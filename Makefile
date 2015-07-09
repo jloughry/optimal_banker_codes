@@ -5,9 +5,12 @@ order = 5
 chart_source = order-5_graph.dot
 pdf_file = order-5_graph.pdf
 
-generator = generate_binary
+generator = generate_programme
 generated_file = order-$(order)_graph_generated
 generator_source = $(generator).c
+generator_header = $(generator).h
+generator_compiled = $(generator).exe
+generator_sources = $(generator_source) $(generator_header)
 generated_dot_file = $(generated_file).dot
 generated_pdf_file = $(generated_file).pdf
 
@@ -21,9 +24,9 @@ $(generated_pdf_file): $(generator)
 	./$(generator) 5 > $(generated_dot_file)
 	dot -T pdf $(generated_dot_file) -o $(generated_pdf_file)
 
-$(generator): $(generator_source) Makefile
+$(generator): $(generator_sources) Makefile
 	gcc -Wall -Wextra -o $@ $<
-	mv $(generator).exe $@
+	mv $(generator_compiled) $@
 
 clean::
 	$(rm) $(target) $(pdf_file) $(generator) *.stackdump \

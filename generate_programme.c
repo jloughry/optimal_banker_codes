@@ -1,14 +1,18 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "generate_programme.h"
 
 char * binary (int n, int m);
 void blank_line (void);
+int count_bits (char * binary_string, char digit);
+void test_count_bits (void);
+
+int hand_generated_cardinality_sequence[] = { 0, 1, 2, 1, 2, 1, 2, 1, 2, 1,
+    2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 5};
 
 int main (int argc, char ** argv) {
     int n = 0;
     int row = 0;
     int col = 0;
+    int * cardinality = NULL;
 
     switch (argc) {
         case 2:
@@ -17,6 +21,19 @@ int main (int argc, char ** argv) {
         default:
             fprintf (stderr, "Usage: %s n\n", argv[0]);
             exit (EXIT_FAILURE);
+    }
+
+    if (5 == n) {
+        cardinality = hand_generated_cardinality_sequence;
+    }
+    else {
+        int i = 0;
+
+        cardinality = (int *) malloc (n);
+        assert (cardinality != NULL);
+        for (i = 0; i < n; i++) {
+            cardinality[i] = -1;
+        }
     }
 
     printf ("/*\n");
@@ -32,7 +49,8 @@ int main (int argc, char ** argv) {
     // left side row markers
 
     for (row = 0; row < (0x1 << n); row ++) {
-        printf ("    level_%d [label=\"%d (?)\"]\n", row, row);
+        printf ("    level_%d [label=\"%d (%d)\"]\n",
+            row, row, cardinality[row]);
     }
 
     blank_line ();
@@ -73,7 +91,18 @@ int main (int argc, char ** argv) {
 
             p = binary (col, n);
 
-            printf ("        level_%d_%s [label=\"%s\"]\n", row, p, p);
+            printf ("        level_%d_%s [label=\"%s\"", row, p, p);
+
+            if (((row == 0) && (count_bits (p, '1') == 0))
+                || ((row == (1 << n) - 1) && (count_bits (p, '1') == n))) {
+                printf (",color=red,textcolor=red");
+            }
+            else if (count_bits (p, '1') != cardinality[row]) {
+                printf (",color=grey,textcolor=grey");
+            }
+
+            printf ("]\n");
+
             free (p);
         }
         printf ("    }\n");
@@ -138,11 +167,19 @@ int main (int argc, char ** argv) {
     return EXIT_SUCCESS;
 }
 
+// Return a string containing the binary representation of $n$ in $m$ bits.
+//
+// The caller is responsible for freeing the string.
+
 char * binary (int n, int m) {
     int i = 0;
     char * s = NULL;
 
-    s = malloc (m+1);
+    // Make sure the result fits in $m$ bits.
+
+    assert ( log (n) <= (double) m );
+
+    s = malloc (m + 1);
     if (!s) {
         fprintf (stderr, "malloc() failed\n");
         exit (EXIT_FAILURE);
@@ -156,7 +193,38 @@ char * binary (int n, int m) {
     return s;
 }
 
+// Put a blank line in the output.
+
 void blank_line (void) {
     printf ("\n");
+}
+
+// Count the `1' bits in a string representation of a binary number.
+
+int count_bits (char * binary_string, char digit) {
+    char * p = NULL;
+    int count = 0;
+
+    p = binary_string;
+
+    assert (p != NULL);
+
+    while (*p) {
+        if (digit == *p) {
+            ++ count;
+        }
+        ++ p;
+    }
+    return count;
+}
+
+void test_count_bits (void) {
+    assert (count_bits ("0", '1') == 0);
+    assert (count_bits ("1", '1') == 1);
+    assert (count_bits ("10101", '1') == 3);
+    assert (count_bits ("10101", '0') == 2);
+    assert (count_bits ("10101", 'a') == 0);
+    assert (count_bits ("abc", '1') == 0);
+    assert (count_bits ("", '1') == 0);
 }
 
