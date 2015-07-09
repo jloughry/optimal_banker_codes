@@ -26,7 +26,8 @@ $(generator): $(generator_source) Makefile
 	mv $(generator).exe $@
 
 clean::
-	$(rm) $(target) $(pdf_file) $(generator) *.stackdump $(generated_dot_file) $(generated_pdf_file)
+	$(rm) $(target) $(pdf_file) $(generator) *.stackdump \
+		$(generated_dot_file) $(generated_pdf_file) $(bibtex_file)
 
 test: $(target)
 	./$(target) 5
