@@ -1,0 +1,1016 @@
+
+    // allowable transitions from (0) -> (1) out of level 0
+
+    level_0_00000 -> level_1_00001 // [color=red,style=bold]
+    level_0_00000 -> level_1_00010
+    level_0_00000 -> level_1_00100
+    level_0_00000 -> level_1_01000
+    level_0_00000 -> level_1_10000
+
+    // allowable transitions from (1) -> (2) out of level 1
+
+    level_1_00001 -> level_2_00011
+    level_1_00001 -> level_2_00101
+    level_1_00001 -> level_2_01001
+    level_1_00001 -> level_2_10001
+
+    level_1_00010 -> level_2_00011
+    level_1_00010 -> level_2_00110
+    level_1_00010 -> level_2_01010
+    level_1_00010 -> level_2_10010
+
+    level_1_00100 -> level_2_00101
+    level_1_00100 -> level_2_00110
+    level_1_00100 -> level_2_01100
+    level_1_00100 -> level_2_10100
+
+    level_1_01000 -> level_2_01001
+    level_1_01000 -> level_2_01010
+    level_1_01000 -> level_2_01100
+    level_1_01000 -> level_2_11000
+
+    level_1_10000 -> level_2_10001
+    level_1_10000 -> level_2_10010
+    level_1_10000 -> level_2_10100
+    level_1_10000 -> level_2_11000
+
+    // allowable transitions from (2) -> (1) out of level 2
+
+    level_2_00011 -> level_3_00010
+    level_2_00011 -> level_3_00001
+
+    level_2_00110 -> level_3_00100
+    level_2_00110 -> level_3_00010
+
+    level_2_01100 -> level_3_01000
+    level_2_01100 -> level_3_00100
+
+    level_2_11000 -> level_3_10000
+    level_2_11000 -> level_3_01000
+
+    level_2_00101 -> level_3_00100
+    level_2_00101 -> level_3_00001
+
+    level_2_01010 -> level_3_01000
+    level_2_01010 -> level_3_00010
+
+    level_2_10100 -> level_3_10000
+    level_2_10100 -> level_3_00100
+
+    level_2_01001 -> level_3_01000
+    level_2_01001 -> level_3_00001
+
+    level_2_10010 -> level_3_10000
+    level_2_10010 -> level_3_00010
+
+    level_2_10001 -> level_3_10000
+    level_2_10001 -> level_3_00001
+
+    // allowable transitions from (1) to (2) out of level 3
+
+    level_3_00001 -> level_4_00011
+    level_3_00001 -> level_4_00101
+    level_3_00001 -> level_4_01001
+    level_3_00001 -> level_4_10001
+
+    level_3_00010 -> level_4_00011
+    level_3_00010 -> level_4_00110
+    level_3_00010 -> level_4_01010
+    level_3_00010 -> level_4_10010
+
+    level_3_00100 -> level_4_00101
+    level_3_00100 -> level_4_00110
+    level_3_00100 -> level_4_01100
+    level_3_00100 -> level_4_10100
+
+    level_3_01000 -> level_4_01001
+    level_3_01000 -> level_4_01010
+    level_3_01000 -> level_4_01100
+    level_3_01000 -> level_4_11000
+
+    level_3_10000 -> level_4_10001
+    level_3_10000 -> level_4_10010
+    level_3_10000 -> level_4_10100
+    level_3_10000 -> level_4_11000
+
+    // allowable transitions from (2) to (1) out of level 4
+
+    level_4_00011 -> level_5_00010
+    level_4_00011 -> level_5_00001
+
+    level_4_00110 -> level_5_00100
+    level_4_00110 -> level_5_00010
+
+    level_4_01100 -> level_5_01000
+    level_4_01100 -> level_5_00100
+
+    level_4_11000 -> level_5_10000
+    level_4_11000 -> level_5_01000
+
+    level_4_00101 -> level_5_00100
+    level_4_00101 -> level_5_00001
+
+    level_4_01010 -> level_5_01000
+    level_4_01010 -> level_5_00010
+
+    level_4_10100 -> level_5_10000
+    level_4_10100 -> level_5_00100
+
+    level_4_01001 -> level_5_01000
+    level_4_01001 -> level_5_00001
+
+    level_4_10010 -> level_5_10000
+    level_4_10010 -> level_5_00010
+
+    level_4_10001 -> level_5_10000
+    level_4_10001 -> level_5_00001
+
+    // allowable transitions from (1) to (2) out of level 5
+
+    level_5_00001 -> level_6_00011
+    level_5_00001 -> level_6_00101
+    level_5_00001 -> level_6_01001
+    level_5_00001 -> level_6_10001
+
+    level_5_00010 -> level_6_00011
+    level_5_00010 -> level_6_00110
+    level_5_00010 -> level_6_01010
+    level_5_00010 -> level_6_10010
+
+    level_5_00100 -> level_6_00101
+    level_5_00100 -> level_6_00110
+    level_5_00100 -> level_6_01100
+    level_5_00100 -> level_6_10100
+
+    level_5_01000 -> level_6_01001
+    level_5_01000 -> level_6_01010
+    level_5_01000 -> level_6_01100
+    level_5_01000 -> level_6_11000
+
+    level_5_10000 -> level_6_10001
+    level_5_10000 -> level_6_10010
+    level_5_10000 -> level_6_10100
+    level_5_10000 -> level_6_11000
+
+    // allowable transitions from (2) to (1) out of level 6
+
+    level_6_00011 -> level_7_00010
+    level_6_00011 -> level_7_00001
+
+    level_6_00110 -> level_7_00100
+    level_6_00110 -> level_7_00010
+
+    level_6_01100 -> level_7_01000
+    level_6_01100 -> level_7_00100
+
+    level_6_11000 -> level_7_10000
+    level_6_11000 -> level_7_01000
+
+    level_6_00101 -> level_7_00100
+    level_6_00101 -> level_7_00001
+
+    level_6_01010 -> level_7_01000
+    level_6_01010 -> level_7_00010
+
+    level_6_10100 -> level_7_10000
+    level_6_10100 -> level_7_00100
+
+    level_6_01001 -> level_7_01000
+    level_6_01001 -> level_7_00001
+
+    level_6_10010 -> level_7_10000
+    level_6_10010 -> level_7_00010
+
+    level_6_10001 -> level_7_10000
+    level_6_10001 -> level_7_00001
+
+    // allowable transitions from (1) to (2) out of level 7
+
+    level_7_00001 -> level_8_00011
+    level_7_00001 -> level_8_00101
+    level_7_00001 -> level_8_01001
+    level_7_00001 -> level_8_10001
+
+    level_7_00010 -> level_8_00011
+    level_7_00010 -> level_8_00110
+    level_7_00010 -> level_8_01010
+    level_7_00010 -> level_8_10010
+
+    level_7_00100 -> level_8_00101
+    level_7_00100 -> level_8_00110
+    level_7_00100 -> level_8_01100
+    level_7_00100 -> level_8_10100
+
+    level_7_01000 -> level_8_01001
+    level_7_01000 -> level_8_01010
+    level_7_01000 -> level_8_01100
+    level_7_01000 -> level_8_11000
+
+    level_7_10000 -> level_8_10001
+    level_7_10000 -> level_8_10010
+    level_7_10000 -> level_8_10100
+    level_7_10000 -> level_8_11000
+
+    // allowable transitions from (2) to (1) out of level 8
+
+    level_8_00011 -> level_9_00010
+    level_8_00011 -> level_9_00001
+
+    level_8_00110 -> level_9_00100
+    level_8_00110 -> level_9_00010
+
+    level_8_01100 -> level_9_01000
+    level_8_01100 -> level_9_00100
+
+    level_8_11000 -> level_9_10000
+    level_8_11000 -> level_9_01000
+
+    level_8_00101 -> level_9_00100
+    level_8_00101 -> level_9_00001
+
+    level_8_01010 -> level_9_01000
+    level_8_01010 -> level_9_00010
+
+    level_8_10100 -> level_9_10000
+    level_8_10100 -> level_9_00100
+
+    level_8_01001 -> level_9_01000
+    level_8_01001 -> level_9_00001
+
+    level_8_10010 -> level_9_10000
+    level_8_10010 -> level_9_00010
+
+    level_8_10001 -> level_9_10000
+    level_8_10001 -> level_9_00001
+
+    // allowable transitions from (1) to (2) out of level 9
+
+    level_9_00001 -> level_10_00011
+    level_9_00001 -> level_10_00101
+    level_9_00001 -> level_10_01001
+    level_9_00001 -> level_10_10001
+
+    level_9_00010 -> level_10_00011
+    level_9_00010 -> level_10_00110
+    level_9_00010 -> level_10_01010
+    level_9_00010 -> level_10_10010
+
+    level_9_00100 -> level_10_00101
+    level_9_00100 -> level_10_00110
+    level_9_00100 -> level_10_01100
+    level_9_00100 -> level_10_10100
+
+    level_9_01000 -> level_10_01001
+    level_9_01000 -> level_10_01010
+    level_9_01000 -> level_10_01100
+    level_9_01000 -> level_10_11000
+
+    level_9_10000 -> level_10_10001
+    level_9_10000 -> level_10_10010
+    level_9_10000 -> level_10_10100
+    level_9_10000 -> level_10_11000
+
+    // allowable transitions from (2) to (3) out of level 10
+
+    level_10_00011 -> level_11_00111
+    level_10_00011 -> level_11_01011
+    level_10_00011 -> level_11_10011
+
+    level_10_00110 -> level_11_00111
+    level_10_00110 -> level_11_01110
+    level_10_00110 -> level_11_10110
+
+    level_10_01100 -> level_11_01101
+    level_10_01100 -> level_11_01110
+    level_10_01100 -> level_11_11100
+
+    level_10_11000 -> level_11_11001
+    level_10_11000 -> level_11_11010
+    level_10_11000 -> level_11_11100
+
+    level_10_00101 -> level_11_00111
+    level_10_00101 -> level_11_01101
+    level_10_00101 -> level_11_10101
+
+    level_10_01010 -> level_11_01011
+    level_10_01010 -> level_11_01110
+    level_10_01010 -> level_11_11010
+
+    level_10_10100 -> level_11_10101
+    level_10_10100 -> level_11_10110
+    level_10_10100 -> level_11_11100
+
+    level_10_01001 -> level_11_01011
+    level_10_01001 -> level_11_01101
+    level_10_01001 -> level_11_11001
+
+    level_10_10010 -> level_11_10011
+    level_10_10010 -> level_11_10110
+    level_10_10010 -> level_11_11010
+
+    level_10_10001 -> level_11_10011
+    level_10_10001 -> level_11_10101
+    level_10_10001 -> level_11_11001
+
+    // allowable transitions from (3) to (2) out of level 11
+
+    level_11_00111 -> level_12_00110
+    level_11_00111 -> level_12_00101
+    level_11_00111 -> level_12_00011
+
+    level_11_01110 -> level_12_01100
+    level_11_01110 -> level_12_01010
+    level_11_01110 -> level_12_00110
+
+    level_11_11100 -> level_12_11000
+    level_11_11100 -> level_12_10100
+    level_11_11100 -> level_12_01100
+
+    level_11_01011 -> level_12_01010
+    level_11_01011 -> level_12_01001
+    level_11_01011 -> level_12_00011
+
+    level_11_01101 -> level_12_01100
+    level_11_01101 -> level_12_01001
+    level_11_01101 -> level_12_00101
+
+    level_11_11010 -> level_12_11000
+    level_11_11010 -> level_12_10010
+    level_11_11010 -> level_12_01010
+
+    level_11_10101 -> level_12_10100
+    level_11_10101 -> level_12_10001
+    level_11_10101 -> level_12_00101
+
+    level_11_10011 -> level_12_10010
+    level_11_10011 -> level_12_10001
+    level_11_10011 -> level_12_00011
+
+    level_11_11001 -> level_12_11000
+    level_11_11001 -> level_12_10001
+    level_11_11001 -> level_12_01001
+
+    level_11_10110 -> level_12_10100
+    level_11_10110 -> level_12_10010
+    level_11_10110 -> level_12_00110
+
+    // allowable transitions from (2) to (3) out of level 12
+
+    level_12_00011 -> level_13_00111
+    level_12_00011 -> level_13_01011
+    level_12_00011 -> level_13_10011
+
+    level_12_00110 -> level_13_00111
+    level_12_00110 -> level_13_01110
+    level_12_00110 -> level_13_10110
+
+    level_12_01100 -> level_13_01101
+    level_12_01100 -> level_13_01110
+    level_12_01100 -> level_13_11100
+
+    level_12_11000 -> level_13_11001
+    level_12_11000 -> level_13_11010
+    level_12_11000 -> level_13_11100
+
+    level_12_00101 -> level_13_00111
+    level_12_00101 -> level_13_01101
+    level_12_00101 -> level_13_10101
+
+    level_12_01010 -> level_13_01011
+    level_12_01010 -> level_13_01110
+    level_12_01010 -> level_13_11010
+
+    level_12_10100 -> level_13_10101
+    level_12_10100 -> level_13_10110
+    level_12_10100 -> level_13_11100
+
+    level_12_01001 -> level_13_01011
+    level_12_01001 -> level_13_01101
+    level_12_01001 -> level_13_11001
+
+    level_12_10010 -> level_13_10011
+    level_12_10010 -> level_13_10110
+    level_12_10010 -> level_13_11010
+
+    level_12_10001 -> level_13_10011
+    level_12_10001 -> level_13_10101
+    level_12_10001 -> level_13_11001
+
+    // allowable transitions from (3) to (2) out of level 13
+
+    level_13_00111 -> level_14_00110
+    level_13_00111 -> level_14_00101
+    level_13_00111 -> level_14_00011
+
+    level_13_01110 -> level_14_01100
+    level_13_01110 -> level_14_01010
+    level_13_01110 -> level_14_00110
+
+    level_13_11100 -> level_14_11000
+    level_13_11100 -> level_14_10100
+    level_13_11100 -> level_14_01100
+
+    level_13_01011 -> level_14_01010
+    level_13_01011 -> level_14_01001
+    level_13_01011 -> level_14_00011
+
+    level_13_01101 -> level_14_01100
+    level_13_01101 -> level_14_01001
+    level_13_01101 -> level_14_00101
+
+    level_13_11010 -> level_14_11000
+    level_13_11010 -> level_14_10010
+    level_13_11010 -> level_14_01010
+
+    level_13_10101 -> level_14_10100
+    level_13_10101 -> level_14_10001
+    level_13_10101 -> level_14_00101
+
+    level_13_10011 -> level_14_10010
+    level_13_10011 -> level_14_10001
+    level_13_10011 -> level_14_00011
+
+    level_13_11001 -> level_14_11000
+    level_13_11001 -> level_14_10001
+    level_13_11001 -> level_14_01001
+
+    level_13_10110 -> level_14_10100
+    level_13_10110 -> level_14_10010
+    level_13_10110 -> level_14_00110
+
+    // allowable transitions from (2) to (3) out of level 14
+
+    level_14_00011 -> level_15_00111
+    level_14_00011 -> level_15_01011
+    level_14_00011 -> level_15_10011
+
+    level_14_00110 -> level_15_00111
+    level_14_00110 -> level_15_01110
+    level_14_00110 -> level_15_10110
+
+    level_14_01100 -> level_15_01101
+    level_14_01100 -> level_15_01110
+    level_14_01100 -> level_15_11100
+
+    level_14_11000 -> level_15_11001
+    level_14_11000 -> level_15_11010
+    level_14_11000 -> level_15_11100
+
+    level_14_00101 -> level_15_00111
+    level_14_00101 -> level_15_01101
+    level_14_00101 -> level_15_10101
+
+    level_14_01010 -> level_15_01011
+    level_14_01010 -> level_15_01110
+    level_14_01010 -> level_15_11010
+
+    level_14_10100 -> level_15_10101
+    level_14_10100 -> level_15_10110
+    level_14_10100 -> level_15_11100
+
+    level_14_01001 -> level_15_01011
+    level_14_01001 -> level_15_01101
+    level_14_01001 -> level_15_11001
+
+    level_14_10010 -> level_15_10011
+    level_14_10010 -> level_15_10110
+    level_14_10010 -> level_15_11010
+
+    level_14_10001 -> level_15_10011
+    level_14_10001 -> level_15_10101
+    level_14_10001 -> level_15_11001
+
+    // allowable transitions from (3) to (2) out of level 15
+
+    level_15_00111 -> level_16_00110
+    level_15_00111 -> level_16_00101
+    level_15_00111 -> level_16_00011
+
+    level_15_01110 -> level_16_01100
+    level_15_01110 -> level_16_01010
+    level_15_01110 -> level_16_00110
+
+    level_15_11100 -> level_16_11000
+    level_15_11100 -> level_16_10100
+    level_15_11100 -> level_16_01100
+
+    level_15_01011 -> level_16_01010
+    level_15_01011 -> level_16_01001
+    level_15_01011 -> level_16_00011
+
+    level_15_01101 -> level_16_01100
+    level_15_01101 -> level_16_01001
+    level_15_01101 -> level_16_00101
+
+    level_15_11010 -> level_16_11000
+    level_15_11010 -> level_16_10010
+    level_15_11010 -> level_16_01010
+
+    level_15_10101 -> level_16_10100
+    level_15_10101 -> level_16_10001
+    level_15_10101 -> level_16_00101
+
+    level_15_10011 -> level_16_10010
+    level_15_10011 -> level_16_10001
+    level_15_10011 -> level_16_00011
+
+    level_15_11001 -> level_16_11000
+    level_15_11001 -> level_16_10001
+    level_15_11001 -> level_16_01001
+
+    level_15_10110 -> level_16_10100
+    level_15_10110 -> level_16_10010
+    level_15_10110 -> level_16_00110
+
+    // allowable transitions from (2) to (3) out of level 16
+
+    level_16_00011 -> level_17_00111
+    level_16_00011 -> level_17_01011
+    level_16_00011 -> level_17_10011
+
+    level_16_00110 -> level_17_00111
+    level_16_00110 -> level_17_01110
+    level_16_00110 -> level_17_10110
+
+    level_16_01100 -> level_17_01101
+    level_16_01100 -> level_17_01110
+    level_16_01100 -> level_17_11100
+
+    level_16_11000 -> level_17_11001
+    level_16_11000 -> level_17_11010
+    level_16_11000 -> level_17_11100
+
+    level_16_00101 -> level_17_00111
+    level_16_00101 -> level_17_01101
+    level_16_00101 -> level_17_10101
+
+    level_16_01010 -> level_17_01011
+    level_16_01010 -> level_17_01110
+    level_16_01010 -> level_17_11010
+
+    level_16_10100 -> level_17_10101
+    level_16_10100 -> level_17_10110
+    level_16_10100 -> level_17_11100
+
+    level_16_01001 -> level_17_01011
+    level_16_01001 -> level_17_01101
+    level_16_01001 -> level_17_11001
+
+    level_16_10010 -> level_17_10011
+    level_16_10010 -> level_17_10110
+    level_16_10010 -> level_17_11010
+
+    level_16_10001 -> level_17_10011
+    level_16_10001 -> level_17_10101
+    level_16_10001 -> level_17_11001
+
+    // allowable transitions from (3) to (2) out of level 17
+
+    level_17_00111 -> level_18_00110
+    level_17_00111 -> level_18_00101
+    level_17_00111 -> level_18_00011
+
+    level_17_01110 -> level_18_01100
+    level_17_01110 -> level_18_01010
+    level_17_01110 -> level_18_00110
+
+    level_17_11100 -> level_18_11000
+    level_17_11100 -> level_18_10100
+    level_17_11100 -> level_18_01100
+
+    level_17_01011 -> level_18_01010
+    level_17_01011 -> level_18_01001
+    level_17_01011 -> level_18_00011
+
+    level_17_01101 -> level_18_01100
+    level_17_01101 -> level_18_01001
+    level_17_01101 -> level_18_00101
+
+    level_17_11010 -> level_18_11000
+    level_17_11010 -> level_18_10010
+    level_17_11010 -> level_18_01010
+
+    level_17_10101 -> level_18_10100
+    level_17_10101 -> level_18_10001
+    level_17_10101 -> level_18_00101
+
+    level_17_10011 -> level_18_10010
+    level_17_10011 -> level_18_10001
+    level_17_10011 -> level_18_00011
+
+    level_17_11001 -> level_18_11000
+    level_17_11001 -> level_18_10001
+    level_17_11001 -> level_18_01001
+
+    level_17_10110 -> level_18_10100
+    level_17_10110 -> level_18_10010
+    level_17_10110 -> level_18_00110
+
+    // allowable transitions from (2) to (3) out of level 18
+
+    level_18_00011 -> level_19_00111
+    level_18_00011 -> level_19_01011
+    level_18_00011 -> level_19_10011
+
+    level_18_00110 -> level_19_00111
+    level_18_00110 -> level_19_01110
+    level_18_00110 -> level_19_10110
+
+    level_18_01100 -> level_19_01101
+    level_18_01100 -> level_19_01110
+    level_18_01100 -> level_19_11100
+
+    level_18_11000 -> level_19_11001
+    level_18_11000 -> level_19_11010
+    level_18_11000 -> level_19_11100
+
+    level_18_00101 -> level_19_00111
+    level_18_00101 -> level_19_01101
+    level_18_00101 -> level_19_10101
+
+    level_18_01010 -> level_19_01011
+    level_18_01010 -> level_19_01110
+    level_18_01010 -> level_19_11010
+
+    level_18_10100 -> level_19_10101
+    level_18_10100 -> level_19_10110
+    level_18_10100 -> level_19_11100
+
+    level_18_01001 -> level_19_01011
+    level_18_01001 -> level_19_01101
+    level_18_01001 -> level_19_11001
+
+    level_18_10010 -> level_19_10011
+    level_18_10010 -> level_19_10110
+    level_18_10010 -> level_19_11010
+
+    level_18_10001 -> level_19_10011
+    level_18_10001 -> level_19_10101
+    level_18_10001 -> level_19_11001
+
+    // allowable transitions from (3) to (2) out of level 19
+
+    level_19_00111 -> level_20_00110
+    level_19_00111 -> level_20_00101
+    level_19_00111 -> level_20_00011
+
+    level_19_01110 -> level_20_01100
+    level_19_01110 -> level_20_01010
+    level_19_01110 -> level_20_00110
+
+    level_19_11100 -> level_20_11000
+    level_19_11100 -> level_20_10100
+    level_19_11100 -> level_20_01100
+
+    level_19_01011 -> level_20_01010
+    level_19_01011 -> level_20_01001
+    level_19_01011 -> level_20_00011
+
+    level_19_01101 -> level_20_01100
+    level_19_01101 -> level_20_01001
+    level_19_01101 -> level_20_00101
+
+    level_19_11010 -> level_20_11000
+    level_19_11010 -> level_20_10010
+    level_19_11010 -> level_20_01010
+
+    level_19_10101 -> level_20_10100
+    level_19_10101 -> level_20_10001
+    level_19_10101 -> level_20_00101
+
+    level_19_10011 -> level_20_10010
+    level_19_10011 -> level_20_10001
+    level_19_10011 -> level_20_00011
+
+    level_19_11001 -> level_20_11000
+    level_19_11001 -> level_20_10001
+    level_19_11001 -> level_20_01001
+
+    level_19_10110 -> level_20_10100
+    level_19_10110 -> level_20_10010
+    level_19_10110 -> level_20_00110
+
+    // allowable transitions from (2) to (3) out of level 20
+
+    level_20_00011 -> level_21_00111
+    level_20_00011 -> level_21_01011
+    level_20_00011 -> level_21_10011
+
+    level_20_00110 -> level_21_00111
+    level_20_00110 -> level_21_01110
+    level_20_00110 -> level_21_10110
+
+    level_20_01100 -> level_21_01101
+    level_20_01100 -> level_21_01110
+    level_20_01100 -> level_21_11100
+
+    level_20_11000 -> level_21_11001
+    level_20_11000 -> level_21_11010
+    level_20_11000 -> level_21_11100
+
+    level_20_00101 -> level_21_00111
+    level_20_00101 -> level_21_01101
+    level_20_00101 -> level_21_10101
+
+    level_20_01010 -> level_21_01011
+    level_20_01010 -> level_21_01110
+    level_20_01010 -> level_21_11010
+
+    level_20_10100 -> level_21_10101
+    level_20_10100 -> level_21_10110
+    level_20_10100 -> level_21_11100
+
+    level_20_01001 -> level_21_01011
+    level_20_01001 -> level_21_01101
+    level_20_01001 -> level_21_11001
+
+    level_20_10010 -> level_21_10011
+    level_20_10010 -> level_21_10110
+    level_20_10010 -> level_21_11010
+
+    level_20_10001 -> level_21_10011
+    level_20_10001 -> level_21_10101
+    level_20_10001 -> level_21_11001
+
+    // allowable transitions from (3) to (4) out of level 21
+
+    level_21_00111 -> level_22_01111
+    level_21_00111 -> level_22_10111
+
+    level_21_01110 -> level_22_01111
+    level_21_01110 -> level_22_11110
+
+    level_21_11100 -> level_22_11101
+    level_21_11100 -> level_22_11110
+
+    level_21_01011 -> level_22_01111
+    level_21_01011 -> level_22_11011
+
+    level_21_01101 -> level_22_01111
+    level_21_01101 -> level_22_11101
+
+    level_21_11010 -> level_22_11011
+    level_21_11010 -> level_22_11110
+
+    level_21_10101 -> level_22_10111
+    level_21_10101 -> level_22_11101
+
+    level_21_10011 -> level_22_10111
+    level_21_10011 -> level_22_11011
+
+    level_21_11001 -> level_22_11011
+    level_21_11001 -> level_22_11101
+
+    level_21_10110 -> level_22_10111
+    level_21_10110 -> level_22_11110
+
+    // allowable transitions from (4) to (3) out of level 22
+
+    level_22_11110 -> level_23_11100
+    level_22_11110 -> level_23_11010
+    level_22_11110 -> level_23_10110
+    level_22_11110 -> level_23_01110
+
+    level_22_11101 -> level_23_11100
+    level_22_11101 -> level_23_11001
+    level_22_11101 -> level_23_10101
+    level_22_11101 -> level_23_01101
+
+    level_22_11011 -> level_23_11010
+    level_22_11011 -> level_23_11001
+    level_22_11011 -> level_23_10011
+    level_22_11011 -> level_23_01011
+
+    level_22_10111 -> level_23_10110
+    level_22_10111 -> level_23_10101
+    level_22_10111 -> level_23_10011
+    level_22_10111 -> level_23_00111
+
+    level_22_01111 -> level_23_01110
+    level_22_01111 -> level_23_01101
+    level_22_01111 -> level_23_01011
+    level_22_01111 -> level_23_00111
+
+    // allowable transitions from (3) to (4) out of level 23
+
+    level_23_00111 -> level_24_01111
+    level_23_00111 -> level_24_10111
+
+    level_23_01110 -> level_24_01111
+    level_23_01110 -> level_24_11110
+
+    level_23_11100 -> level_24_11101
+    level_23_11100 -> level_24_11110
+
+    level_23_01011 -> level_24_01111
+    level_23_01011 -> level_24_11011
+
+    level_23_01101 -> level_24_01111
+    level_23_01101 -> level_24_11101
+
+    level_23_11010 -> level_24_11011
+    level_23_11010 -> level_24_11110
+
+    level_23_10101 -> level_24_10111
+    level_23_10101 -> level_24_11101
+
+    level_23_10011 -> level_24_10111
+    level_23_10011 -> level_24_11011
+
+    level_23_11001 -> level_24_11011
+    level_23_11001 -> level_24_11101
+
+    level_23_10110 -> level_24_10111
+    level_23_10110 -> level_24_11110
+
+    // allowable transitions from (4) to (3) out of level 24
+
+    level_24_11110 -> level_25_11100
+    level_24_11110 -> level_25_11010
+    level_24_11110 -> level_25_10110
+    level_24_11110 -> level_25_01110
+
+    level_24_11101 -> level_25_11100
+    level_24_11101 -> level_25_11001
+    level_24_11101 -> level_25_10101
+    level_24_11101 -> level_25_01101
+
+    level_24_11011 -> level_25_11010
+    level_24_11011 -> level_25_11001
+    level_24_11011 -> level_25_10011
+    level_24_11011 -> level_25_01011
+
+    level_24_10111 -> level_25_10110
+    level_24_10111 -> level_25_10101
+    level_24_10111 -> level_25_10011
+    level_24_10111 -> level_25_00111
+
+    level_24_01111 -> level_25_01110
+    level_24_01111 -> level_25_01101
+    level_24_01111 -> level_25_01011
+    level_24_01111 -> level_25_00111
+
+    // allowable transitions from (3) to (4) out of level 25
+
+    level_25_00111 -> level_26_01111
+    level_25_00111 -> level_26_10111
+
+    level_25_01110 -> level_26_01111
+    level_25_01110 -> level_26_11110
+
+    level_25_11100 -> level_26_11101
+    level_25_11100 -> level_26_11110
+
+    level_25_01011 -> level_26_01111
+    level_25_01011 -> level_26_11011
+
+    level_25_01101 -> level_26_01111
+    level_25_01101 -> level_26_11101
+
+    level_25_11010 -> level_26_11011
+    level_25_11010 -> level_26_11110
+
+    level_25_10101 -> level_26_10111
+    level_25_10101 -> level_26_11101
+
+    level_25_10011 -> level_26_10111
+    level_25_10011 -> level_26_11011
+
+    level_25_11001 -> level_26_11011
+    level_25_11001 -> level_26_11101
+
+    level_25_10110 -> level_26_10111
+    level_25_10110 -> level_26_11110
+
+    // allowable transitions from (4) to (3) out of level 26
+
+    level_26_11110 -> level_27_11100
+    level_26_11110 -> level_27_11010
+    level_26_11110 -> level_27_10110
+    level_26_11110 -> level_27_01110
+
+    level_26_11101 -> level_27_11100
+    level_26_11101 -> level_27_11001
+    level_26_11101 -> level_27_10101
+    level_26_11101 -> level_27_01101
+
+    level_26_11011 -> level_27_11010
+    level_26_11011 -> level_27_11001
+    level_26_11011 -> level_27_10011
+    level_26_11011 -> level_27_01011
+
+    level_26_10111 -> level_27_10110
+    level_26_10111 -> level_27_10101
+    level_26_10111 -> level_27_10011
+    level_26_10111 -> level_27_00111
+
+    level_26_01111 -> level_27_01110
+    level_26_01111 -> level_27_01101
+    level_26_01111 -> level_27_01011
+    level_26_01111 -> level_27_00111
+
+    // allowable transitions from (3) to (4) out of level 27
+
+    level_27_00111 -> level_28_01111
+    level_27_00111 -> level_28_10111
+
+    level_27_01110 -> level_28_01111
+    level_27_01110 -> level_28_11110
+
+    level_27_11100 -> level_28_11101
+    level_27_11100 -> level_28_11110
+
+    level_27_01011 -> level_28_01111
+    level_27_01011 -> level_28_11011
+
+    level_27_01101 -> level_28_01111
+    level_27_01101 -> level_28_11101
+
+    level_27_11010 -> level_28_11011
+    level_27_11010 -> level_28_11110
+
+    level_27_10101 -> level_28_10111
+    level_27_10101 -> level_28_11101
+
+    level_27_10011 -> level_28_10111
+    level_27_10011 -> level_28_11011
+
+    level_27_11001 -> level_28_11011
+    level_27_11001 -> level_28_11101
+
+    level_27_10110 -> level_28_10111
+    level_27_10110 -> level_28_11110
+
+    // allowable transitions from (4) to (3) out of level 28
+
+    level_28_11110 -> level_29_11100
+    level_28_11110 -> level_29_11010
+    level_28_11110 -> level_29_10110
+    level_28_11110 -> level_29_01110
+
+    level_28_11101 -> level_29_11100
+    level_28_11101 -> level_29_11001
+    level_28_11101 -> level_29_10101
+    level_28_11101 -> level_29_01101
+
+    level_28_11011 -> level_29_11010
+    level_28_11011 -> level_29_11001
+    level_28_11011 -> level_29_10011
+    level_28_11011 -> level_29_01011
+
+    level_28_10111 -> level_29_10110
+    level_28_10111 -> level_29_10101
+    level_28_10111 -> level_29_10011
+    level_28_10111 -> level_29_00111
+
+    level_28_01111 -> level_29_01110
+    level_28_01111 -> level_29_01101
+    level_28_01111 -> level_29_01011
+    level_28_01111 -> level_29_00111
+
+    // allowable transitions from (3) to (4) out of level 29
+
+    level_29_00111 -> level_30_01111
+    level_29_00111 -> level_30_10111
+
+    level_29_01110 -> level_30_01111
+    level_29_01110 -> level_30_11110
+
+    level_29_11100 -> level_30_11101
+    level_29_11100 -> level_30_11110
+
+    level_29_01011 -> level_30_01111
+    level_29_01011 -> level_30_11011
+
+    level_29_01101 -> level_30_01111
+    level_29_01101 -> level_30_11101
+
+    level_29_11010 -> level_30_11011
+    level_29_11010 -> level_30_11110
+
+    level_29_10101 -> level_30_10111
+    level_29_10101 -> level_30_11101
+
+    level_29_10011 -> level_30_10111
+    level_29_10011 -> level_30_11011
+
+    level_29_11001 -> level_30_11011
+    level_29_11001 -> level_30_11101
+
+    level_29_10110 -> level_30_10111
+    level_29_10110 -> level_30_11110
+
+    // These are a pain to generate manually; I'm sure there's a function
+    // in Knuth (Vol. 4) something like
+    // `list-of-all-$n$-bit-binary-numbers-with-exactly-$k$-bits-set()';
+    // if I had that, I could say `level_$i$_$n(j)$ -> level_$i+1$_$n(k)$'
+    // instead of all this typing.
+
+    // allowable transitions from (4) to (5) out of level 30
+
+    level_30_01111 -> level_31_11111
+    level_30_10111 -> level_31_11111
+    level_30_11011 -> level_31_11111
+    level_30_11101 -> level_31_11111
+    level_30_11110 -> level_31_11111
+

@@ -1,0 +1,3547 @@
+/*
+    dot -T pdf order-5_graph_generated.dot -o order-5_graph_generated.pdf
+*/
+
+digraph order5 {
+
+    node [shape=plaintext]
+
+    level_0 [label="0 (?)"]
+    level_1 [label="1 (?)"]
+    level_2 [label="2 (?)"]
+    level_3 [label="3 (?)"]
+    level_4 [label="4 (?)"]
+    level_5 [label="5 (?)"]
+    level_6 [label="6 (?)"]
+    level_7 [label="7 (?)"]
+    level_8 [label="8 (?)"]
+    level_9 [label="9 (?)"]
+    level_10 [label="10 (?)"]
+    level_11 [label="11 (?)"]
+    level_12 [label="12 (?)"]
+    level_13 [label="13 (?)"]
+    level_14 [label="14 (?)"]
+    level_15 [label="15 (?)"]
+    level_16 [label="16 (?)"]
+    level_17 [label="17 (?)"]
+    level_18 [label="18 (?)"]
+    level_19 [label="19 (?)"]
+    level_20 [label="20 (?)"]
+    level_21 [label="21 (?)"]
+    level_22 [label="22 (?)"]
+    level_23 [label="23 (?)"]
+    level_24 [label="24 (?)"]
+    level_25 [label="25 (?)"]
+    level_26 [label="26 (?)"]
+    level_27 [label="27 (?)"]
+    level_28 [label="28 (?)"]
+    level_29 [label="29 (?)"]
+    level_30 [label="30 (?)"]
+    level_31 [label="31 (?)"]
+
+    /* Connect the left side row markers invisibly so they stay lined up. */
+
+    edge [style=invis]
+
+    level_0 -> level_0 -> level_1 -> level_2 -> level_3 -> level_4
+         -> level_5 -> level_6 -> level_7 -> level_8 -> level_9
+         -> level_10 -> level_11 -> level_12 -> level_13 -> level_14
+         -> level_15 -> level_16 -> level_17 -> level_18 -> level_19
+         -> level_20 -> level_21 -> level_22 -> level_23 -> level_24
+         -> level_25 -> level_26 -> level_27 -> level_28 -> level_29
+         -> level_30 -> level_31
+
+    graph [ordering=out]
+    node [shape=rect]
+
+    /* set of all possible states */
+
+    {
+        rank=same; level_0
+
+        level_0_00000 [label="00000",color=red,fontcolor=red]
+        level_0_00001 [label="00001",color=grey,fontcolor=grey]
+        level_0_00010 [label="00010",color=grey,fontcolor=grey]
+        level_0_00011 [label="00011",color=grey,fontcolor=grey]
+        level_0_00100 [label="00100",color=grey,fontcolor=grey]
+        level_0_00101 [label="00101",color=grey,fontcolor=grey]
+        level_0_00110 [label="00110",color=grey,fontcolor=grey]
+        level_0_00111 [label="00111",color=grey,fontcolor=grey]
+        level_0_01000 [label="01000",color=grey,fontcolor=grey]
+        level_0_01001 [label="01001",color=grey,fontcolor=grey]
+        level_0_01010 [label="01010",color=grey,fontcolor=grey]
+        level_0_01011 [label="01011",color=grey,fontcolor=grey]
+        level_0_01100 [label="01100",color=grey,fontcolor=grey]
+        level_0_01101 [label="01101",color=grey,fontcolor=grey]
+        level_0_01110 [label="01110",color=grey,fontcolor=grey]
+        level_0_01111 [label="01111",color=grey,fontcolor=grey]
+        level_0_10000 [label="10000",color=grey,fontcolor=grey]
+        level_0_10001 [label="10001",color=grey,fontcolor=grey]
+        level_0_10010 [label="10010",color=grey,fontcolor=grey]
+        level_0_10011 [label="10011",color=grey,fontcolor=grey]
+        level_0_10100 [label="10100",color=grey,fontcolor=grey]
+        level_0_10101 [label="10101",color=grey,fontcolor=grey]
+        level_0_10110 [label="10110",color=grey,fontcolor=grey]
+        level_0_10111 [label="10111",color=grey,fontcolor=grey]
+        level_0_11000 [label="11000",color=grey,fontcolor=grey]
+        level_0_11001 [label="11001",color=grey,fontcolor=grey]
+        level_0_11010 [label="11010",color=grey,fontcolor=grey]
+        level_0_11011 [label="11011",color=grey,fontcolor=grey]
+        level_0_11100 [label="11100",color=grey,fontcolor=grey]
+        level_0_11101 [label="11101",color=grey,fontcolor=grey]
+        level_0_11110 [label="11110",color=grey,fontcolor=grey]
+        level_0_11111 [label="11111",color=grey,fontcolor=grey]
+    }
+
+    {
+        rank=same; level_1
+
+        level_1_00000 [label="00000",color=grey,fontcolor=grey]
+        level_1_00001 [label="00001"]
+        level_1_00010 [label="00010"]
+        level_1_00011 [label="00011",color=grey,fontcolor=grey]
+        level_1_00100 [label="00100"]
+        level_1_00101 [label="00101",color=grey,fontcolor=grey]
+        level_1_00110 [label="00110",color=grey,fontcolor=grey]
+        level_1_00111 [label="00111",color=grey,fontcolor=grey]
+        level_1_01000 [label="01000"]
+        level_1_01001 [label="01001",color=grey,fontcolor=grey]
+        level_1_01010 [label="01010",color=grey,fontcolor=grey]
+        level_1_01011 [label="01011",color=grey,fontcolor=grey]
+        level_1_01100 [label="01100",color=grey,fontcolor=grey]
+        level_1_01101 [label="01101",color=grey,fontcolor=grey]
+        level_1_01110 [label="01110",color=grey,fontcolor=grey]
+        level_1_01111 [label="01111",color=grey,fontcolor=grey]
+        level_1_10000 [label="10000"]
+        level_1_10001 [label="10001",color=grey,fontcolor=grey]
+        level_1_10010 [label="10010",color=grey,fontcolor=grey]
+        level_1_10011 [label="10011",color=grey,fontcolor=grey]
+        level_1_10100 [label="10100",color=grey,fontcolor=grey]
+        level_1_10101 [label="10101",color=grey,fontcolor=grey]
+        level_1_10110 [label="10110",color=grey,fontcolor=grey]
+        level_1_10111 [label="10111",color=grey,fontcolor=grey]
+        level_1_11000 [label="11000",color=grey,fontcolor=grey]
+        level_1_11001 [label="11001",color=grey,fontcolor=grey]
+        level_1_11010 [label="11010",color=grey,fontcolor=grey]
+        level_1_11011 [label="11011",color=grey,fontcolor=grey]
+        level_1_11100 [label="11100",color=grey,fontcolor=grey]
+        level_1_11101 [label="11101",color=grey,fontcolor=grey]
+        level_1_11110 [label="11110",color=grey,fontcolor=grey]
+        level_1_11111 [label="11111",color=grey,fontcolor=grey]
+    }
+
+    {
+        rank=same; level_2
+
+        level_2_00000 [label="00000",color=grey,fontcolor=grey]
+        level_2_00001 [label="00001",color=grey,fontcolor=grey]
+        level_2_00010 [label="00010",color=grey,fontcolor=grey]
+        level_2_00011 [label="00011"]
+        level_2_00100 [label="00100",color=grey,fontcolor=grey]
+        level_2_00101 [label="00101"]
+        level_2_00110 [label="00110"]
+        level_2_00111 [label="00111",color=grey,fontcolor=grey]
+        level_2_01000 [label="01000",color=grey,fontcolor=grey]
+        level_2_01001 [label="01001"]
+        level_2_01010 [label="01010"]
+        level_2_01011 [label="01011",color=grey,fontcolor=grey]
+        level_2_01100 [label="01100"]
+        level_2_01101 [label="01101",color=grey,fontcolor=grey]
+        level_2_01110 [label="01110",color=grey,fontcolor=grey]
+        level_2_01111 [label="01111",color=grey,fontcolor=grey]
+        level_2_10000 [label="10000",color=grey,fontcolor=grey]
+        level_2_10001 [label="10001"]
+        level_2_10010 [label="10010"]
+        level_2_10011 [label="10011",color=grey,fontcolor=grey]
+        level_2_10100 [label="10100"]
+        level_2_10101 [label="10101",color=grey,fontcolor=grey]
+        level_2_10110 [label="10110",color=grey,fontcolor=grey]
+        level_2_10111 [label="10111",color=grey,fontcolor=grey]
+        level_2_11000 [label="11000"]
+        level_2_11001 [label="11001",color=grey,fontcolor=grey]
+        level_2_11010 [label="11010",color=grey,fontcolor=grey]
+        level_2_11011 [label="11011",color=grey,fontcolor=grey]
+        level_2_11100 [label="11100",color=grey,fontcolor=grey]
+        level_2_11101 [label="11101",color=grey,fontcolor=grey]
+        level_2_11110 [label="11110",color=grey,fontcolor=grey]
+        level_2_11111 [label="11111",color=grey,fontcolor=grey]
+    }
+
+    {
+        rank=same; level_3
+
+        level_3_00000 [label="00000",color=grey,fontcolor=grey]
+        level_3_00001 [label="00001"]
+        level_3_00010 [label="00010",color=grey,fontcolor=grey]
+        level_3_00011 [label="00011",color=grey,fontcolor=grey]
+        level_3_00100 [label="00100"]
+        level_3_00101 [label="00101",color=grey,fontcolor=grey]
+        level_3_00110 [label="00110",color=grey,fontcolor=grey]
+        level_3_00111 [label="00111",color=grey,fontcolor=grey]
+        level_3_01000 [label="01000"]
+        level_3_01001 [label="01001",color=grey,fontcolor=grey]
+        level_3_01010 [label="01010",color=grey,fontcolor=grey]
+        level_3_01011 [label="01011",color=grey,fontcolor=grey]
+        level_3_01100 [label="01100",color=grey,fontcolor=grey]
+        level_3_01101 [label="01101",color=grey,fontcolor=grey]
+        level_3_01110 [label="01110",color=grey,fontcolor=grey]
+        level_3_01111 [label="01111",color=grey,fontcolor=grey]
+        level_3_10000 [label="10000"]
+        level_3_10001 [label="10001",color=grey,fontcolor=grey]
+        level_3_10010 [label="10010",color=grey,fontcolor=grey]
+        level_3_10011 [label="10011",color=grey,fontcolor=grey]
+        level_3_10100 [label="10100",color=grey,fontcolor=grey]
+        level_3_10101 [label="10101",color=grey,fontcolor=grey]
+        level_3_10110 [label="10110",color=grey,fontcolor=grey]
+        level_3_10111 [label="10111",color=grey,fontcolor=grey]
+        level_3_11000 [label="11000",color=grey,fontcolor=grey]
+        level_3_11001 [label="11001",color=grey,fontcolor=grey]
+        level_3_11010 [label="11010",color=grey,fontcolor=grey]
+        level_3_11011 [label="11011",color=grey,fontcolor=grey]
+        level_3_11100 [label="11100",color=grey,fontcolor=grey]
+        level_3_11101 [label="11101",color=grey,fontcolor=grey]
+        level_3_11110 [label="11110",color=grey,fontcolor=grey]
+        level_3_11111 [label="11111",color=grey,fontcolor=grey]
+    }
+
+    {
+        rank=same; level_4
+
+        level_4_00000 [label="00000"]
+        level_4_00001 [label="00001"]
+        level_4_00010 [label="00010"]
+        level_4_00011 [label="00011"]
+        level_4_00100 [label="00100"]
+        level_4_00101 [label="00101"]
+        level_4_00110 [label="00110"]
+        level_4_00111 [label="00111"]
+        level_4_01000 [label="01000"]
+        level_4_01001 [label="01001"]
+        level_4_01010 [label="01010"]
+        level_4_01011 [label="01011"]
+        level_4_01100 [label="01100"]
+        level_4_01101 [label="01101"]
+        level_4_01110 [label="01110"]
+        level_4_01111 [label="01111"]
+        level_4_10000 [label="10000"]
+        level_4_10001 [label="10001"]
+        level_4_10010 [label="10010"]
+        level_4_10011 [label="10011"]
+        level_4_10100 [label="10100"]
+        level_4_10101 [label="10101"]
+        level_4_10110 [label="10110"]
+        level_4_10111 [label="10111"]
+        level_4_11000 [label="11000"]
+        level_4_11001 [label="11001"]
+        level_4_11010 [label="11010"]
+        level_4_11011 [label="11011"]
+        level_4_11100 [label="11100"]
+        level_4_11101 [label="11101"]
+        level_4_11110 [label="11110"]
+        level_4_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_5
+
+        level_5_00000 [label="00000"]
+        level_5_00001 [label="00001"]
+        level_5_00010 [label="00010"]
+        level_5_00011 [label="00011"]
+        level_5_00100 [label="00100"]
+        level_5_00101 [label="00101"]
+        level_5_00110 [label="00110"]
+        level_5_00111 [label="00111"]
+        level_5_01000 [label="01000"]
+        level_5_01001 [label="01001"]
+        level_5_01010 [label="01010"]
+        level_5_01011 [label="01011"]
+        level_5_01100 [label="01100"]
+        level_5_01101 [label="01101"]
+        level_5_01110 [label="01110"]
+        level_5_01111 [label="01111"]
+        level_5_10000 [label="10000"]
+        level_5_10001 [label="10001"]
+        level_5_10010 [label="10010"]
+        level_5_10011 [label="10011"]
+        level_5_10100 [label="10100"]
+        level_5_10101 [label="10101"]
+        level_5_10110 [label="10110"]
+        level_5_10111 [label="10111"]
+        level_5_11000 [label="11000"]
+        level_5_11001 [label="11001"]
+        level_5_11010 [label="11010"]
+        level_5_11011 [label="11011"]
+        level_5_11100 [label="11100"]
+        level_5_11101 [label="11101"]
+        level_5_11110 [label="11110"]
+        level_5_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_6
+
+        level_6_00000 [label="00000"]
+        level_6_00001 [label="00001"]
+        level_6_00010 [label="00010"]
+        level_6_00011 [label="00011"]
+        level_6_00100 [label="00100"]
+        level_6_00101 [label="00101"]
+        level_6_00110 [label="00110"]
+        level_6_00111 [label="00111"]
+        level_6_01000 [label="01000"]
+        level_6_01001 [label="01001"]
+        level_6_01010 [label="01010"]
+        level_6_01011 [label="01011"]
+        level_6_01100 [label="01100"]
+        level_6_01101 [label="01101"]
+        level_6_01110 [label="01110"]
+        level_6_01111 [label="01111"]
+        level_6_10000 [label="10000"]
+        level_6_10001 [label="10001"]
+        level_6_10010 [label="10010"]
+        level_6_10011 [label="10011"]
+        level_6_10100 [label="10100"]
+        level_6_10101 [label="10101"]
+        level_6_10110 [label="10110"]
+        level_6_10111 [label="10111"]
+        level_6_11000 [label="11000"]
+        level_6_11001 [label="11001"]
+        level_6_11010 [label="11010"]
+        level_6_11011 [label="11011"]
+        level_6_11100 [label="11100"]
+        level_6_11101 [label="11101"]
+        level_6_11110 [label="11110"]
+        level_6_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_7
+
+        level_7_00000 [label="00000"]
+        level_7_00001 [label="00001"]
+        level_7_00010 [label="00010"]
+        level_7_00011 [label="00011"]
+        level_7_00100 [label="00100"]
+        level_7_00101 [label="00101"]
+        level_7_00110 [label="00110"]
+        level_7_00111 [label="00111"]
+        level_7_01000 [label="01000"]
+        level_7_01001 [label="01001"]
+        level_7_01010 [label="01010"]
+        level_7_01011 [label="01011"]
+        level_7_01100 [label="01100"]
+        level_7_01101 [label="01101"]
+        level_7_01110 [label="01110"]
+        level_7_01111 [label="01111"]
+        level_7_10000 [label="10000"]
+        level_7_10001 [label="10001"]
+        level_7_10010 [label="10010"]
+        level_7_10011 [label="10011"]
+        level_7_10100 [label="10100"]
+        level_7_10101 [label="10101"]
+        level_7_10110 [label="10110"]
+        level_7_10111 [label="10111"]
+        level_7_11000 [label="11000"]
+        level_7_11001 [label="11001"]
+        level_7_11010 [label="11010"]
+        level_7_11011 [label="11011"]
+        level_7_11100 [label="11100"]
+        level_7_11101 [label="11101"]
+        level_7_11110 [label="11110"]
+        level_7_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_8
+
+        level_8_00000 [label="00000"]
+        level_8_00001 [label="00001"]
+        level_8_00010 [label="00010"]
+        level_8_00011 [label="00011"]
+        level_8_00100 [label="00100"]
+        level_8_00101 [label="00101"]
+        level_8_00110 [label="00110"]
+        level_8_00111 [label="00111"]
+        level_8_01000 [label="01000"]
+        level_8_01001 [label="01001"]
+        level_8_01010 [label="01010"]
+        level_8_01011 [label="01011"]
+        level_8_01100 [label="01100"]
+        level_8_01101 [label="01101"]
+        level_8_01110 [label="01110"]
+        level_8_01111 [label="01111"]
+        level_8_10000 [label="10000"]
+        level_8_10001 [label="10001"]
+        level_8_10010 [label="10010"]
+        level_8_10011 [label="10011"]
+        level_8_10100 [label="10100"]
+        level_8_10101 [label="10101"]
+        level_8_10110 [label="10110"]
+        level_8_10111 [label="10111"]
+        level_8_11000 [label="11000"]
+        level_8_11001 [label="11001"]
+        level_8_11010 [label="11010"]
+        level_8_11011 [label="11011"]
+        level_8_11100 [label="11100"]
+        level_8_11101 [label="11101"]
+        level_8_11110 [label="11110"]
+        level_8_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_9
+
+        level_9_00000 [label="00000"]
+        level_9_00001 [label="00001"]
+        level_9_00010 [label="00010"]
+        level_9_00011 [label="00011"]
+        level_9_00100 [label="00100"]
+        level_9_00101 [label="00101"]
+        level_9_00110 [label="00110"]
+        level_9_00111 [label="00111"]
+        level_9_01000 [label="01000"]
+        level_9_01001 [label="01001"]
+        level_9_01010 [label="01010"]
+        level_9_01011 [label="01011"]
+        level_9_01100 [label="01100"]
+        level_9_01101 [label="01101"]
+        level_9_01110 [label="01110"]
+        level_9_01111 [label="01111"]
+        level_9_10000 [label="10000"]
+        level_9_10001 [label="10001"]
+        level_9_10010 [label="10010"]
+        level_9_10011 [label="10011"]
+        level_9_10100 [label="10100"]
+        level_9_10101 [label="10101"]
+        level_9_10110 [label="10110"]
+        level_9_10111 [label="10111"]
+        level_9_11000 [label="11000"]
+        level_9_11001 [label="11001"]
+        level_9_11010 [label="11010"]
+        level_9_11011 [label="11011"]
+        level_9_11100 [label="11100"]
+        level_9_11101 [label="11101"]
+        level_9_11110 [label="11110"]
+        level_9_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_10
+
+        level_10_00000 [label="00000"]
+        level_10_00001 [label="00001"]
+        level_10_00010 [label="00010"]
+        level_10_00011 [label="00011"]
+        level_10_00100 [label="00100"]
+        level_10_00101 [label="00101"]
+        level_10_00110 [label="00110"]
+        level_10_00111 [label="00111"]
+        level_10_01000 [label="01000"]
+        level_10_01001 [label="01001"]
+        level_10_01010 [label="01010"]
+        level_10_01011 [label="01011"]
+        level_10_01100 [label="01100"]
+        level_10_01101 [label="01101"]
+        level_10_01110 [label="01110"]
+        level_10_01111 [label="01111"]
+        level_10_10000 [label="10000"]
+        level_10_10001 [label="10001"]
+        level_10_10010 [label="10010"]
+        level_10_10011 [label="10011"]
+        level_10_10100 [label="10100"]
+        level_10_10101 [label="10101"]
+        level_10_10110 [label="10110"]
+        level_10_10111 [label="10111"]
+        level_10_11000 [label="11000"]
+        level_10_11001 [label="11001"]
+        level_10_11010 [label="11010"]
+        level_10_11011 [label="11011"]
+        level_10_11100 [label="11100"]
+        level_10_11101 [label="11101"]
+        level_10_11110 [label="11110"]
+        level_10_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_11
+
+        level_11_00000 [label="00000"]
+        level_11_00001 [label="00001"]
+        level_11_00010 [label="00010"]
+        level_11_00011 [label="00011"]
+        level_11_00100 [label="00100"]
+        level_11_00101 [label="00101"]
+        level_11_00110 [label="00110"]
+        level_11_00111 [label="00111"]
+        level_11_01000 [label="01000"]
+        level_11_01001 [label="01001"]
+        level_11_01010 [label="01010"]
+        level_11_01011 [label="01011"]
+        level_11_01100 [label="01100"]
+        level_11_01101 [label="01101"]
+        level_11_01110 [label="01110"]
+        level_11_01111 [label="01111"]
+        level_11_10000 [label="10000"]
+        level_11_10001 [label="10001"]
+        level_11_10010 [label="10010"]
+        level_11_10011 [label="10011"]
+        level_11_10100 [label="10100"]
+        level_11_10101 [label="10101"]
+        level_11_10110 [label="10110"]
+        level_11_10111 [label="10111"]
+        level_11_11000 [label="11000"]
+        level_11_11001 [label="11001"]
+        level_11_11010 [label="11010"]
+        level_11_11011 [label="11011"]
+        level_11_11100 [label="11100"]
+        level_11_11101 [label="11101"]
+        level_11_11110 [label="11110"]
+        level_11_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_12
+
+        level_12_00000 [label="00000"]
+        level_12_00001 [label="00001"]
+        level_12_00010 [label="00010"]
+        level_12_00011 [label="00011"]
+        level_12_00100 [label="00100"]
+        level_12_00101 [label="00101"]
+        level_12_00110 [label="00110"]
+        level_12_00111 [label="00111"]
+        level_12_01000 [label="01000"]
+        level_12_01001 [label="01001"]
+        level_12_01010 [label="01010"]
+        level_12_01011 [label="01011"]
+        level_12_01100 [label="01100"]
+        level_12_01101 [label="01101"]
+        level_12_01110 [label="01110"]
+        level_12_01111 [label="01111"]
+        level_12_10000 [label="10000"]
+        level_12_10001 [label="10001"]
+        level_12_10010 [label="10010"]
+        level_12_10011 [label="10011"]
+        level_12_10100 [label="10100"]
+        level_12_10101 [label="10101"]
+        level_12_10110 [label="10110"]
+        level_12_10111 [label="10111"]
+        level_12_11000 [label="11000"]
+        level_12_11001 [label="11001"]
+        level_12_11010 [label="11010"]
+        level_12_11011 [label="11011"]
+        level_12_11100 [label="11100"]
+        level_12_11101 [label="11101"]
+        level_12_11110 [label="11110"]
+        level_12_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_13
+
+        level_13_00000 [label="00000"]
+        level_13_00001 [label="00001"]
+        level_13_00010 [label="00010"]
+        level_13_00011 [label="00011"]
+        level_13_00100 [label="00100"]
+        level_13_00101 [label="00101"]
+        level_13_00110 [label="00110"]
+        level_13_00111 [label="00111"]
+        level_13_01000 [label="01000"]
+        level_13_01001 [label="01001"]
+        level_13_01010 [label="01010"]
+        level_13_01011 [label="01011"]
+        level_13_01100 [label="01100"]
+        level_13_01101 [label="01101"]
+        level_13_01110 [label="01110"]
+        level_13_01111 [label="01111"]
+        level_13_10000 [label="10000"]
+        level_13_10001 [label="10001"]
+        level_13_10010 [label="10010"]
+        level_13_10011 [label="10011"]
+        level_13_10100 [label="10100"]
+        level_13_10101 [label="10101"]
+        level_13_10110 [label="10110"]
+        level_13_10111 [label="10111"]
+        level_13_11000 [label="11000"]
+        level_13_11001 [label="11001"]
+        level_13_11010 [label="11010"]
+        level_13_11011 [label="11011"]
+        level_13_11100 [label="11100"]
+        level_13_11101 [label="11101"]
+        level_13_11110 [label="11110"]
+        level_13_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_14
+
+        level_14_00000 [label="00000"]
+        level_14_00001 [label="00001"]
+        level_14_00010 [label="00010"]
+        level_14_00011 [label="00011"]
+        level_14_00100 [label="00100"]
+        level_14_00101 [label="00101"]
+        level_14_00110 [label="00110"]
+        level_14_00111 [label="00111"]
+        level_14_01000 [label="01000"]
+        level_14_01001 [label="01001"]
+        level_14_01010 [label="01010"]
+        level_14_01011 [label="01011"]
+        level_14_01100 [label="01100"]
+        level_14_01101 [label="01101"]
+        level_14_01110 [label="01110"]
+        level_14_01111 [label="01111"]
+        level_14_10000 [label="10000"]
+        level_14_10001 [label="10001"]
+        level_14_10010 [label="10010"]
+        level_14_10011 [label="10011"]
+        level_14_10100 [label="10100"]
+        level_14_10101 [label="10101"]
+        level_14_10110 [label="10110"]
+        level_14_10111 [label="10111"]
+        level_14_11000 [label="11000"]
+        level_14_11001 [label="11001"]
+        level_14_11010 [label="11010"]
+        level_14_11011 [label="11011"]
+        level_14_11100 [label="11100"]
+        level_14_11101 [label="11101"]
+        level_14_11110 [label="11110"]
+        level_14_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_15
+
+        level_15_00000 [label="00000"]
+        level_15_00001 [label="00001"]
+        level_15_00010 [label="00010"]
+        level_15_00011 [label="00011"]
+        level_15_00100 [label="00100"]
+        level_15_00101 [label="00101"]
+        level_15_00110 [label="00110"]
+        level_15_00111 [label="00111"]
+        level_15_01000 [label="01000"]
+        level_15_01001 [label="01001"]
+        level_15_01010 [label="01010"]
+        level_15_01011 [label="01011"]
+        level_15_01100 [label="01100"]
+        level_15_01101 [label="01101"]
+        level_15_01110 [label="01110"]
+        level_15_01111 [label="01111"]
+        level_15_10000 [label="10000"]
+        level_15_10001 [label="10001"]
+        level_15_10010 [label="10010"]
+        level_15_10011 [label="10011"]
+        level_15_10100 [label="10100"]
+        level_15_10101 [label="10101"]
+        level_15_10110 [label="10110"]
+        level_15_10111 [label="10111"]
+        level_15_11000 [label="11000"]
+        level_15_11001 [label="11001"]
+        level_15_11010 [label="11010"]
+        level_15_11011 [label="11011"]
+        level_15_11100 [label="11100"]
+        level_15_11101 [label="11101"]
+        level_15_11110 [label="11110"]
+        level_15_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_16
+
+        level_16_00000 [label="00000"]
+        level_16_00001 [label="00001"]
+        level_16_00010 [label="00010"]
+        level_16_00011 [label="00011"]
+        level_16_00100 [label="00100"]
+        level_16_00101 [label="00101"]
+        level_16_00110 [label="00110"]
+        level_16_00111 [label="00111"]
+        level_16_01000 [label="01000"]
+        level_16_01001 [label="01001"]
+        level_16_01010 [label="01010"]
+        level_16_01011 [label="01011"]
+        level_16_01100 [label="01100"]
+        level_16_01101 [label="01101"]
+        level_16_01110 [label="01110"]
+        level_16_01111 [label="01111"]
+        level_16_10000 [label="10000"]
+        level_16_10001 [label="10001"]
+        level_16_10010 [label="10010"]
+        level_16_10011 [label="10011"]
+        level_16_10100 [label="10100"]
+        level_16_10101 [label="10101"]
+        level_16_10110 [label="10110"]
+        level_16_10111 [label="10111"]
+        level_16_11000 [label="11000"]
+        level_16_11001 [label="11001"]
+        level_16_11010 [label="11010"]
+        level_16_11011 [label="11011"]
+        level_16_11100 [label="11100"]
+        level_16_11101 [label="11101"]
+        level_16_11110 [label="11110"]
+        level_16_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_17
+
+        level_17_00000 [label="00000"]
+        level_17_00001 [label="00001"]
+        level_17_00010 [label="00010"]
+        level_17_00011 [label="00011"]
+        level_17_00100 [label="00100"]
+        level_17_00101 [label="00101"]
+        level_17_00110 [label="00110"]
+        level_17_00111 [label="00111"]
+        level_17_01000 [label="01000"]
+        level_17_01001 [label="01001"]
+        level_17_01010 [label="01010"]
+        level_17_01011 [label="01011"]
+        level_17_01100 [label="01100"]
+        level_17_01101 [label="01101"]
+        level_17_01110 [label="01110"]
+        level_17_01111 [label="01111"]
+        level_17_10000 [label="10000"]
+        level_17_10001 [label="10001"]
+        level_17_10010 [label="10010"]
+        level_17_10011 [label="10011"]
+        level_17_10100 [label="10100"]
+        level_17_10101 [label="10101"]
+        level_17_10110 [label="10110"]
+        level_17_10111 [label="10111"]
+        level_17_11000 [label="11000"]
+        level_17_11001 [label="11001"]
+        level_17_11010 [label="11010"]
+        level_17_11011 [label="11011"]
+        level_17_11100 [label="11100"]
+        level_17_11101 [label="11101"]
+        level_17_11110 [label="11110"]
+        level_17_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_18
+
+        level_18_00000 [label="00000"]
+        level_18_00001 [label="00001"]
+        level_18_00010 [label="00010"]
+        level_18_00011 [label="00011"]
+        level_18_00100 [label="00100"]
+        level_18_00101 [label="00101"]
+        level_18_00110 [label="00110"]
+        level_18_00111 [label="00111"]
+        level_18_01000 [label="01000"]
+        level_18_01001 [label="01001"]
+        level_18_01010 [label="01010"]
+        level_18_01011 [label="01011"]
+        level_18_01100 [label="01100"]
+        level_18_01101 [label="01101"]
+        level_18_01110 [label="01110"]
+        level_18_01111 [label="01111"]
+        level_18_10000 [label="10000"]
+        level_18_10001 [label="10001"]
+        level_18_10010 [label="10010"]
+        level_18_10011 [label="10011"]
+        level_18_10100 [label="10100"]
+        level_18_10101 [label="10101"]
+        level_18_10110 [label="10110"]
+        level_18_10111 [label="10111"]
+        level_18_11000 [label="11000"]
+        level_18_11001 [label="11001"]
+        level_18_11010 [label="11010"]
+        level_18_11011 [label="11011"]
+        level_18_11100 [label="11100"]
+        level_18_11101 [label="11101"]
+        level_18_11110 [label="11110"]
+        level_18_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_19
+
+        level_19_00000 [label="00000"]
+        level_19_00001 [label="00001"]
+        level_19_00010 [label="00010"]
+        level_19_00011 [label="00011"]
+        level_19_00100 [label="00100"]
+        level_19_00101 [label="00101"]
+        level_19_00110 [label="00110"]
+        level_19_00111 [label="00111"]
+        level_19_01000 [label="01000"]
+        level_19_01001 [label="01001"]
+        level_19_01010 [label="01010"]
+        level_19_01011 [label="01011"]
+        level_19_01100 [label="01100"]
+        level_19_01101 [label="01101"]
+        level_19_01110 [label="01110"]
+        level_19_01111 [label="01111"]
+        level_19_10000 [label="10000"]
+        level_19_10001 [label="10001"]
+        level_19_10010 [label="10010"]
+        level_19_10011 [label="10011"]
+        level_19_10100 [label="10100"]
+        level_19_10101 [label="10101"]
+        level_19_10110 [label="10110"]
+        level_19_10111 [label="10111"]
+        level_19_11000 [label="11000"]
+        level_19_11001 [label="11001"]
+        level_19_11010 [label="11010"]
+        level_19_11011 [label="11011"]
+        level_19_11100 [label="11100"]
+        level_19_11101 [label="11101"]
+        level_19_11110 [label="11110"]
+        level_19_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_20
+
+        level_20_00000 [label="00000"]
+        level_20_00001 [label="00001"]
+        level_20_00010 [label="00010"]
+        level_20_00011 [label="00011"]
+        level_20_00100 [label="00100"]
+        level_20_00101 [label="00101"]
+        level_20_00110 [label="00110"]
+        level_20_00111 [label="00111"]
+        level_20_01000 [label="01000"]
+        level_20_01001 [label="01001"]
+        level_20_01010 [label="01010"]
+        level_20_01011 [label="01011"]
+        level_20_01100 [label="01100"]
+        level_20_01101 [label="01101"]
+        level_20_01110 [label="01110"]
+        level_20_01111 [label="01111"]
+        level_20_10000 [label="10000"]
+        level_20_10001 [label="10001"]
+        level_20_10010 [label="10010"]
+        level_20_10011 [label="10011"]
+        level_20_10100 [label="10100"]
+        level_20_10101 [label="10101"]
+        level_20_10110 [label="10110"]
+        level_20_10111 [label="10111"]
+        level_20_11000 [label="11000"]
+        level_20_11001 [label="11001"]
+        level_20_11010 [label="11010"]
+        level_20_11011 [label="11011"]
+        level_20_11100 [label="11100"]
+        level_20_11101 [label="11101"]
+        level_20_11110 [label="11110"]
+        level_20_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_21
+
+        level_21_00000 [label="00000"]
+        level_21_00001 [label="00001"]
+        level_21_00010 [label="00010"]
+        level_21_00011 [label="00011"]
+        level_21_00100 [label="00100"]
+        level_21_00101 [label="00101"]
+        level_21_00110 [label="00110"]
+        level_21_00111 [label="00111"]
+        level_21_01000 [label="01000"]
+        level_21_01001 [label="01001"]
+        level_21_01010 [label="01010"]
+        level_21_01011 [label="01011"]
+        level_21_01100 [label="01100"]
+        level_21_01101 [label="01101"]
+        level_21_01110 [label="01110"]
+        level_21_01111 [label="01111"]
+        level_21_10000 [label="10000"]
+        level_21_10001 [label="10001"]
+        level_21_10010 [label="10010"]
+        level_21_10011 [label="10011"]
+        level_21_10100 [label="10100"]
+        level_21_10101 [label="10101"]
+        level_21_10110 [label="10110"]
+        level_21_10111 [label="10111"]
+        level_21_11000 [label="11000"]
+        level_21_11001 [label="11001"]
+        level_21_11010 [label="11010"]
+        level_21_11011 [label="11011"]
+        level_21_11100 [label="11100"]
+        level_21_11101 [label="11101"]
+        level_21_11110 [label="11110"]
+        level_21_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_22
+
+        level_22_00000 [label="00000"]
+        level_22_00001 [label="00001"]
+        level_22_00010 [label="00010"]
+        level_22_00011 [label="00011"]
+        level_22_00100 [label="00100"]
+        level_22_00101 [label="00101"]
+        level_22_00110 [label="00110"]
+        level_22_00111 [label="00111"]
+        level_22_01000 [label="01000"]
+        level_22_01001 [label="01001"]
+        level_22_01010 [label="01010"]
+        level_22_01011 [label="01011"]
+        level_22_01100 [label="01100"]
+        level_22_01101 [label="01101"]
+        level_22_01110 [label="01110"]
+        level_22_01111 [label="01111"]
+        level_22_10000 [label="10000"]
+        level_22_10001 [label="10001"]
+        level_22_10010 [label="10010"]
+        level_22_10011 [label="10011"]
+        level_22_10100 [label="10100"]
+        level_22_10101 [label="10101"]
+        level_22_10110 [label="10110"]
+        level_22_10111 [label="10111"]
+        level_22_11000 [label="11000"]
+        level_22_11001 [label="11001"]
+        level_22_11010 [label="11010"]
+        level_22_11011 [label="11011"]
+        level_22_11100 [label="11100"]
+        level_22_11101 [label="11101"]
+        level_22_11110 [label="11110"]
+        level_22_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_23
+
+        level_23_00000 [label="00000"]
+        level_23_00001 [label="00001"]
+        level_23_00010 [label="00010"]
+        level_23_00011 [label="00011"]
+        level_23_00100 [label="00100"]
+        level_23_00101 [label="00101"]
+        level_23_00110 [label="00110"]
+        level_23_00111 [label="00111"]
+        level_23_01000 [label="01000"]
+        level_23_01001 [label="01001"]
+        level_23_01010 [label="01010"]
+        level_23_01011 [label="01011"]
+        level_23_01100 [label="01100"]
+        level_23_01101 [label="01101"]
+        level_23_01110 [label="01110"]
+        level_23_01111 [label="01111"]
+        level_23_10000 [label="10000"]
+        level_23_10001 [label="10001"]
+        level_23_10010 [label="10010"]
+        level_23_10011 [label="10011"]
+        level_23_10100 [label="10100"]
+        level_23_10101 [label="10101"]
+        level_23_10110 [label="10110"]
+        level_23_10111 [label="10111"]
+        level_23_11000 [label="11000"]
+        level_23_11001 [label="11001"]
+        level_23_11010 [label="11010"]
+        level_23_11011 [label="11011"]
+        level_23_11100 [label="11100"]
+        level_23_11101 [label="11101"]
+        level_23_11110 [label="11110"]
+        level_23_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_24
+
+        level_24_00000 [label="00000"]
+        level_24_00001 [label="00001"]
+        level_24_00010 [label="00010"]
+        level_24_00011 [label="00011"]
+        level_24_00100 [label="00100"]
+        level_24_00101 [label="00101"]
+        level_24_00110 [label="00110"]
+        level_24_00111 [label="00111"]
+        level_24_01000 [label="01000"]
+        level_24_01001 [label="01001"]
+        level_24_01010 [label="01010"]
+        level_24_01011 [label="01011"]
+        level_24_01100 [label="01100"]
+        level_24_01101 [label="01101"]
+        level_24_01110 [label="01110"]
+        level_24_01111 [label="01111"]
+        level_24_10000 [label="10000"]
+        level_24_10001 [label="10001"]
+        level_24_10010 [label="10010"]
+        level_24_10011 [label="10011"]
+        level_24_10100 [label="10100"]
+        level_24_10101 [label="10101"]
+        level_24_10110 [label="10110"]
+        level_24_10111 [label="10111"]
+        level_24_11000 [label="11000"]
+        level_24_11001 [label="11001"]
+        level_24_11010 [label="11010"]
+        level_24_11011 [label="11011"]
+        level_24_11100 [label="11100"]
+        level_24_11101 [label="11101"]
+        level_24_11110 [label="11110"]
+        level_24_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_25
+
+        level_25_00000 [label="00000"]
+        level_25_00001 [label="00001"]
+        level_25_00010 [label="00010"]
+        level_25_00011 [label="00011"]
+        level_25_00100 [label="00100"]
+        level_25_00101 [label="00101"]
+        level_25_00110 [label="00110"]
+        level_25_00111 [label="00111"]
+        level_25_01000 [label="01000"]
+        level_25_01001 [label="01001"]
+        level_25_01010 [label="01010"]
+        level_25_01011 [label="01011"]
+        level_25_01100 [label="01100"]
+        level_25_01101 [label="01101"]
+        level_25_01110 [label="01110"]
+        level_25_01111 [label="01111"]
+        level_25_10000 [label="10000"]
+        level_25_10001 [label="10001"]
+        level_25_10010 [label="10010"]
+        level_25_10011 [label="10011"]
+        level_25_10100 [label="10100"]
+        level_25_10101 [label="10101"]
+        level_25_10110 [label="10110"]
+        level_25_10111 [label="10111"]
+        level_25_11000 [label="11000"]
+        level_25_11001 [label="11001"]
+        level_25_11010 [label="11010"]
+        level_25_11011 [label="11011"]
+        level_25_11100 [label="11100"]
+        level_25_11101 [label="11101"]
+        level_25_11110 [label="11110"]
+        level_25_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_26
+
+        level_26_00000 [label="00000"]
+        level_26_00001 [label="00001"]
+        level_26_00010 [label="00010"]
+        level_26_00011 [label="00011"]
+        level_26_00100 [label="00100"]
+        level_26_00101 [label="00101"]
+        level_26_00110 [label="00110"]
+        level_26_00111 [label="00111"]
+        level_26_01000 [label="01000"]
+        level_26_01001 [label="01001"]
+        level_26_01010 [label="01010"]
+        level_26_01011 [label="01011"]
+        level_26_01100 [label="01100"]
+        level_26_01101 [label="01101"]
+        level_26_01110 [label="01110"]
+        level_26_01111 [label="01111"]
+        level_26_10000 [label="10000"]
+        level_26_10001 [label="10001"]
+        level_26_10010 [label="10010"]
+        level_26_10011 [label="10011"]
+        level_26_10100 [label="10100"]
+        level_26_10101 [label="10101"]
+        level_26_10110 [label="10110"]
+        level_26_10111 [label="10111"]
+        level_26_11000 [label="11000"]
+        level_26_11001 [label="11001"]
+        level_26_11010 [label="11010"]
+        level_26_11011 [label="11011"]
+        level_26_11100 [label="11100"]
+        level_26_11101 [label="11101"]
+        level_26_11110 [label="11110"]
+        level_26_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_27
+
+        level_27_00000 [label="00000"]
+        level_27_00001 [label="00001"]
+        level_27_00010 [label="00010"]
+        level_27_00011 [label="00011"]
+        level_27_00100 [label="00100"]
+        level_27_00101 [label="00101"]
+        level_27_00110 [label="00110"]
+        level_27_00111 [label="00111"]
+        level_27_01000 [label="01000"]
+        level_27_01001 [label="01001"]
+        level_27_01010 [label="01010"]
+        level_27_01011 [label="01011"]
+        level_27_01100 [label="01100"]
+        level_27_01101 [label="01101"]
+        level_27_01110 [label="01110"]
+        level_27_01111 [label="01111"]
+        level_27_10000 [label="10000"]
+        level_27_10001 [label="10001"]
+        level_27_10010 [label="10010"]
+        level_27_10011 [label="10011"]
+        level_27_10100 [label="10100"]
+        level_27_10101 [label="10101"]
+        level_27_10110 [label="10110"]
+        level_27_10111 [label="10111"]
+        level_27_11000 [label="11000"]
+        level_27_11001 [label="11001"]
+        level_27_11010 [label="11010"]
+        level_27_11011 [label="11011"]
+        level_27_11100 [label="11100"]
+        level_27_11101 [label="11101"]
+        level_27_11110 [label="11110"]
+        level_27_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_28
+
+        level_28_00000 [label="00000"]
+        level_28_00001 [label="00001"]
+        level_28_00010 [label="00010"]
+        level_28_00011 [label="00011"]
+        level_28_00100 [label="00100"]
+        level_28_00101 [label="00101"]
+        level_28_00110 [label="00110"]
+        level_28_00111 [label="00111"]
+        level_28_01000 [label="01000"]
+        level_28_01001 [label="01001"]
+        level_28_01010 [label="01010"]
+        level_28_01011 [label="01011"]
+        level_28_01100 [label="01100"]
+        level_28_01101 [label="01101"]
+        level_28_01110 [label="01110"]
+        level_28_01111 [label="01111"]
+        level_28_10000 [label="10000"]
+        level_28_10001 [label="10001"]
+        level_28_10010 [label="10010"]
+        level_28_10011 [label="10011"]
+        level_28_10100 [label="10100"]
+        level_28_10101 [label="10101"]
+        level_28_10110 [label="10110"]
+        level_28_10111 [label="10111"]
+        level_28_11000 [label="11000"]
+        level_28_11001 [label="11001"]
+        level_28_11010 [label="11010"]
+        level_28_11011 [label="11011"]
+        level_28_11100 [label="11100"]
+        level_28_11101 [label="11101"]
+        level_28_11110 [label="11110"]
+        level_28_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_29
+
+        level_29_00000 [label="00000"]
+        level_29_00001 [label="00001"]
+        level_29_00010 [label="00010"]
+        level_29_00011 [label="00011"]
+        level_29_00100 [label="00100"]
+        level_29_00101 [label="00101"]
+        level_29_00110 [label="00110"]
+        level_29_00111 [label="00111"]
+        level_29_01000 [label="01000"]
+        level_29_01001 [label="01001"]
+        level_29_01010 [label="01010"]
+        level_29_01011 [label="01011"]
+        level_29_01100 [label="01100"]
+        level_29_01101 [label="01101"]
+        level_29_01110 [label="01110"]
+        level_29_01111 [label="01111"]
+        level_29_10000 [label="10000"]
+        level_29_10001 [label="10001"]
+        level_29_10010 [label="10010"]
+        level_29_10011 [label="10011"]
+        level_29_10100 [label="10100"]
+        level_29_10101 [label="10101"]
+        level_29_10110 [label="10110"]
+        level_29_10111 [label="10111"]
+        level_29_11000 [label="11000"]
+        level_29_11001 [label="11001"]
+        level_29_11010 [label="11010"]
+        level_29_11011 [label="11011"]
+        level_29_11100 [label="11100"]
+        level_29_11101 [label="11101"]
+        level_29_11110 [label="11110"]
+        level_29_11111 [label="11111"]
+    }
+
+    {
+        rank=same; level_30
+
+        level_30_00000 [label="00000",color=grey,fontcolor=grey]
+        level_30_00001 [label="00001",color=grey,fontcolor=grey]
+        level_30_00010 [label="00010",color=grey,fontcolor=grey]
+        level_30_00011 [label="00011",color=grey,fontcolor=grey]
+        level_30_00100 [label="00100",color=grey,fontcolor=grey]
+        level_30_00101 [label="00101",color=grey,fontcolor=grey]
+        level_30_00110 [label="00110",color=grey,fontcolor=grey]
+        level_30_00111 [label="00111",color=grey,fontcolor=grey]
+        level_30_01000 [label="01000",color=grey,fontcolor=grey]
+        level_30_01001 [label="01001",color=grey,fontcolor=grey]
+        level_30_01010 [label="01010",color=grey,fontcolor=grey]
+        level_30_01011 [label="01011",color=grey,fontcolor=grey]
+        level_30_01100 [label="01100",color=grey,fontcolor=grey]
+        level_30_01101 [label="01101",color=grey,fontcolor=grey]
+        level_30_01110 [label="01110",color=grey,fontcolor=grey]
+        level_30_01111 [label="01111"]
+        level_30_10000 [label="10000",color=grey,fontcolor=grey]
+        level_30_10001 [label="10001",color=grey,fontcolor=grey]
+        level_30_10010 [label="10010",color=grey,fontcolor=grey]
+        level_30_10011 [label="10011",color=grey,fontcolor=grey]
+        level_30_10100 [label="10100",color=grey,fontcolor=grey]
+        level_30_10101 [label="10101",color=grey,fontcolor=grey]
+        level_30_10110 [label="10110",color=grey,fontcolor=grey]
+        level_30_10111 [label="10111"]
+        level_30_11000 [label="11000",color=grey,fontcolor=grey]
+        level_30_11001 [label="11001",color=grey,fontcolor=grey]
+        level_30_11010 [label="11010",color=grey,fontcolor=grey]
+        level_30_11011 [label="11011"]
+        level_30_11100 [label="11100",color=grey,fontcolor=grey]
+        level_30_11101 [label="11101"]
+        level_30_11110 [label="11110"]
+        level_30_11111 [label="11111",color=grey,fontcolor=grey]
+    }
+
+    {
+        rank=same; level_31
+
+        level_31_00000 [label="00000",color=grey,fontcolor=grey]
+        level_31_00001 [label="00001",color=grey,fontcolor=grey]
+        level_31_00010 [label="00010",color=grey,fontcolor=grey]
+        level_31_00011 [label="00011",color=grey,fontcolor=grey]
+        level_31_00100 [label="00100",color=grey,fontcolor=grey]
+        level_31_00101 [label="00101",color=grey,fontcolor=grey]
+        level_31_00110 [label="00110",color=grey,fontcolor=grey]
+        level_31_00111 [label="00111",color=grey,fontcolor=grey]
+        level_31_01000 [label="01000",color=grey,fontcolor=grey]
+        level_31_01001 [label="01001",color=grey,fontcolor=grey]
+        level_31_01010 [label="01010",color=grey,fontcolor=grey]
+        level_31_01011 [label="01011",color=grey,fontcolor=grey]
+        level_31_01100 [label="01100",color=grey,fontcolor=grey]
+        level_31_01101 [label="01101",color=grey,fontcolor=grey]
+        level_31_01110 [label="01110",color=grey,fontcolor=grey]
+        level_31_01111 [label="01111",color=grey,fontcolor=grey]
+        level_31_10000 [label="10000",color=grey,fontcolor=grey]
+        level_31_10001 [label="10001",color=grey,fontcolor=grey]
+        level_31_10010 [label="10010",color=grey,fontcolor=grey]
+        level_31_10011 [label="10011",color=grey,fontcolor=grey]
+        level_31_10100 [label="10100",color=grey,fontcolor=grey]
+        level_31_10101 [label="10101",color=grey,fontcolor=grey]
+        level_31_10110 [label="10110",color=grey,fontcolor=grey]
+        level_31_10111 [label="10111",color=grey,fontcolor=grey]
+        level_31_11000 [label="11000",color=grey,fontcolor=grey]
+        level_31_11001 [label="11001",color=grey,fontcolor=grey]
+        level_31_11010 [label="11010",color=grey,fontcolor=grey]
+        level_31_11011 [label="11011",color=grey,fontcolor=grey]
+        level_31_11100 [label="11100",color=grey,fontcolor=grey]
+        level_31_11101 [label="11101",color=grey,fontcolor=grey]
+        level_31_11110 [label="11110",color=grey,fontcolor=grey]
+        level_31_11111 [label="11111",color=red,fontcolor=red]
+    }
+
+    edge [style=invis]
+
+    /* Connect the states invisibly so they stay lined up vertically. */
+
+    level_0_00000 -> level_1_00000
+    level_1_00000 -> level_2_00000
+    level_2_00000 -> level_3_00000
+    level_3_00000 -> level_4_00000
+    level_4_00000 -> level_5_00000
+    level_5_00000 -> level_6_00000
+    level_6_00000 -> level_7_00000
+    level_7_00000 -> level_8_00000
+    level_8_00000 -> level_9_00000
+    level_9_00000 -> level_10_00000
+    level_10_00000 -> level_11_00000
+    level_11_00000 -> level_12_00000
+    level_12_00000 -> level_13_00000
+    level_13_00000 -> level_14_00000
+    level_14_00000 -> level_15_00000
+    level_15_00000 -> level_16_00000
+    level_16_00000 -> level_17_00000
+    level_17_00000 -> level_18_00000
+    level_18_00000 -> level_19_00000
+    level_19_00000 -> level_20_00000
+    level_20_00000 -> level_21_00000
+    level_21_00000 -> level_22_00000
+    level_22_00000 -> level_23_00000
+    level_23_00000 -> level_24_00000
+    level_24_00000 -> level_25_00000
+    level_25_00000 -> level_26_00000
+    level_26_00000 -> level_27_00000
+    level_27_00000 -> level_28_00000
+    level_28_00000 -> level_29_00000
+    level_29_00000 -> level_30_00000
+    level_30_00000 -> level_31_00000
+
+    level_0_00001 -> level_1_00001
+    level_1_00001 -> level_2_00001
+    level_2_00001 -> level_3_00001
+    level_3_00001 -> level_4_00001
+    level_4_00001 -> level_5_00001
+    level_5_00001 -> level_6_00001
+    level_6_00001 -> level_7_00001
+    level_7_00001 -> level_8_00001
+    level_8_00001 -> level_9_00001
+    level_9_00001 -> level_10_00001
+    level_10_00001 -> level_11_00001
+    level_11_00001 -> level_12_00001
+    level_12_00001 -> level_13_00001
+    level_13_00001 -> level_14_00001
+    level_14_00001 -> level_15_00001
+    level_15_00001 -> level_16_00001
+    level_16_00001 -> level_17_00001
+    level_17_00001 -> level_18_00001
+    level_18_00001 -> level_19_00001
+    level_19_00001 -> level_20_00001
+    level_20_00001 -> level_21_00001
+    level_21_00001 -> level_22_00001
+    level_22_00001 -> level_23_00001
+    level_23_00001 -> level_24_00001
+    level_24_00001 -> level_25_00001
+    level_25_00001 -> level_26_00001
+    level_26_00001 -> level_27_00001
+    level_27_00001 -> level_28_00001
+    level_28_00001 -> level_29_00001
+    level_29_00001 -> level_30_00001
+    level_30_00001 -> level_31_00001
+
+    level_0_00010 -> level_1_00010
+    level_1_00010 -> level_2_00010
+    level_2_00010 -> level_3_00010
+    level_3_00010 -> level_4_00010
+    level_4_00010 -> level_5_00010
+    level_5_00010 -> level_6_00010
+    level_6_00010 -> level_7_00010
+    level_7_00010 -> level_8_00010
+    level_8_00010 -> level_9_00010
+    level_9_00010 -> level_10_00010
+    level_10_00010 -> level_11_00010
+    level_11_00010 -> level_12_00010
+    level_12_00010 -> level_13_00010
+    level_13_00010 -> level_14_00010
+    level_14_00010 -> level_15_00010
+    level_15_00010 -> level_16_00010
+    level_16_00010 -> level_17_00010
+    level_17_00010 -> level_18_00010
+    level_18_00010 -> level_19_00010
+    level_19_00010 -> level_20_00010
+    level_20_00010 -> level_21_00010
+    level_21_00010 -> level_22_00010
+    level_22_00010 -> level_23_00010
+    level_23_00010 -> level_24_00010
+    level_24_00010 -> level_25_00010
+    level_25_00010 -> level_26_00010
+    level_26_00010 -> level_27_00010
+    level_27_00010 -> level_28_00010
+    level_28_00010 -> level_29_00010
+    level_29_00010 -> level_30_00010
+    level_30_00010 -> level_31_00010
+
+    level_0_00011 -> level_1_00011
+    level_1_00011 -> level_2_00011
+    level_2_00011 -> level_3_00011
+    level_3_00011 -> level_4_00011
+    level_4_00011 -> level_5_00011
+    level_5_00011 -> level_6_00011
+    level_6_00011 -> level_7_00011
+    level_7_00011 -> level_8_00011
+    level_8_00011 -> level_9_00011
+    level_9_00011 -> level_10_00011
+    level_10_00011 -> level_11_00011
+    level_11_00011 -> level_12_00011
+    level_12_00011 -> level_13_00011
+    level_13_00011 -> level_14_00011
+    level_14_00011 -> level_15_00011
+    level_15_00011 -> level_16_00011
+    level_16_00011 -> level_17_00011
+    level_17_00011 -> level_18_00011
+    level_18_00011 -> level_19_00011
+    level_19_00011 -> level_20_00011
+    level_20_00011 -> level_21_00011
+    level_21_00011 -> level_22_00011
+    level_22_00011 -> level_23_00011
+    level_23_00011 -> level_24_00011
+    level_24_00011 -> level_25_00011
+    level_25_00011 -> level_26_00011
+    level_26_00011 -> level_27_00011
+    level_27_00011 -> level_28_00011
+    level_28_00011 -> level_29_00011
+    level_29_00011 -> level_30_00011
+    level_30_00011 -> level_31_00011
+
+    level_0_00100 -> level_1_00100
+    level_1_00100 -> level_2_00100
+    level_2_00100 -> level_3_00100
+    level_3_00100 -> level_4_00100
+    level_4_00100 -> level_5_00100
+    level_5_00100 -> level_6_00100
+    level_6_00100 -> level_7_00100
+    level_7_00100 -> level_8_00100
+    level_8_00100 -> level_9_00100
+    level_9_00100 -> level_10_00100
+    level_10_00100 -> level_11_00100
+    level_11_00100 -> level_12_00100
+    level_12_00100 -> level_13_00100
+    level_13_00100 -> level_14_00100
+    level_14_00100 -> level_15_00100
+    level_15_00100 -> level_16_00100
+    level_16_00100 -> level_17_00100
+    level_17_00100 -> level_18_00100
+    level_18_00100 -> level_19_00100
+    level_19_00100 -> level_20_00100
+    level_20_00100 -> level_21_00100
+    level_21_00100 -> level_22_00100
+    level_22_00100 -> level_23_00100
+    level_23_00100 -> level_24_00100
+    level_24_00100 -> level_25_00100
+    level_25_00100 -> level_26_00100
+    level_26_00100 -> level_27_00100
+    level_27_00100 -> level_28_00100
+    level_28_00100 -> level_29_00100
+    level_29_00100 -> level_30_00100
+    level_30_00100 -> level_31_00100
+
+    level_0_00101 -> level_1_00101
+    level_1_00101 -> level_2_00101
+    level_2_00101 -> level_3_00101
+    level_3_00101 -> level_4_00101
+    level_4_00101 -> level_5_00101
+    level_5_00101 -> level_6_00101
+    level_6_00101 -> level_7_00101
+    level_7_00101 -> level_8_00101
+    level_8_00101 -> level_9_00101
+    level_9_00101 -> level_10_00101
+    level_10_00101 -> level_11_00101
+    level_11_00101 -> level_12_00101
+    level_12_00101 -> level_13_00101
+    level_13_00101 -> level_14_00101
+    level_14_00101 -> level_15_00101
+    level_15_00101 -> level_16_00101
+    level_16_00101 -> level_17_00101
+    level_17_00101 -> level_18_00101
+    level_18_00101 -> level_19_00101
+    level_19_00101 -> level_20_00101
+    level_20_00101 -> level_21_00101
+    level_21_00101 -> level_22_00101
+    level_22_00101 -> level_23_00101
+    level_23_00101 -> level_24_00101
+    level_24_00101 -> level_25_00101
+    level_25_00101 -> level_26_00101
+    level_26_00101 -> level_27_00101
+    level_27_00101 -> level_28_00101
+    level_28_00101 -> level_29_00101
+    level_29_00101 -> level_30_00101
+    level_30_00101 -> level_31_00101
+
+    level_0_00110 -> level_1_00110
+    level_1_00110 -> level_2_00110
+    level_2_00110 -> level_3_00110
+    level_3_00110 -> level_4_00110
+    level_4_00110 -> level_5_00110
+    level_5_00110 -> level_6_00110
+    level_6_00110 -> level_7_00110
+    level_7_00110 -> level_8_00110
+    level_8_00110 -> level_9_00110
+    level_9_00110 -> level_10_00110
+    level_10_00110 -> level_11_00110
+    level_11_00110 -> level_12_00110
+    level_12_00110 -> level_13_00110
+    level_13_00110 -> level_14_00110
+    level_14_00110 -> level_15_00110
+    level_15_00110 -> level_16_00110
+    level_16_00110 -> level_17_00110
+    level_17_00110 -> level_18_00110
+    level_18_00110 -> level_19_00110
+    level_19_00110 -> level_20_00110
+    level_20_00110 -> level_21_00110
+    level_21_00110 -> level_22_00110
+    level_22_00110 -> level_23_00110
+    level_23_00110 -> level_24_00110
+    level_24_00110 -> level_25_00110
+    level_25_00110 -> level_26_00110
+    level_26_00110 -> level_27_00110
+    level_27_00110 -> level_28_00110
+    level_28_00110 -> level_29_00110
+    level_29_00110 -> level_30_00110
+    level_30_00110 -> level_31_00110
+
+    level_0_00111 -> level_1_00111
+    level_1_00111 -> level_2_00111
+    level_2_00111 -> level_3_00111
+    level_3_00111 -> level_4_00111
+    level_4_00111 -> level_5_00111
+    level_5_00111 -> level_6_00111
+    level_6_00111 -> level_7_00111
+    level_7_00111 -> level_8_00111
+    level_8_00111 -> level_9_00111
+    level_9_00111 -> level_10_00111
+    level_10_00111 -> level_11_00111
+    level_11_00111 -> level_12_00111
+    level_12_00111 -> level_13_00111
+    level_13_00111 -> level_14_00111
+    level_14_00111 -> level_15_00111
+    level_15_00111 -> level_16_00111
+    level_16_00111 -> level_17_00111
+    level_17_00111 -> level_18_00111
+    level_18_00111 -> level_19_00111
+    level_19_00111 -> level_20_00111
+    level_20_00111 -> level_21_00111
+    level_21_00111 -> level_22_00111
+    level_22_00111 -> level_23_00111
+    level_23_00111 -> level_24_00111
+    level_24_00111 -> level_25_00111
+    level_25_00111 -> level_26_00111
+    level_26_00111 -> level_27_00111
+    level_27_00111 -> level_28_00111
+    level_28_00111 -> level_29_00111
+    level_29_00111 -> level_30_00111
+    level_30_00111 -> level_31_00111
+
+    level_0_01000 -> level_1_01000
+    level_1_01000 -> level_2_01000
+    level_2_01000 -> level_3_01000
+    level_3_01000 -> level_4_01000
+    level_4_01000 -> level_5_01000
+    level_5_01000 -> level_6_01000
+    level_6_01000 -> level_7_01000
+    level_7_01000 -> level_8_01000
+    level_8_01000 -> level_9_01000
+    level_9_01000 -> level_10_01000
+    level_10_01000 -> level_11_01000
+    level_11_01000 -> level_12_01000
+    level_12_01000 -> level_13_01000
+    level_13_01000 -> level_14_01000
+    level_14_01000 -> level_15_01000
+    level_15_01000 -> level_16_01000
+    level_16_01000 -> level_17_01000
+    level_17_01000 -> level_18_01000
+    level_18_01000 -> level_19_01000
+    level_19_01000 -> level_20_01000
+    level_20_01000 -> level_21_01000
+    level_21_01000 -> level_22_01000
+    level_22_01000 -> level_23_01000
+    level_23_01000 -> level_24_01000
+    level_24_01000 -> level_25_01000
+    level_25_01000 -> level_26_01000
+    level_26_01000 -> level_27_01000
+    level_27_01000 -> level_28_01000
+    level_28_01000 -> level_29_01000
+    level_29_01000 -> level_30_01000
+    level_30_01000 -> level_31_01000
+
+    level_0_01001 -> level_1_01001
+    level_1_01001 -> level_2_01001
+    level_2_01001 -> level_3_01001
+    level_3_01001 -> level_4_01001
+    level_4_01001 -> level_5_01001
+    level_5_01001 -> level_6_01001
+    level_6_01001 -> level_7_01001
+    level_7_01001 -> level_8_01001
+    level_8_01001 -> level_9_01001
+    level_9_01001 -> level_10_01001
+    level_10_01001 -> level_11_01001
+    level_11_01001 -> level_12_01001
+    level_12_01001 -> level_13_01001
+    level_13_01001 -> level_14_01001
+    level_14_01001 -> level_15_01001
+    level_15_01001 -> level_16_01001
+    level_16_01001 -> level_17_01001
+    level_17_01001 -> level_18_01001
+    level_18_01001 -> level_19_01001
+    level_19_01001 -> level_20_01001
+    level_20_01001 -> level_21_01001
+    level_21_01001 -> level_22_01001
+    level_22_01001 -> level_23_01001
+    level_23_01001 -> level_24_01001
+    level_24_01001 -> level_25_01001
+    level_25_01001 -> level_26_01001
+    level_26_01001 -> level_27_01001
+    level_27_01001 -> level_28_01001
+    level_28_01001 -> level_29_01001
+    level_29_01001 -> level_30_01001
+    level_30_01001 -> level_31_01001
+
+    level_0_01010 -> level_1_01010
+    level_1_01010 -> level_2_01010
+    level_2_01010 -> level_3_01010
+    level_3_01010 -> level_4_01010
+    level_4_01010 -> level_5_01010
+    level_5_01010 -> level_6_01010
+    level_6_01010 -> level_7_01010
+    level_7_01010 -> level_8_01010
+    level_8_01010 -> level_9_01010
+    level_9_01010 -> level_10_01010
+    level_10_01010 -> level_11_01010
+    level_11_01010 -> level_12_01010
+    level_12_01010 -> level_13_01010
+    level_13_01010 -> level_14_01010
+    level_14_01010 -> level_15_01010
+    level_15_01010 -> level_16_01010
+    level_16_01010 -> level_17_01010
+    level_17_01010 -> level_18_01010
+    level_18_01010 -> level_19_01010
+    level_19_01010 -> level_20_01010
+    level_20_01010 -> level_21_01010
+    level_21_01010 -> level_22_01010
+    level_22_01010 -> level_23_01010
+    level_23_01010 -> level_24_01010
+    level_24_01010 -> level_25_01010
+    level_25_01010 -> level_26_01010
+    level_26_01010 -> level_27_01010
+    level_27_01010 -> level_28_01010
+    level_28_01010 -> level_29_01010
+    level_29_01010 -> level_30_01010
+    level_30_01010 -> level_31_01010
+
+    level_0_01011 -> level_1_01011
+    level_1_01011 -> level_2_01011
+    level_2_01011 -> level_3_01011
+    level_3_01011 -> level_4_01011
+    level_4_01011 -> level_5_01011
+    level_5_01011 -> level_6_01011
+    level_6_01011 -> level_7_01011
+    level_7_01011 -> level_8_01011
+    level_8_01011 -> level_9_01011
+    level_9_01011 -> level_10_01011
+    level_10_01011 -> level_11_01011
+    level_11_01011 -> level_12_01011
+    level_12_01011 -> level_13_01011
+    level_13_01011 -> level_14_01011
+    level_14_01011 -> level_15_01011
+    level_15_01011 -> level_16_01011
+    level_16_01011 -> level_17_01011
+    level_17_01011 -> level_18_01011
+    level_18_01011 -> level_19_01011
+    level_19_01011 -> level_20_01011
+    level_20_01011 -> level_21_01011
+    level_21_01011 -> level_22_01011
+    level_22_01011 -> level_23_01011
+    level_23_01011 -> level_24_01011
+    level_24_01011 -> level_25_01011
+    level_25_01011 -> level_26_01011
+    level_26_01011 -> level_27_01011
+    level_27_01011 -> level_28_01011
+    level_28_01011 -> level_29_01011
+    level_29_01011 -> level_30_01011
+    level_30_01011 -> level_31_01011
+
+    level_0_01100 -> level_1_01100
+    level_1_01100 -> level_2_01100
+    level_2_01100 -> level_3_01100
+    level_3_01100 -> level_4_01100
+    level_4_01100 -> level_5_01100
+    level_5_01100 -> level_6_01100
+    level_6_01100 -> level_7_01100
+    level_7_01100 -> level_8_01100
+    level_8_01100 -> level_9_01100
+    level_9_01100 -> level_10_01100
+    level_10_01100 -> level_11_01100
+    level_11_01100 -> level_12_01100
+    level_12_01100 -> level_13_01100
+    level_13_01100 -> level_14_01100
+    level_14_01100 -> level_15_01100
+    level_15_01100 -> level_16_01100
+    level_16_01100 -> level_17_01100
+    level_17_01100 -> level_18_01100
+    level_18_01100 -> level_19_01100
+    level_19_01100 -> level_20_01100
+    level_20_01100 -> level_21_01100
+    level_21_01100 -> level_22_01100
+    level_22_01100 -> level_23_01100
+    level_23_01100 -> level_24_01100
+    level_24_01100 -> level_25_01100
+    level_25_01100 -> level_26_01100
+    level_26_01100 -> level_27_01100
+    level_27_01100 -> level_28_01100
+    level_28_01100 -> level_29_01100
+    level_29_01100 -> level_30_01100
+    level_30_01100 -> level_31_01100
+
+    level_0_01101 -> level_1_01101
+    level_1_01101 -> level_2_01101
+    level_2_01101 -> level_3_01101
+    level_3_01101 -> level_4_01101
+    level_4_01101 -> level_5_01101
+    level_5_01101 -> level_6_01101
+    level_6_01101 -> level_7_01101
+    level_7_01101 -> level_8_01101
+    level_8_01101 -> level_9_01101
+    level_9_01101 -> level_10_01101
+    level_10_01101 -> level_11_01101
+    level_11_01101 -> level_12_01101
+    level_12_01101 -> level_13_01101
+    level_13_01101 -> level_14_01101
+    level_14_01101 -> level_15_01101
+    level_15_01101 -> level_16_01101
+    level_16_01101 -> level_17_01101
+    level_17_01101 -> level_18_01101
+    level_18_01101 -> level_19_01101
+    level_19_01101 -> level_20_01101
+    level_20_01101 -> level_21_01101
+    level_21_01101 -> level_22_01101
+    level_22_01101 -> level_23_01101
+    level_23_01101 -> level_24_01101
+    level_24_01101 -> level_25_01101
+    level_25_01101 -> level_26_01101
+    level_26_01101 -> level_27_01101
+    level_27_01101 -> level_28_01101
+    level_28_01101 -> level_29_01101
+    level_29_01101 -> level_30_01101
+    level_30_01101 -> level_31_01101
+
+    level_0_01110 -> level_1_01110
+    level_1_01110 -> level_2_01110
+    level_2_01110 -> level_3_01110
+    level_3_01110 -> level_4_01110
+    level_4_01110 -> level_5_01110
+    level_5_01110 -> level_6_01110
+    level_6_01110 -> level_7_01110
+    level_7_01110 -> level_8_01110
+    level_8_01110 -> level_9_01110
+    level_9_01110 -> level_10_01110
+    level_10_01110 -> level_11_01110
+    level_11_01110 -> level_12_01110
+    level_12_01110 -> level_13_01110
+    level_13_01110 -> level_14_01110
+    level_14_01110 -> level_15_01110
+    level_15_01110 -> level_16_01110
+    level_16_01110 -> level_17_01110
+    level_17_01110 -> level_18_01110
+    level_18_01110 -> level_19_01110
+    level_19_01110 -> level_20_01110
+    level_20_01110 -> level_21_01110
+    level_21_01110 -> level_22_01110
+    level_22_01110 -> level_23_01110
+    level_23_01110 -> level_24_01110
+    level_24_01110 -> level_25_01110
+    level_25_01110 -> level_26_01110
+    level_26_01110 -> level_27_01110
+    level_27_01110 -> level_28_01110
+    level_28_01110 -> level_29_01110
+    level_29_01110 -> level_30_01110
+    level_30_01110 -> level_31_01110
+
+    level_0_01111 -> level_1_01111
+    level_1_01111 -> level_2_01111
+    level_2_01111 -> level_3_01111
+    level_3_01111 -> level_4_01111
+    level_4_01111 -> level_5_01111
+    level_5_01111 -> level_6_01111
+    level_6_01111 -> level_7_01111
+    level_7_01111 -> level_8_01111
+    level_8_01111 -> level_9_01111
+    level_9_01111 -> level_10_01111
+    level_10_01111 -> level_11_01111
+    level_11_01111 -> level_12_01111
+    level_12_01111 -> level_13_01111
+    level_13_01111 -> level_14_01111
+    level_14_01111 -> level_15_01111
+    level_15_01111 -> level_16_01111
+    level_16_01111 -> level_17_01111
+    level_17_01111 -> level_18_01111
+    level_18_01111 -> level_19_01111
+    level_19_01111 -> level_20_01111
+    level_20_01111 -> level_21_01111
+    level_21_01111 -> level_22_01111
+    level_22_01111 -> level_23_01111
+    level_23_01111 -> level_24_01111
+    level_24_01111 -> level_25_01111
+    level_25_01111 -> level_26_01111
+    level_26_01111 -> level_27_01111
+    level_27_01111 -> level_28_01111
+    level_28_01111 -> level_29_01111
+    level_29_01111 -> level_30_01111
+    level_30_01111 -> level_31_01111
+
+    level_0_10000 -> level_1_10000
+    level_1_10000 -> level_2_10000
+    level_2_10000 -> level_3_10000
+    level_3_10000 -> level_4_10000
+    level_4_10000 -> level_5_10000
+    level_5_10000 -> level_6_10000
+    level_6_10000 -> level_7_10000
+    level_7_10000 -> level_8_10000
+    level_8_10000 -> level_9_10000
+    level_9_10000 -> level_10_10000
+    level_10_10000 -> level_11_10000
+    level_11_10000 -> level_12_10000
+    level_12_10000 -> level_13_10000
+    level_13_10000 -> level_14_10000
+    level_14_10000 -> level_15_10000
+    level_15_10000 -> level_16_10000
+    level_16_10000 -> level_17_10000
+    level_17_10000 -> level_18_10000
+    level_18_10000 -> level_19_10000
+    level_19_10000 -> level_20_10000
+    level_20_10000 -> level_21_10000
+    level_21_10000 -> level_22_10000
+    level_22_10000 -> level_23_10000
+    level_23_10000 -> level_24_10000
+    level_24_10000 -> level_25_10000
+    level_25_10000 -> level_26_10000
+    level_26_10000 -> level_27_10000
+    level_27_10000 -> level_28_10000
+    level_28_10000 -> level_29_10000
+    level_29_10000 -> level_30_10000
+    level_30_10000 -> level_31_10000
+
+    level_0_10001 -> level_1_10001
+    level_1_10001 -> level_2_10001
+    level_2_10001 -> level_3_10001
+    level_3_10001 -> level_4_10001
+    level_4_10001 -> level_5_10001
+    level_5_10001 -> level_6_10001
+    level_6_10001 -> level_7_10001
+    level_7_10001 -> level_8_10001
+    level_8_10001 -> level_9_10001
+    level_9_10001 -> level_10_10001
+    level_10_10001 -> level_11_10001
+    level_11_10001 -> level_12_10001
+    level_12_10001 -> level_13_10001
+    level_13_10001 -> level_14_10001
+    level_14_10001 -> level_15_10001
+    level_15_10001 -> level_16_10001
+    level_16_10001 -> level_17_10001
+    level_17_10001 -> level_18_10001
+    level_18_10001 -> level_19_10001
+    level_19_10001 -> level_20_10001
+    level_20_10001 -> level_21_10001
+    level_21_10001 -> level_22_10001
+    level_22_10001 -> level_23_10001
+    level_23_10001 -> level_24_10001
+    level_24_10001 -> level_25_10001
+    level_25_10001 -> level_26_10001
+    level_26_10001 -> level_27_10001
+    level_27_10001 -> level_28_10001
+    level_28_10001 -> level_29_10001
+    level_29_10001 -> level_30_10001
+    level_30_10001 -> level_31_10001
+
+    level_0_10010 -> level_1_10010
+    level_1_10010 -> level_2_10010
+    level_2_10010 -> level_3_10010
+    level_3_10010 -> level_4_10010
+    level_4_10010 -> level_5_10010
+    level_5_10010 -> level_6_10010
+    level_6_10010 -> level_7_10010
+    level_7_10010 -> level_8_10010
+    level_8_10010 -> level_9_10010
+    level_9_10010 -> level_10_10010
+    level_10_10010 -> level_11_10010
+    level_11_10010 -> level_12_10010
+    level_12_10010 -> level_13_10010
+    level_13_10010 -> level_14_10010
+    level_14_10010 -> level_15_10010
+    level_15_10010 -> level_16_10010
+    level_16_10010 -> level_17_10010
+    level_17_10010 -> level_18_10010
+    level_18_10010 -> level_19_10010
+    level_19_10010 -> level_20_10010
+    level_20_10010 -> level_21_10010
+    level_21_10010 -> level_22_10010
+    level_22_10010 -> level_23_10010
+    level_23_10010 -> level_24_10010
+    level_24_10010 -> level_25_10010
+    level_25_10010 -> level_26_10010
+    level_26_10010 -> level_27_10010
+    level_27_10010 -> level_28_10010
+    level_28_10010 -> level_29_10010
+    level_29_10010 -> level_30_10010
+    level_30_10010 -> level_31_10010
+
+    level_0_10011 -> level_1_10011
+    level_1_10011 -> level_2_10011
+    level_2_10011 -> level_3_10011
+    level_3_10011 -> level_4_10011
+    level_4_10011 -> level_5_10011
+    level_5_10011 -> level_6_10011
+    level_6_10011 -> level_7_10011
+    level_7_10011 -> level_8_10011
+    level_8_10011 -> level_9_10011
+    level_9_10011 -> level_10_10011
+    level_10_10011 -> level_11_10011
+    level_11_10011 -> level_12_10011
+    level_12_10011 -> level_13_10011
+    level_13_10011 -> level_14_10011
+    level_14_10011 -> level_15_10011
+    level_15_10011 -> level_16_10011
+    level_16_10011 -> level_17_10011
+    level_17_10011 -> level_18_10011
+    level_18_10011 -> level_19_10011
+    level_19_10011 -> level_20_10011
+    level_20_10011 -> level_21_10011
+    level_21_10011 -> level_22_10011
+    level_22_10011 -> level_23_10011
+    level_23_10011 -> level_24_10011
+    level_24_10011 -> level_25_10011
+    level_25_10011 -> level_26_10011
+    level_26_10011 -> level_27_10011
+    level_27_10011 -> level_28_10011
+    level_28_10011 -> level_29_10011
+    level_29_10011 -> level_30_10011
+    level_30_10011 -> level_31_10011
+
+    level_0_10100 -> level_1_10100
+    level_1_10100 -> level_2_10100
+    level_2_10100 -> level_3_10100
+    level_3_10100 -> level_4_10100
+    level_4_10100 -> level_5_10100
+    level_5_10100 -> level_6_10100
+    level_6_10100 -> level_7_10100
+    level_7_10100 -> level_8_10100
+    level_8_10100 -> level_9_10100
+    level_9_10100 -> level_10_10100
+    level_10_10100 -> level_11_10100
+    level_11_10100 -> level_12_10100
+    level_12_10100 -> level_13_10100
+    level_13_10100 -> level_14_10100
+    level_14_10100 -> level_15_10100
+    level_15_10100 -> level_16_10100
+    level_16_10100 -> level_17_10100
+    level_17_10100 -> level_18_10100
+    level_18_10100 -> level_19_10100
+    level_19_10100 -> level_20_10100
+    level_20_10100 -> level_21_10100
+    level_21_10100 -> level_22_10100
+    level_22_10100 -> level_23_10100
+    level_23_10100 -> level_24_10100
+    level_24_10100 -> level_25_10100
+    level_25_10100 -> level_26_10100
+    level_26_10100 -> level_27_10100
+    level_27_10100 -> level_28_10100
+    level_28_10100 -> level_29_10100
+    level_29_10100 -> level_30_10100
+    level_30_10100 -> level_31_10100
+
+    level_0_10101 -> level_1_10101
+    level_1_10101 -> level_2_10101
+    level_2_10101 -> level_3_10101
+    level_3_10101 -> level_4_10101
+    level_4_10101 -> level_5_10101
+    level_5_10101 -> level_6_10101
+    level_6_10101 -> level_7_10101
+    level_7_10101 -> level_8_10101
+    level_8_10101 -> level_9_10101
+    level_9_10101 -> level_10_10101
+    level_10_10101 -> level_11_10101
+    level_11_10101 -> level_12_10101
+    level_12_10101 -> level_13_10101
+    level_13_10101 -> level_14_10101
+    level_14_10101 -> level_15_10101
+    level_15_10101 -> level_16_10101
+    level_16_10101 -> level_17_10101
+    level_17_10101 -> level_18_10101
+    level_18_10101 -> level_19_10101
+    level_19_10101 -> level_20_10101
+    level_20_10101 -> level_21_10101
+    level_21_10101 -> level_22_10101
+    level_22_10101 -> level_23_10101
+    level_23_10101 -> level_24_10101
+    level_24_10101 -> level_25_10101
+    level_25_10101 -> level_26_10101
+    level_26_10101 -> level_27_10101
+    level_27_10101 -> level_28_10101
+    level_28_10101 -> level_29_10101
+    level_29_10101 -> level_30_10101
+    level_30_10101 -> level_31_10101
+
+    level_0_10110 -> level_1_10110
+    level_1_10110 -> level_2_10110
+    level_2_10110 -> level_3_10110
+    level_3_10110 -> level_4_10110
+    level_4_10110 -> level_5_10110
+    level_5_10110 -> level_6_10110
+    level_6_10110 -> level_7_10110
+    level_7_10110 -> level_8_10110
+    level_8_10110 -> level_9_10110
+    level_9_10110 -> level_10_10110
+    level_10_10110 -> level_11_10110
+    level_11_10110 -> level_12_10110
+    level_12_10110 -> level_13_10110
+    level_13_10110 -> level_14_10110
+    level_14_10110 -> level_15_10110
+    level_15_10110 -> level_16_10110
+    level_16_10110 -> level_17_10110
+    level_17_10110 -> level_18_10110
+    level_18_10110 -> level_19_10110
+    level_19_10110 -> level_20_10110
+    level_20_10110 -> level_21_10110
+    level_21_10110 -> level_22_10110
+    level_22_10110 -> level_23_10110
+    level_23_10110 -> level_24_10110
+    level_24_10110 -> level_25_10110
+    level_25_10110 -> level_26_10110
+    level_26_10110 -> level_27_10110
+    level_27_10110 -> level_28_10110
+    level_28_10110 -> level_29_10110
+    level_29_10110 -> level_30_10110
+    level_30_10110 -> level_31_10110
+
+    level_0_10111 -> level_1_10111
+    level_1_10111 -> level_2_10111
+    level_2_10111 -> level_3_10111
+    level_3_10111 -> level_4_10111
+    level_4_10111 -> level_5_10111
+    level_5_10111 -> level_6_10111
+    level_6_10111 -> level_7_10111
+    level_7_10111 -> level_8_10111
+    level_8_10111 -> level_9_10111
+    level_9_10111 -> level_10_10111
+    level_10_10111 -> level_11_10111
+    level_11_10111 -> level_12_10111
+    level_12_10111 -> level_13_10111
+    level_13_10111 -> level_14_10111
+    level_14_10111 -> level_15_10111
+    level_15_10111 -> level_16_10111
+    level_16_10111 -> level_17_10111
+    level_17_10111 -> level_18_10111
+    level_18_10111 -> level_19_10111
+    level_19_10111 -> level_20_10111
+    level_20_10111 -> level_21_10111
+    level_21_10111 -> level_22_10111
+    level_22_10111 -> level_23_10111
+    level_23_10111 -> level_24_10111
+    level_24_10111 -> level_25_10111
+    level_25_10111 -> level_26_10111
+    level_26_10111 -> level_27_10111
+    level_27_10111 -> level_28_10111
+    level_28_10111 -> level_29_10111
+    level_29_10111 -> level_30_10111
+    level_30_10111 -> level_31_10111
+
+    level_0_11000 -> level_1_11000
+    level_1_11000 -> level_2_11000
+    level_2_11000 -> level_3_11000
+    level_3_11000 -> level_4_11000
+    level_4_11000 -> level_5_11000
+    level_5_11000 -> level_6_11000
+    level_6_11000 -> level_7_11000
+    level_7_11000 -> level_8_11000
+    level_8_11000 -> level_9_11000
+    level_9_11000 -> level_10_11000
+    level_10_11000 -> level_11_11000
+    level_11_11000 -> level_12_11000
+    level_12_11000 -> level_13_11000
+    level_13_11000 -> level_14_11000
+    level_14_11000 -> level_15_11000
+    level_15_11000 -> level_16_11000
+    level_16_11000 -> level_17_11000
+    level_17_11000 -> level_18_11000
+    level_18_11000 -> level_19_11000
+    level_19_11000 -> level_20_11000
+    level_20_11000 -> level_21_11000
+    level_21_11000 -> level_22_11000
+    level_22_11000 -> level_23_11000
+    level_23_11000 -> level_24_11000
+    level_24_11000 -> level_25_11000
+    level_25_11000 -> level_26_11000
+    level_26_11000 -> level_27_11000
+    level_27_11000 -> level_28_11000
+    level_28_11000 -> level_29_11000
+    level_29_11000 -> level_30_11000
+    level_30_11000 -> level_31_11000
+
+    level_0_11001 -> level_1_11001
+    level_1_11001 -> level_2_11001
+    level_2_11001 -> level_3_11001
+    level_3_11001 -> level_4_11001
+    level_4_11001 -> level_5_11001
+    level_5_11001 -> level_6_11001
+    level_6_11001 -> level_7_11001
+    level_7_11001 -> level_8_11001
+    level_8_11001 -> level_9_11001
+    level_9_11001 -> level_10_11001
+    level_10_11001 -> level_11_11001
+    level_11_11001 -> level_12_11001
+    level_12_11001 -> level_13_11001
+    level_13_11001 -> level_14_11001
+    level_14_11001 -> level_15_11001
+    level_15_11001 -> level_16_11001
+    level_16_11001 -> level_17_11001
+    level_17_11001 -> level_18_11001
+    level_18_11001 -> level_19_11001
+    level_19_11001 -> level_20_11001
+    level_20_11001 -> level_21_11001
+    level_21_11001 -> level_22_11001
+    level_22_11001 -> level_23_11001
+    level_23_11001 -> level_24_11001
+    level_24_11001 -> level_25_11001
+    level_25_11001 -> level_26_11001
+    level_26_11001 -> level_27_11001
+    level_27_11001 -> level_28_11001
+    level_28_11001 -> level_29_11001
+    level_29_11001 -> level_30_11001
+    level_30_11001 -> level_31_11001
+
+    level_0_11010 -> level_1_11010
+    level_1_11010 -> level_2_11010
+    level_2_11010 -> level_3_11010
+    level_3_11010 -> level_4_11010
+    level_4_11010 -> level_5_11010
+    level_5_11010 -> level_6_11010
+    level_6_11010 -> level_7_11010
+    level_7_11010 -> level_8_11010
+    level_8_11010 -> level_9_11010
+    level_9_11010 -> level_10_11010
+    level_10_11010 -> level_11_11010
+    level_11_11010 -> level_12_11010
+    level_12_11010 -> level_13_11010
+    level_13_11010 -> level_14_11010
+    level_14_11010 -> level_15_11010
+    level_15_11010 -> level_16_11010
+    level_16_11010 -> level_17_11010
+    level_17_11010 -> level_18_11010
+    level_18_11010 -> level_19_11010
+    level_19_11010 -> level_20_11010
+    level_20_11010 -> level_21_11010
+    level_21_11010 -> level_22_11010
+    level_22_11010 -> level_23_11010
+    level_23_11010 -> level_24_11010
+    level_24_11010 -> level_25_11010
+    level_25_11010 -> level_26_11010
+    level_26_11010 -> level_27_11010
+    level_27_11010 -> level_28_11010
+    level_28_11010 -> level_29_11010
+    level_29_11010 -> level_30_11010
+    level_30_11010 -> level_31_11010
+
+    level_0_11011 -> level_1_11011
+    level_1_11011 -> level_2_11011
+    level_2_11011 -> level_3_11011
+    level_3_11011 -> level_4_11011
+    level_4_11011 -> level_5_11011
+    level_5_11011 -> level_6_11011
+    level_6_11011 -> level_7_11011
+    level_7_11011 -> level_8_11011
+    level_8_11011 -> level_9_11011
+    level_9_11011 -> level_10_11011
+    level_10_11011 -> level_11_11011
+    level_11_11011 -> level_12_11011
+    level_12_11011 -> level_13_11011
+    level_13_11011 -> level_14_11011
+    level_14_11011 -> level_15_11011
+    level_15_11011 -> level_16_11011
+    level_16_11011 -> level_17_11011
+    level_17_11011 -> level_18_11011
+    level_18_11011 -> level_19_11011
+    level_19_11011 -> level_20_11011
+    level_20_11011 -> level_21_11011
+    level_21_11011 -> level_22_11011
+    level_22_11011 -> level_23_11011
+    level_23_11011 -> level_24_11011
+    level_24_11011 -> level_25_11011
+    level_25_11011 -> level_26_11011
+    level_26_11011 -> level_27_11011
+    level_27_11011 -> level_28_11011
+    level_28_11011 -> level_29_11011
+    level_29_11011 -> level_30_11011
+    level_30_11011 -> level_31_11011
+
+    level_0_11100 -> level_1_11100
+    level_1_11100 -> level_2_11100
+    level_2_11100 -> level_3_11100
+    level_3_11100 -> level_4_11100
+    level_4_11100 -> level_5_11100
+    level_5_11100 -> level_6_11100
+    level_6_11100 -> level_7_11100
+    level_7_11100 -> level_8_11100
+    level_8_11100 -> level_9_11100
+    level_9_11100 -> level_10_11100
+    level_10_11100 -> level_11_11100
+    level_11_11100 -> level_12_11100
+    level_12_11100 -> level_13_11100
+    level_13_11100 -> level_14_11100
+    level_14_11100 -> level_15_11100
+    level_15_11100 -> level_16_11100
+    level_16_11100 -> level_17_11100
+    level_17_11100 -> level_18_11100
+    level_18_11100 -> level_19_11100
+    level_19_11100 -> level_20_11100
+    level_20_11100 -> level_21_11100
+    level_21_11100 -> level_22_11100
+    level_22_11100 -> level_23_11100
+    level_23_11100 -> level_24_11100
+    level_24_11100 -> level_25_11100
+    level_25_11100 -> level_26_11100
+    level_26_11100 -> level_27_11100
+    level_27_11100 -> level_28_11100
+    level_28_11100 -> level_29_11100
+    level_29_11100 -> level_30_11100
+    level_30_11100 -> level_31_11100
+
+    level_0_11101 -> level_1_11101
+    level_1_11101 -> level_2_11101
+    level_2_11101 -> level_3_11101
+    level_3_11101 -> level_4_11101
+    level_4_11101 -> level_5_11101
+    level_5_11101 -> level_6_11101
+    level_6_11101 -> level_7_11101
+    level_7_11101 -> level_8_11101
+    level_8_11101 -> level_9_11101
+    level_9_11101 -> level_10_11101
+    level_10_11101 -> level_11_11101
+    level_11_11101 -> level_12_11101
+    level_12_11101 -> level_13_11101
+    level_13_11101 -> level_14_11101
+    level_14_11101 -> level_15_11101
+    level_15_11101 -> level_16_11101
+    level_16_11101 -> level_17_11101
+    level_17_11101 -> level_18_11101
+    level_18_11101 -> level_19_11101
+    level_19_11101 -> level_20_11101
+    level_20_11101 -> level_21_11101
+    level_21_11101 -> level_22_11101
+    level_22_11101 -> level_23_11101
+    level_23_11101 -> level_24_11101
+    level_24_11101 -> level_25_11101
+    level_25_11101 -> level_26_11101
+    level_26_11101 -> level_27_11101
+    level_27_11101 -> level_28_11101
+    level_28_11101 -> level_29_11101
+    level_29_11101 -> level_30_11101
+    level_30_11101 -> level_31_11101
+
+    level_0_11110 -> level_1_11110
+    level_1_11110 -> level_2_11110
+    level_2_11110 -> level_3_11110
+    level_3_11110 -> level_4_11110
+    level_4_11110 -> level_5_11110
+    level_5_11110 -> level_6_11110
+    level_6_11110 -> level_7_11110
+    level_7_11110 -> level_8_11110
+    level_8_11110 -> level_9_11110
+    level_9_11110 -> level_10_11110
+    level_10_11110 -> level_11_11110
+    level_11_11110 -> level_12_11110
+    level_12_11110 -> level_13_11110
+    level_13_11110 -> level_14_11110
+    level_14_11110 -> level_15_11110
+    level_15_11110 -> level_16_11110
+    level_16_11110 -> level_17_11110
+    level_17_11110 -> level_18_11110
+    level_18_11110 -> level_19_11110
+    level_19_11110 -> level_20_11110
+    level_20_11110 -> level_21_11110
+    level_21_11110 -> level_22_11110
+    level_22_11110 -> level_23_11110
+    level_23_11110 -> level_24_11110
+    level_24_11110 -> level_25_11110
+    level_25_11110 -> level_26_11110
+    level_26_11110 -> level_27_11110
+    level_27_11110 -> level_28_11110
+    level_28_11110 -> level_29_11110
+    level_29_11110 -> level_30_11110
+    level_30_11110 -> level_31_11110
+
+    level_0_11111 -> level_1_11111
+    level_1_11111 -> level_2_11111
+    level_2_11111 -> level_3_11111
+    level_3_11111 -> level_4_11111
+    level_4_11111 -> level_5_11111
+    level_5_11111 -> level_6_11111
+    level_6_11111 -> level_7_11111
+    level_7_11111 -> level_8_11111
+    level_8_11111 -> level_9_11111
+    level_9_11111 -> level_10_11111
+    level_10_11111 -> level_11_11111
+    level_11_11111 -> level_12_11111
+    level_12_11111 -> level_13_11111
+    level_13_11111 -> level_14_11111
+    level_14_11111 -> level_15_11111
+    level_15_11111 -> level_16_11111
+    level_16_11111 -> level_17_11111
+    level_17_11111 -> level_18_11111
+    level_18_11111 -> level_19_11111
+    level_19_11111 -> level_20_11111
+    level_20_11111 -> level_21_11111
+    level_21_11111 -> level_22_11111
+    level_22_11111 -> level_23_11111
+    level_23_11111 -> level_24_11111
+    level_24_11111 -> level_25_11111
+    level_25_11111 -> level_26_11111
+    level_26_11111 -> level_27_11111
+    level_27_11111 -> level_28_11111
+    level_28_11111 -> level_29_11111
+    level_29_11111 -> level_30_11111
+    level_30_11111 -> level_31_11111
+
+    /* Connect the states invisibly so they stay lined up horizontally. */
+
+    level_0_00000 -> level_0_00001 -> level_0_00010 -> level_0_00011 -> level_0_00100
+     -> level_0_00101 -> level_0_00110 -> level_0_00111 -> level_0_01000 -> level_0_01001
+     -> level_0_01010 -> level_0_01011 -> level_0_01100 -> level_0_01101 -> level_0_01110
+     -> level_0_01111 -> level_0_10000 -> level_0_10001 -> level_0_10010 -> level_0_10011
+     -> level_0_10100 -> level_0_10101 -> level_0_10110 -> level_0_10111 -> level_0_11000
+     -> level_0_11001 -> level_0_11010 -> level_0_11011 -> level_0_11100 -> level_0_11101
+     -> level_0_11110 -> level_0_11111
+
+    level_1_00000 -> level_1_00001 -> level_1_00010 -> level_1_00011 -> level_1_00100
+     -> level_1_00101 -> level_1_00110 -> level_1_00111 -> level_1_01000 -> level_1_01001
+     -> level_1_01010 -> level_1_01011 -> level_1_01100 -> level_1_01101 -> level_1_01110
+     -> level_1_01111 -> level_1_10000 -> level_1_10001 -> level_1_10010 -> level_1_10011
+     -> level_1_10100 -> level_1_10101 -> level_1_10110 -> level_1_10111 -> level_1_11000
+     -> level_1_11001 -> level_1_11010 -> level_1_11011 -> level_1_11100 -> level_1_11101
+     -> level_1_11110 -> level_1_11111
+
+    level_2_00000 -> level_2_00001 -> level_2_00010 -> level_2_00011 -> level_2_00100
+     -> level_2_00101 -> level_2_00110 -> level_2_00111 -> level_2_01000 -> level_2_01001
+     -> level_2_01010 -> level_2_01011 -> level_2_01100 -> level_2_01101 -> level_2_01110
+     -> level_2_01111 -> level_2_10000 -> level_2_10001 -> level_2_10010 -> level_2_10011
+     -> level_2_10100 -> level_2_10101 -> level_2_10110 -> level_2_10111 -> level_2_11000
+     -> level_2_11001 -> level_2_11010 -> level_2_11011 -> level_2_11100 -> level_2_11101
+     -> level_2_11110 -> level_2_11111
+
+    level_3_00000 -> level_3_00001 -> level_3_00010 -> level_3_00011 -> level_3_00100
+     -> level_3_00101 -> level_3_00110 -> level_3_00111 -> level_3_01000 -> level_3_01001
+     -> level_3_01010 -> level_3_01011 -> level_3_01100 -> level_3_01101 -> level_3_01110
+     -> level_3_01111 -> level_3_10000 -> level_3_10001 -> level_3_10010 -> level_3_10011
+     -> level_3_10100 -> level_3_10101 -> level_3_10110 -> level_3_10111 -> level_3_11000
+     -> level_3_11001 -> level_3_11010 -> level_3_11011 -> level_3_11100 -> level_3_11101
+     -> level_3_11110 -> level_3_11111
+
+    level_4_00000 -> level_4_00001 -> level_4_00010 -> level_4_00011 -> level_4_00100
+     -> level_4_00101 -> level_4_00110 -> level_4_00111 -> level_4_01000 -> level_4_01001
+     -> level_4_01010 -> level_4_01011 -> level_4_01100 -> level_4_01101 -> level_4_01110
+     -> level_4_01111 -> level_4_10000 -> level_4_10001 -> level_4_10010 -> level_4_10011
+     -> level_4_10100 -> level_4_10101 -> level_4_10110 -> level_4_10111 -> level_4_11000
+     -> level_4_11001 -> level_4_11010 -> level_4_11011 -> level_4_11100 -> level_4_11101
+     -> level_4_11110 -> level_4_11111
+
+    level_5_00000 -> level_5_00001 -> level_5_00010 -> level_5_00011 -> level_5_00100
+     -> level_5_00101 -> level_5_00110 -> level_5_00111 -> level_5_01000 -> level_5_01001
+     -> level_5_01010 -> level_5_01011 -> level_5_01100 -> level_5_01101 -> level_5_01110
+     -> level_5_01111 -> level_5_10000 -> level_5_10001 -> level_5_10010 -> level_5_10011
+     -> level_5_10100 -> level_5_10101 -> level_5_10110 -> level_5_10111 -> level_5_11000
+     -> level_5_11001 -> level_5_11010 -> level_5_11011 -> level_5_11100 -> level_5_11101
+     -> level_5_11110 -> level_5_11111
+
+    level_6_00000 -> level_6_00001 -> level_6_00010 -> level_6_00011 -> level_6_00100
+     -> level_6_00101 -> level_6_00110 -> level_6_00111 -> level_6_01000 -> level_6_01001
+     -> level_6_01010 -> level_6_01011 -> level_6_01100 -> level_6_01101 -> level_6_01110
+     -> level_6_01111 -> level_6_10000 -> level_6_10001 -> level_6_10010 -> level_6_10011
+     -> level_6_10100 -> level_6_10101 -> level_6_10110 -> level_6_10111 -> level_6_11000
+     -> level_6_11001 -> level_6_11010 -> level_6_11011 -> level_6_11100 -> level_6_11101
+     -> level_6_11110 -> level_6_11111
+
+    level_7_00000 -> level_7_00001 -> level_7_00010 -> level_7_00011 -> level_7_00100
+     -> level_7_00101 -> level_7_00110 -> level_7_00111 -> level_7_01000 -> level_7_01001
+     -> level_7_01010 -> level_7_01011 -> level_7_01100 -> level_7_01101 -> level_7_01110
+     -> level_7_01111 -> level_7_10000 -> level_7_10001 -> level_7_10010 -> level_7_10011
+     -> level_7_10100 -> level_7_10101 -> level_7_10110 -> level_7_10111 -> level_7_11000
+     -> level_7_11001 -> level_7_11010 -> level_7_11011 -> level_7_11100 -> level_7_11101
+     -> level_7_11110 -> level_7_11111
+
+    level_8_00000 -> level_8_00001 -> level_8_00010 -> level_8_00011 -> level_8_00100
+     -> level_8_00101 -> level_8_00110 -> level_8_00111 -> level_8_01000 -> level_8_01001
+     -> level_8_01010 -> level_8_01011 -> level_8_01100 -> level_8_01101 -> level_8_01110
+     -> level_8_01111 -> level_8_10000 -> level_8_10001 -> level_8_10010 -> level_8_10011
+     -> level_8_10100 -> level_8_10101 -> level_8_10110 -> level_8_10111 -> level_8_11000
+     -> level_8_11001 -> level_8_11010 -> level_8_11011 -> level_8_11100 -> level_8_11101
+     -> level_8_11110 -> level_8_11111
+
+    level_9_00000 -> level_9_00001 -> level_9_00010 -> level_9_00011 -> level_9_00100
+     -> level_9_00101 -> level_9_00110 -> level_9_00111 -> level_9_01000 -> level_9_01001
+     -> level_9_01010 -> level_9_01011 -> level_9_01100 -> level_9_01101 -> level_9_01110
+     -> level_9_01111 -> level_9_10000 -> level_9_10001 -> level_9_10010 -> level_9_10011
+     -> level_9_10100 -> level_9_10101 -> level_9_10110 -> level_9_10111 -> level_9_11000
+     -> level_9_11001 -> level_9_11010 -> level_9_11011 -> level_9_11100 -> level_9_11101
+     -> level_9_11110 -> level_9_11111
+
+    level_10_00000 -> level_10_00001 -> level_10_00010 -> level_10_00011 -> level_10_00100
+     -> level_10_00101 -> level_10_00110 -> level_10_00111 -> level_10_01000 -> level_10_01001
+     -> level_10_01010 -> level_10_01011 -> level_10_01100 -> level_10_01101 -> level_10_01110
+     -> level_10_01111 -> level_10_10000 -> level_10_10001 -> level_10_10010 -> level_10_10011
+     -> level_10_10100 -> level_10_10101 -> level_10_10110 -> level_10_10111 -> level_10_11000
+     -> level_10_11001 -> level_10_11010 -> level_10_11011 -> level_10_11100 -> level_10_11101
+     -> level_10_11110 -> level_10_11111
+
+    level_11_00000 -> level_11_00001 -> level_11_00010 -> level_11_00011 -> level_11_00100
+     -> level_11_00101 -> level_11_00110 -> level_11_00111 -> level_11_01000 -> level_11_01001
+     -> level_11_01010 -> level_11_01011 -> level_11_01100 -> level_11_01101 -> level_11_01110
+     -> level_11_01111 -> level_11_10000 -> level_11_10001 -> level_11_10010 -> level_11_10011
+     -> level_11_10100 -> level_11_10101 -> level_11_10110 -> level_11_10111 -> level_11_11000
+     -> level_11_11001 -> level_11_11010 -> level_11_11011 -> level_11_11100 -> level_11_11101
+     -> level_11_11110 -> level_11_11111
+
+    level_12_00000 -> level_12_00001 -> level_12_00010 -> level_12_00011 -> level_12_00100
+     -> level_12_00101 -> level_12_00110 -> level_12_00111 -> level_12_01000 -> level_12_01001
+     -> level_12_01010 -> level_12_01011 -> level_12_01100 -> level_12_01101 -> level_12_01110
+     -> level_12_01111 -> level_12_10000 -> level_12_10001 -> level_12_10010 -> level_12_10011
+     -> level_12_10100 -> level_12_10101 -> level_12_10110 -> level_12_10111 -> level_12_11000
+     -> level_12_11001 -> level_12_11010 -> level_12_11011 -> level_12_11100 -> level_12_11101
+     -> level_12_11110 -> level_12_11111
+
+    level_13_00000 -> level_13_00001 -> level_13_00010 -> level_13_00011 -> level_13_00100
+     -> level_13_00101 -> level_13_00110 -> level_13_00111 -> level_13_01000 -> level_13_01001
+     -> level_13_01010 -> level_13_01011 -> level_13_01100 -> level_13_01101 -> level_13_01110
+     -> level_13_01111 -> level_13_10000 -> level_13_10001 -> level_13_10010 -> level_13_10011
+     -> level_13_10100 -> level_13_10101 -> level_13_10110 -> level_13_10111 -> level_13_11000
+     -> level_13_11001 -> level_13_11010 -> level_13_11011 -> level_13_11100 -> level_13_11101
+     -> level_13_11110 -> level_13_11111
+
+    level_14_00000 -> level_14_00001 -> level_14_00010 -> level_14_00011 -> level_14_00100
+     -> level_14_00101 -> level_14_00110 -> level_14_00111 -> level_14_01000 -> level_14_01001
+     -> level_14_01010 -> level_14_01011 -> level_14_01100 -> level_14_01101 -> level_14_01110
+     -> level_14_01111 -> level_14_10000 -> level_14_10001 -> level_14_10010 -> level_14_10011
+     -> level_14_10100 -> level_14_10101 -> level_14_10110 -> level_14_10111 -> level_14_11000
+     -> level_14_11001 -> level_14_11010 -> level_14_11011 -> level_14_11100 -> level_14_11101
+     -> level_14_11110 -> level_14_11111
+
+    level_15_00000 -> level_15_00001 -> level_15_00010 -> level_15_00011 -> level_15_00100
+     -> level_15_00101 -> level_15_00110 -> level_15_00111 -> level_15_01000 -> level_15_01001
+     -> level_15_01010 -> level_15_01011 -> level_15_01100 -> level_15_01101 -> level_15_01110
+     -> level_15_01111 -> level_15_10000 -> level_15_10001 -> level_15_10010 -> level_15_10011
+     -> level_15_10100 -> level_15_10101 -> level_15_10110 -> level_15_10111 -> level_15_11000
+     -> level_15_11001 -> level_15_11010 -> level_15_11011 -> level_15_11100 -> level_15_11101
+     -> level_15_11110 -> level_15_11111
+
+    level_16_00000 -> level_16_00001 -> level_16_00010 -> level_16_00011 -> level_16_00100
+     -> level_16_00101 -> level_16_00110 -> level_16_00111 -> level_16_01000 -> level_16_01001
+     -> level_16_01010 -> level_16_01011 -> level_16_01100 -> level_16_01101 -> level_16_01110
+     -> level_16_01111 -> level_16_10000 -> level_16_10001 -> level_16_10010 -> level_16_10011
+     -> level_16_10100 -> level_16_10101 -> level_16_10110 -> level_16_10111 -> level_16_11000
+     -> level_16_11001 -> level_16_11010 -> level_16_11011 -> level_16_11100 -> level_16_11101
+     -> level_16_11110 -> level_16_11111
+
+    level_17_00000 -> level_17_00001 -> level_17_00010 -> level_17_00011 -> level_17_00100
+     -> level_17_00101 -> level_17_00110 -> level_17_00111 -> level_17_01000 -> level_17_01001
+     -> level_17_01010 -> level_17_01011 -> level_17_01100 -> level_17_01101 -> level_17_01110
+     -> level_17_01111 -> level_17_10000 -> level_17_10001 -> level_17_10010 -> level_17_10011
+     -> level_17_10100 -> level_17_10101 -> level_17_10110 -> level_17_10111 -> level_17_11000
+     -> level_17_11001 -> level_17_11010 -> level_17_11011 -> level_17_11100 -> level_17_11101
+     -> level_17_11110 -> level_17_11111
+
+    level_18_00000 -> level_18_00001 -> level_18_00010 -> level_18_00011 -> level_18_00100
+     -> level_18_00101 -> level_18_00110 -> level_18_00111 -> level_18_01000 -> level_18_01001
+     -> level_18_01010 -> level_18_01011 -> level_18_01100 -> level_18_01101 -> level_18_01110
+     -> level_18_01111 -> level_18_10000 -> level_18_10001 -> level_18_10010 -> level_18_10011
+     -> level_18_10100 -> level_18_10101 -> level_18_10110 -> level_18_10111 -> level_18_11000
+     -> level_18_11001 -> level_18_11010 -> level_18_11011 -> level_18_11100 -> level_18_11101
+     -> level_18_11110 -> level_18_11111
+
+    level_19_00000 -> level_19_00001 -> level_19_00010 -> level_19_00011 -> level_19_00100
+     -> level_19_00101 -> level_19_00110 -> level_19_00111 -> level_19_01000 -> level_19_01001
+     -> level_19_01010 -> level_19_01011 -> level_19_01100 -> level_19_01101 -> level_19_01110
+     -> level_19_01111 -> level_19_10000 -> level_19_10001 -> level_19_10010 -> level_19_10011
+     -> level_19_10100 -> level_19_10101 -> level_19_10110 -> level_19_10111 -> level_19_11000
+     -> level_19_11001 -> level_19_11010 -> level_19_11011 -> level_19_11100 -> level_19_11101
+     -> level_19_11110 -> level_19_11111
+
+    level_20_00000 -> level_20_00001 -> level_20_00010 -> level_20_00011 -> level_20_00100
+     -> level_20_00101 -> level_20_00110 -> level_20_00111 -> level_20_01000 -> level_20_01001
+     -> level_20_01010 -> level_20_01011 -> level_20_01100 -> level_20_01101 -> level_20_01110
+     -> level_20_01111 -> level_20_10000 -> level_20_10001 -> level_20_10010 -> level_20_10011
+     -> level_20_10100 -> level_20_10101 -> level_20_10110 -> level_20_10111 -> level_20_11000
+     -> level_20_11001 -> level_20_11010 -> level_20_11011 -> level_20_11100 -> level_20_11101
+     -> level_20_11110 -> level_20_11111
+
+    level_21_00000 -> level_21_00001 -> level_21_00010 -> level_21_00011 -> level_21_00100
+     -> level_21_00101 -> level_21_00110 -> level_21_00111 -> level_21_01000 -> level_21_01001
+     -> level_21_01010 -> level_21_01011 -> level_21_01100 -> level_21_01101 -> level_21_01110
+     -> level_21_01111 -> level_21_10000 -> level_21_10001 -> level_21_10010 -> level_21_10011
+     -> level_21_10100 -> level_21_10101 -> level_21_10110 -> level_21_10111 -> level_21_11000
+     -> level_21_11001 -> level_21_11010 -> level_21_11011 -> level_21_11100 -> level_21_11101
+     -> level_21_11110 -> level_21_11111
+
+    level_22_00000 -> level_22_00001 -> level_22_00010 -> level_22_00011 -> level_22_00100
+     -> level_22_00101 -> level_22_00110 -> level_22_00111 -> level_22_01000 -> level_22_01001
+     -> level_22_01010 -> level_22_01011 -> level_22_01100 -> level_22_01101 -> level_22_01110
+     -> level_22_01111 -> level_22_10000 -> level_22_10001 -> level_22_10010 -> level_22_10011
+     -> level_22_10100 -> level_22_10101 -> level_22_10110 -> level_22_10111 -> level_22_11000
+     -> level_22_11001 -> level_22_11010 -> level_22_11011 -> level_22_11100 -> level_22_11101
+     -> level_22_11110 -> level_22_11111
+
+    level_23_00000 -> level_23_00001 -> level_23_00010 -> level_23_00011 -> level_23_00100
+     -> level_23_00101 -> level_23_00110 -> level_23_00111 -> level_23_01000 -> level_23_01001
+     -> level_23_01010 -> level_23_01011 -> level_23_01100 -> level_23_01101 -> level_23_01110
+     -> level_23_01111 -> level_23_10000 -> level_23_10001 -> level_23_10010 -> level_23_10011
+     -> level_23_10100 -> level_23_10101 -> level_23_10110 -> level_23_10111 -> level_23_11000
+     -> level_23_11001 -> level_23_11010 -> level_23_11011 -> level_23_11100 -> level_23_11101
+     -> level_23_11110 -> level_23_11111
+
+    level_24_00000 -> level_24_00001 -> level_24_00010 -> level_24_00011 -> level_24_00100
+     -> level_24_00101 -> level_24_00110 -> level_24_00111 -> level_24_01000 -> level_24_01001
+     -> level_24_01010 -> level_24_01011 -> level_24_01100 -> level_24_01101 -> level_24_01110
+     -> level_24_01111 -> level_24_10000 -> level_24_10001 -> level_24_10010 -> level_24_10011
+     -> level_24_10100 -> level_24_10101 -> level_24_10110 -> level_24_10111 -> level_24_11000
+     -> level_24_11001 -> level_24_11010 -> level_24_11011 -> level_24_11100 -> level_24_11101
+     -> level_24_11110 -> level_24_11111
+
+    level_25_00000 -> level_25_00001 -> level_25_00010 -> level_25_00011 -> level_25_00100
+     -> level_25_00101 -> level_25_00110 -> level_25_00111 -> level_25_01000 -> level_25_01001
+     -> level_25_01010 -> level_25_01011 -> level_25_01100 -> level_25_01101 -> level_25_01110
+     -> level_25_01111 -> level_25_10000 -> level_25_10001 -> level_25_10010 -> level_25_10011
+     -> level_25_10100 -> level_25_10101 -> level_25_10110 -> level_25_10111 -> level_25_11000
+     -> level_25_11001 -> level_25_11010 -> level_25_11011 -> level_25_11100 -> level_25_11101
+     -> level_25_11110 -> level_25_11111
+
+    level_26_00000 -> level_26_00001 -> level_26_00010 -> level_26_00011 -> level_26_00100
+     -> level_26_00101 -> level_26_00110 -> level_26_00111 -> level_26_01000 -> level_26_01001
+     -> level_26_01010 -> level_26_01011 -> level_26_01100 -> level_26_01101 -> level_26_01110
+     -> level_26_01111 -> level_26_10000 -> level_26_10001 -> level_26_10010 -> level_26_10011
+     -> level_26_10100 -> level_26_10101 -> level_26_10110 -> level_26_10111 -> level_26_11000
+     -> level_26_11001 -> level_26_11010 -> level_26_11011 -> level_26_11100 -> level_26_11101
+     -> level_26_11110 -> level_26_11111
+
+    level_27_00000 -> level_27_00001 -> level_27_00010 -> level_27_00011 -> level_27_00100
+     -> level_27_00101 -> level_27_00110 -> level_27_00111 -> level_27_01000 -> level_27_01001
+     -> level_27_01010 -> level_27_01011 -> level_27_01100 -> level_27_01101 -> level_27_01110
+     -> level_27_01111 -> level_27_10000 -> level_27_10001 -> level_27_10010 -> level_27_10011
+     -> level_27_10100 -> level_27_10101 -> level_27_10110 -> level_27_10111 -> level_27_11000
+     -> level_27_11001 -> level_27_11010 -> level_27_11011 -> level_27_11100 -> level_27_11101
+     -> level_27_11110 -> level_27_11111
+
+    level_28_00000 -> level_28_00001 -> level_28_00010 -> level_28_00011 -> level_28_00100
+     -> level_28_00101 -> level_28_00110 -> level_28_00111 -> level_28_01000 -> level_28_01001
+     -> level_28_01010 -> level_28_01011 -> level_28_01100 -> level_28_01101 -> level_28_01110
+     -> level_28_01111 -> level_28_10000 -> level_28_10001 -> level_28_10010 -> level_28_10011
+     -> level_28_10100 -> level_28_10101 -> level_28_10110 -> level_28_10111 -> level_28_11000
+     -> level_28_11001 -> level_28_11010 -> level_28_11011 -> level_28_11100 -> level_28_11101
+     -> level_28_11110 -> level_28_11111
+
+    level_29_00000 -> level_29_00001 -> level_29_00010 -> level_29_00011 -> level_29_00100
+     -> level_29_00101 -> level_29_00110 -> level_29_00111 -> level_29_01000 -> level_29_01001
+     -> level_29_01010 -> level_29_01011 -> level_29_01100 -> level_29_01101 -> level_29_01110
+     -> level_29_01111 -> level_29_10000 -> level_29_10001 -> level_29_10010 -> level_29_10011
+     -> level_29_10100 -> level_29_10101 -> level_29_10110 -> level_29_10111 -> level_29_11000
+     -> level_29_11001 -> level_29_11010 -> level_29_11011 -> level_29_11100 -> level_29_11101
+     -> level_29_11110 -> level_29_11111
+
+    level_30_00000 -> level_30_00001 -> level_30_00010 -> level_30_00011 -> level_30_00100
+     -> level_30_00101 -> level_30_00110 -> level_30_00111 -> level_30_01000 -> level_30_01001
+     -> level_30_01010 -> level_30_01011 -> level_30_01100 -> level_30_01101 -> level_30_01110
+     -> level_30_01111 -> level_30_10000 -> level_30_10001 -> level_30_10010 -> level_30_10011
+     -> level_30_10100 -> level_30_10101 -> level_30_10110 -> level_30_10111 -> level_30_11000
+     -> level_30_11001 -> level_30_11010 -> level_30_11011 -> level_30_11100 -> level_30_11101
+     -> level_30_11110 -> level_30_11111
+
+    level_31_00000 -> level_31_00001 -> level_31_00010 -> level_31_00011 -> level_31_00100
+     -> level_31_00101 -> level_31_00110 -> level_31_00111 -> level_31_01000 -> level_31_01001
+     -> level_31_01010 -> level_31_01011 -> level_31_01100 -> level_31_01101 -> level_31_01110
+     -> level_31_01111 -> level_31_10000 -> level_31_10001 -> level_31_10010 -> level_31_10011
+     -> level_31_10100 -> level_31_10101 -> level_31_10110 -> level_31_10111 -> level_31_11000
+     -> level_31_11001 -> level_31_11010 -> level_31_11011 -> level_31_11100 -> level_31_11101
+     -> level_31_11110 -> level_31_11111
+
+    edge [style=solid,color=black]
+
+    // allowable transitions from (0) -> (1) out of level 0
+
+    level_0_00000 -> level_1_00001 // [color=red,style=bold]
+    level_0_00000 -> level_1_00010
+    level_0_00000 -> level_1_00100
+    level_0_00000 -> level_1_01000
+    level_0_00000 -> level_1_10000
+
+    // allowable transitions from (1) -> (2) out of level 1
+
+    level_1_00001 -> level_2_00011
+    level_1_00001 -> level_2_00101
+    level_1_00001 -> level_2_01001
+    level_1_00001 -> level_2_10001
+
+    level_1_00010 -> level_2_00011
+    level_1_00010 -> level_2_00110
+    level_1_00010 -> level_2_01010
+    level_1_00010 -> level_2_10010
+
+    level_1_00100 -> level_2_00101
+    level_1_00100 -> level_2_00110
+    level_1_00100 -> level_2_01100
+    level_1_00100 -> level_2_10100
+
+    level_1_01000 -> level_2_01001
+    level_1_01000 -> level_2_01010
+    level_1_01000 -> level_2_01100
+    level_1_01000 -> level_2_11000
+
+    level_1_10000 -> level_2_10001
+    level_1_10000 -> level_2_10010
+    level_1_10000 -> level_2_10100
+    level_1_10000 -> level_2_11000
+
+    // allowable transitions from (2) -> (1) out of level 2
+
+    level_2_00011 -> level_3_00010
+    level_2_00011 -> level_3_00001
+
+    level_2_00110 -> level_3_00100
+    level_2_00110 -> level_3_00010
+
+    level_2_01100 -> level_3_01000
+    level_2_01100 -> level_3_00100
+
+    level_2_11000 -> level_3_10000
+    level_2_11000 -> level_3_01000
+
+    level_2_00101 -> level_3_00100
+    level_2_00101 -> level_3_00001
+
+    level_2_01010 -> level_3_01000
+    level_2_01010 -> level_3_00010
+
+    level_2_10100 -> level_3_10000
+    level_2_10100 -> level_3_00100
+
+    level_2_01001 -> level_3_01000
+    level_2_01001 -> level_3_00001
+
+    level_2_10010 -> level_3_10000
+    level_2_10010 -> level_3_00010
+
+    level_2_10001 -> level_3_10000
+    level_2_10001 -> level_3_00001
+
+    // allowable transitions from (1) to (2) out of level 3
+
+    level_3_00001 -> level_4_00011
+    level_3_00001 -> level_4_00101
+    level_3_00001 -> level_4_01001
+    level_3_00001 -> level_4_10001
+
+    level_3_00010 -> level_4_00011
+    level_3_00010 -> level_4_00110
+    level_3_00010 -> level_4_01010
+    level_3_00010 -> level_4_10010
+
+    level_3_00100 -> level_4_00101
+    level_3_00100 -> level_4_00110
+    level_3_00100 -> level_4_01100
+    level_3_00100 -> level_4_10100
+
+    level_3_01000 -> level_4_01001
+    level_3_01000 -> level_4_01010
+    level_3_01000 -> level_4_01100
+    level_3_01000 -> level_4_11000
+
+    level_3_10000 -> level_4_10001
+    level_3_10000 -> level_4_10010
+    level_3_10000 -> level_4_10100
+    level_3_10000 -> level_4_11000
+
+    // allowable transitions from (2) to (1) out of level 4
+
+    level_4_00011 -> level_5_00010
+    level_4_00011 -> level_5_00001
+
+    level_4_00110 -> level_5_00100
+    level_4_00110 -> level_5_00010
+
+    level_4_01100 -> level_5_01000
+    level_4_01100 -> level_5_00100
+
+    level_4_11000 -> level_5_10000
+    level_4_11000 -> level_5_01000
+
+    level_4_00101 -> level_5_00100
+    level_4_00101 -> level_5_00001
+
+    level_4_01010 -> level_5_01000
+    level_4_01010 -> level_5_00010
+
+    level_4_10100 -> level_5_10000
+    level_4_10100 -> level_5_00100
+
+    level_4_01001 -> level_5_01000
+    level_4_01001 -> level_5_00001
+
+    level_4_10010 -> level_5_10000
+    level_4_10010 -> level_5_00010
+
+    level_4_10001 -> level_5_10000
+    level_4_10001 -> level_5_00001
+
+    // allowable transitions from (1) to (2) out of level 5
+
+    level_5_00001 -> level_6_00011
+    level_5_00001 -> level_6_00101
+    level_5_00001 -> level_6_01001
+    level_5_00001 -> level_6_10001
+
+    level_5_00010 -> level_6_00011
+    level_5_00010 -> level_6_00110
+    level_5_00010 -> level_6_01010
+    level_5_00010 -> level_6_10010
+
+    level_5_00100 -> level_6_00101
+    level_5_00100 -> level_6_00110
+    level_5_00100 -> level_6_01100
+    level_5_00100 -> level_6_10100
+
+    level_5_01000 -> level_6_01001
+    level_5_01000 -> level_6_01010
+    level_5_01000 -> level_6_01100
+    level_5_01000 -> level_6_11000
+
+    level_5_10000 -> level_6_10001
+    level_5_10000 -> level_6_10010
+    level_5_10000 -> level_6_10100
+    level_5_10000 -> level_6_11000
+
+    // allowable transitions from (2) to (1) out of level 6
+
+    level_6_00011 -> level_7_00010
+    level_6_00011 -> level_7_00001
+
+    level_6_00110 -> level_7_00100
+    level_6_00110 -> level_7_00010
+
+    level_6_01100 -> level_7_01000
+    level_6_01100 -> level_7_00100
+
+    level_6_11000 -> level_7_10000
+    level_6_11000 -> level_7_01000
+
+    level_6_00101 -> level_7_00100
+    level_6_00101 -> level_7_00001
+
+    level_6_01010 -> level_7_01000
+    level_6_01010 -> level_7_00010
+
+    level_6_10100 -> level_7_10000
+    level_6_10100 -> level_7_00100
+
+    level_6_01001 -> level_7_01000
+    level_6_01001 -> level_7_00001
+
+    level_6_10010 -> level_7_10000
+    level_6_10010 -> level_7_00010
+
+    level_6_10001 -> level_7_10000
+    level_6_10001 -> level_7_00001
+
+    // allowable transitions from (1) to (2) out of level 7
+
+    level_7_00001 -> level_8_00011
+    level_7_00001 -> level_8_00101
+    level_7_00001 -> level_8_01001
+    level_7_00001 -> level_8_10001
+
+    level_7_00010 -> level_8_00011
+    level_7_00010 -> level_8_00110
+    level_7_00010 -> level_8_01010
+    level_7_00010 -> level_8_10010
+
+    level_7_00100 -> level_8_00101
+    level_7_00100 -> level_8_00110
+    level_7_00100 -> level_8_01100
+    level_7_00100 -> level_8_10100
+
+    level_7_01000 -> level_8_01001
+    level_7_01000 -> level_8_01010
+    level_7_01000 -> level_8_01100
+    level_7_01000 -> level_8_11000
+
+    level_7_10000 -> level_8_10001
+    level_7_10000 -> level_8_10010
+    level_7_10000 -> level_8_10100
+    level_7_10000 -> level_8_11000
+
+    // allowable transitions from (2) to (1) out of level 8
+
+    level_8_00011 -> level_9_00010
+    level_8_00011 -> level_9_00001
+
+    level_8_00110 -> level_9_00100
+    level_8_00110 -> level_9_00010
+
+    level_8_01100 -> level_9_01000
+    level_8_01100 -> level_9_00100
+
+    level_8_11000 -> level_9_10000
+    level_8_11000 -> level_9_01000
+
+    level_8_00101 -> level_9_00100
+    level_8_00101 -> level_9_00001
+
+    level_8_01010 -> level_9_01000
+    level_8_01010 -> level_9_00010
+
+    level_8_10100 -> level_9_10000
+    level_8_10100 -> level_9_00100
+
+    level_8_01001 -> level_9_01000
+    level_8_01001 -> level_9_00001
+
+    level_8_10010 -> level_9_10000
+    level_8_10010 -> level_9_00010
+
+    level_8_10001 -> level_9_10000
+    level_8_10001 -> level_9_00001
+
+    // allowable transitions from (1) to (2) out of level 9
+
+    level_9_00001 -> level_10_00011
+    level_9_00001 -> level_10_00101
+    level_9_00001 -> level_10_01001
+    level_9_00001 -> level_10_10001
+
+    level_9_00010 -> level_10_00011
+    level_9_00010 -> level_10_00110
+    level_9_00010 -> level_10_01010
+    level_9_00010 -> level_10_10010
+
+    level_9_00100 -> level_10_00101
+    level_9_00100 -> level_10_00110
+    level_9_00100 -> level_10_01100
+    level_9_00100 -> level_10_10100
+
+    level_9_01000 -> level_10_01001
+    level_9_01000 -> level_10_01010
+    level_9_01000 -> level_10_01100
+    level_9_01000 -> level_10_11000
+
+    level_9_10000 -> level_10_10001
+    level_9_10000 -> level_10_10010
+    level_9_10000 -> level_10_10100
+    level_9_10000 -> level_10_11000
+
+    // allowable transitions from (2) to (3) out of level 10
+
+    level_10_00011 -> level_11_00111
+    level_10_00011 -> level_11_01011
+    level_10_00011 -> level_11_10011
+
+    level_10_00110 -> level_11_00111
+    level_10_00110 -> level_11_01110
+    level_10_00110 -> level_11_10110
+
+    level_10_01100 -> level_11_01101
+    level_10_01100 -> level_11_01110
+    level_10_01100 -> level_11_11100
+
+    level_10_11000 -> level_11_11001
+    level_10_11000 -> level_11_11010
+    level_10_11000 -> level_11_11100
+
+    level_10_00101 -> level_11_00111
+    level_10_00101 -> level_11_01101
+    level_10_00101 -> level_11_10101
+
+    level_10_01010 -> level_11_01011
+    level_10_01010 -> level_11_01110
+    level_10_01010 -> level_11_11010
+
+    level_10_10100 -> level_11_10101
+    level_10_10100 -> level_11_10110
+    level_10_10100 -> level_11_11100
+
+    level_10_01001 -> level_11_01011
+    level_10_01001 -> level_11_01101
+    level_10_01001 -> level_11_11001
+
+    level_10_10010 -> level_11_10011
+    level_10_10010 -> level_11_10110
+    level_10_10010 -> level_11_11010
+
+    level_10_10001 -> level_11_10011
+    level_10_10001 -> level_11_10101
+    level_10_10001 -> level_11_11001
+
+    // allowable transitions from (3) to (2) out of level 11
+
+    level_11_00111 -> level_12_00110
+    level_11_00111 -> level_12_00101
+    level_11_00111 -> level_12_00011
+
+    level_11_01110 -> level_12_01100
+    level_11_01110 -> level_12_01010
+    level_11_01110 -> level_12_00110
+
+    level_11_11100 -> level_12_11000
+    level_11_11100 -> level_12_10100
+    level_11_11100 -> level_12_01100
+
+    level_11_01011 -> level_12_01010
+    level_11_01011 -> level_12_01001
+    level_11_01011 -> level_12_00011
+
+    level_11_01101 -> level_12_01100
+    level_11_01101 -> level_12_01001
+    level_11_01101 -> level_12_00101
+
+    level_11_11010 -> level_12_11000
+    level_11_11010 -> level_12_10010
+    level_11_11010 -> level_12_01010
+
+    level_11_10101 -> level_12_10100
+    level_11_10101 -> level_12_10001
+    level_11_10101 -> level_12_00101
+
+    level_11_10011 -> level_12_10010
+    level_11_10011 -> level_12_10001
+    level_11_10011 -> level_12_00011
+
+    level_11_11001 -> level_12_11000
+    level_11_11001 -> level_12_10001
+    level_11_11001 -> level_12_01001
+
+    level_11_10110 -> level_12_10100
+    level_11_10110 -> level_12_10010
+    level_11_10110 -> level_12_00110
+
+    // allowable transitions from (2) to (3) out of level 12
+
+    level_12_00011 -> level_13_00111
+    level_12_00011 -> level_13_01011
+    level_12_00011 -> level_13_10011
+
+    level_12_00110 -> level_13_00111
+    level_12_00110 -> level_13_01110
+    level_12_00110 -> level_13_10110
+
+    level_12_01100 -> level_13_01101
+    level_12_01100 -> level_13_01110
+    level_12_01100 -> level_13_11100
+
+    level_12_11000 -> level_13_11001
+    level_12_11000 -> level_13_11010
+    level_12_11000 -> level_13_11100
+
+    level_12_00101 -> level_13_00111
+    level_12_00101 -> level_13_01101
+    level_12_00101 -> level_13_10101
+
+    level_12_01010 -> level_13_01011
+    level_12_01010 -> level_13_01110
+    level_12_01010 -> level_13_11010
+
+    level_12_10100 -> level_13_10101
+    level_12_10100 -> level_13_10110
+    level_12_10100 -> level_13_11100
+
+    level_12_01001 -> level_13_01011
+    level_12_01001 -> level_13_01101
+    level_12_01001 -> level_13_11001
+
+    level_12_10010 -> level_13_10011
+    level_12_10010 -> level_13_10110
+    level_12_10010 -> level_13_11010
+
+    level_12_10001 -> level_13_10011
+    level_12_10001 -> level_13_10101
+    level_12_10001 -> level_13_11001
+
+    // allowable transitions from (3) to (2) out of level 13
+
+    level_13_00111 -> level_14_00110
+    level_13_00111 -> level_14_00101
+    level_13_00111 -> level_14_00011
+
+    level_13_01110 -> level_14_01100
+    level_13_01110 -> level_14_01010
+    level_13_01110 -> level_14_00110
+
+    level_13_11100 -> level_14_11000
+    level_13_11100 -> level_14_10100
+    level_13_11100 -> level_14_01100
+
+    level_13_01011 -> level_14_01010
+    level_13_01011 -> level_14_01001
+    level_13_01011 -> level_14_00011
+
+    level_13_01101 -> level_14_01100
+    level_13_01101 -> level_14_01001
+    level_13_01101 -> level_14_00101
+
+    level_13_11010 -> level_14_11000
+    level_13_11010 -> level_14_10010
+    level_13_11010 -> level_14_01010
+
+    level_13_10101 -> level_14_10100
+    level_13_10101 -> level_14_10001
+    level_13_10101 -> level_14_00101
+
+    level_13_10011 -> level_14_10010
+    level_13_10011 -> level_14_10001
+    level_13_10011 -> level_14_00011
+
+    level_13_11001 -> level_14_11000
+    level_13_11001 -> level_14_10001
+    level_13_11001 -> level_14_01001
+
+    level_13_10110 -> level_14_10100
+    level_13_10110 -> level_14_10010
+    level_13_10110 -> level_14_00110
+
+    // allowable transitions from (2) to (3) out of level 14
+
+    level_14_00011 -> level_15_00111
+    level_14_00011 -> level_15_01011
+    level_14_00011 -> level_15_10011
+
+    level_14_00110 -> level_15_00111
+    level_14_00110 -> level_15_01110
+    level_14_00110 -> level_15_10110
+
+    level_14_01100 -> level_15_01101
+    level_14_01100 -> level_15_01110
+    level_14_01100 -> level_15_11100
+
+    level_14_11000 -> level_15_11001
+    level_14_11000 -> level_15_11010
+    level_14_11000 -> level_15_11100
+
+    level_14_00101 -> level_15_00111
+    level_14_00101 -> level_15_01101
+    level_14_00101 -> level_15_10101
+
+    level_14_01010 -> level_15_01011
+    level_14_01010 -> level_15_01110
+    level_14_01010 -> level_15_11010
+
+    level_14_10100 -> level_15_10101
+    level_14_10100 -> level_15_10110
+    level_14_10100 -> level_15_11100
+
+    level_14_01001 -> level_15_01011
+    level_14_01001 -> level_15_01101
+    level_14_01001 -> level_15_11001
+
+    level_14_10010 -> level_15_10011
+    level_14_10010 -> level_15_10110
+    level_14_10010 -> level_15_11010
+
+    level_14_10001 -> level_15_10011
+    level_14_10001 -> level_15_10101
+    level_14_10001 -> level_15_11001
+
+    // allowable transitions from (3) to (2) out of level 15
+
+    level_15_00111 -> level_16_00110
+    level_15_00111 -> level_16_00101
+    level_15_00111 -> level_16_00011
+
+    level_15_01110 -> level_16_01100
+    level_15_01110 -> level_16_01010
+    level_15_01110 -> level_16_00110
+
+    level_15_11100 -> level_16_11000
+    level_15_11100 -> level_16_10100
+    level_15_11100 -> level_16_01100
+
+    level_15_01011 -> level_16_01010
+    level_15_01011 -> level_16_01001
+    level_15_01011 -> level_16_00011
+
+    level_15_01101 -> level_16_01100
+    level_15_01101 -> level_16_01001
+    level_15_01101 -> level_16_00101
+
+    level_15_11010 -> level_16_11000
+    level_15_11010 -> level_16_10010
+    level_15_11010 -> level_16_01010
+
+    level_15_10101 -> level_16_10100
+    level_15_10101 -> level_16_10001
+    level_15_10101 -> level_16_00101
+
+    level_15_10011 -> level_16_10010
+    level_15_10011 -> level_16_10001
+    level_15_10011 -> level_16_00011
+
+    level_15_11001 -> level_16_11000
+    level_15_11001 -> level_16_10001
+    level_15_11001 -> level_16_01001
+
+    level_15_10110 -> level_16_10100
+    level_15_10110 -> level_16_10010
+    level_15_10110 -> level_16_00110
+
+    // allowable transitions from (2) to (3) out of level 16
+
+    level_16_00011 -> level_17_00111
+    level_16_00011 -> level_17_01011
+    level_16_00011 -> level_17_10011
+
+    level_16_00110 -> level_17_00111
+    level_16_00110 -> level_17_01110
+    level_16_00110 -> level_17_10110
+
+    level_16_01100 -> level_17_01101
+    level_16_01100 -> level_17_01110
+    level_16_01100 -> level_17_11100
+
+    level_16_11000 -> level_17_11001
+    level_16_11000 -> level_17_11010
+    level_16_11000 -> level_17_11100
+
+    level_16_00101 -> level_17_00111
+    level_16_00101 -> level_17_01101
+    level_16_00101 -> level_17_10101
+
+    level_16_01010 -> level_17_01011
+    level_16_01010 -> level_17_01110
+    level_16_01010 -> level_17_11010
+
+    level_16_10100 -> level_17_10101
+    level_16_10100 -> level_17_10110
+    level_16_10100 -> level_17_11100
+
+    level_16_01001 -> level_17_01011
+    level_16_01001 -> level_17_01101
+    level_16_01001 -> level_17_11001
+
+    level_16_10010 -> level_17_10011
+    level_16_10010 -> level_17_10110
+    level_16_10010 -> level_17_11010
+
+    level_16_10001 -> level_17_10011
+    level_16_10001 -> level_17_10101
+    level_16_10001 -> level_17_11001
+
+    // allowable transitions from (3) to (2) out of level 17
+
+    level_17_00111 -> level_18_00110
+    level_17_00111 -> level_18_00101
+    level_17_00111 -> level_18_00011
+
+    level_17_01110 -> level_18_01100
+    level_17_01110 -> level_18_01010
+    level_17_01110 -> level_18_00110
+
+    level_17_11100 -> level_18_11000
+    level_17_11100 -> level_18_10100
+    level_17_11100 -> level_18_01100
+
+    level_17_01011 -> level_18_01010
+    level_17_01011 -> level_18_01001
+    level_17_01011 -> level_18_00011
+
+    level_17_01101 -> level_18_01100
+    level_17_01101 -> level_18_01001
+    level_17_01101 -> level_18_00101
+
+    level_17_11010 -> level_18_11000
+    level_17_11010 -> level_18_10010
+    level_17_11010 -> level_18_01010
+
+    level_17_10101 -> level_18_10100
+    level_17_10101 -> level_18_10001
+    level_17_10101 -> level_18_00101
+
+    level_17_10011 -> level_18_10010
+    level_17_10011 -> level_18_10001
+    level_17_10011 -> level_18_00011
+
+    level_17_11001 -> level_18_11000
+    level_17_11001 -> level_18_10001
+    level_17_11001 -> level_18_01001
+
+    level_17_10110 -> level_18_10100
+    level_17_10110 -> level_18_10010
+    level_17_10110 -> level_18_00110
+
+    // allowable transitions from (2) to (3) out of level 18
+
+    level_18_00011 -> level_19_00111
+    level_18_00011 -> level_19_01011
+    level_18_00011 -> level_19_10011
+
+    level_18_00110 -> level_19_00111
+    level_18_00110 -> level_19_01110
+    level_18_00110 -> level_19_10110
+
+    level_18_01100 -> level_19_01101
+    level_18_01100 -> level_19_01110
+    level_18_01100 -> level_19_11100
+
+    level_18_11000 -> level_19_11001
+    level_18_11000 -> level_19_11010
+    level_18_11000 -> level_19_11100
+
+    level_18_00101 -> level_19_00111
+    level_18_00101 -> level_19_01101
+    level_18_00101 -> level_19_10101
+
+    level_18_01010 -> level_19_01011
+    level_18_01010 -> level_19_01110
+    level_18_01010 -> level_19_11010
+
+    level_18_10100 -> level_19_10101
+    level_18_10100 -> level_19_10110
+    level_18_10100 -> level_19_11100
+
+    level_18_01001 -> level_19_01011
+    level_18_01001 -> level_19_01101
+    level_18_01001 -> level_19_11001
+
+    level_18_10010 -> level_19_10011
+    level_18_10010 -> level_19_10110
+    level_18_10010 -> level_19_11010
+
+    level_18_10001 -> level_19_10011
+    level_18_10001 -> level_19_10101
+    level_18_10001 -> level_19_11001
+
+    // allowable transitions from (3) to (2) out of level 19
+
+    level_19_00111 -> level_20_00110
+    level_19_00111 -> level_20_00101
+    level_19_00111 -> level_20_00011
+
+    level_19_01110 -> level_20_01100
+    level_19_01110 -> level_20_01010
+    level_19_01110 -> level_20_00110
+
+    level_19_11100 -> level_20_11000
+    level_19_11100 -> level_20_10100
+    level_19_11100 -> level_20_01100
+
+    level_19_01011 -> level_20_01010
+    level_19_01011 -> level_20_01001
+    level_19_01011 -> level_20_00011
+
+    level_19_01101 -> level_20_01100
+    level_19_01101 -> level_20_01001
+    level_19_01101 -> level_20_00101
+
+    level_19_11010 -> level_20_11000
+    level_19_11010 -> level_20_10010
+    level_19_11010 -> level_20_01010
+
+    level_19_10101 -> level_20_10100
+    level_19_10101 -> level_20_10001
+    level_19_10101 -> level_20_00101
+
+    level_19_10011 -> level_20_10010
+    level_19_10011 -> level_20_10001
+    level_19_10011 -> level_20_00011
+
+    level_19_11001 -> level_20_11000
+    level_19_11001 -> level_20_10001
+    level_19_11001 -> level_20_01001
+
+    level_19_10110 -> level_20_10100
+    level_19_10110 -> level_20_10010
+    level_19_10110 -> level_20_00110
+
+    // allowable transitions from (2) to (3) out of level 20
+
+    level_20_00011 -> level_21_00111
+    level_20_00011 -> level_21_01011
+    level_20_00011 -> level_21_10011
+
+    level_20_00110 -> level_21_00111
+    level_20_00110 -> level_21_01110
+    level_20_00110 -> level_21_10110
+
+    level_20_01100 -> level_21_01101
+    level_20_01100 -> level_21_01110
+    level_20_01100 -> level_21_11100
+
+    level_20_11000 -> level_21_11001
+    level_20_11000 -> level_21_11010
+    level_20_11000 -> level_21_11100
+
+    level_20_00101 -> level_21_00111
+    level_20_00101 -> level_21_01101
+    level_20_00101 -> level_21_10101
+
+    level_20_01010 -> level_21_01011
+    level_20_01010 -> level_21_01110
+    level_20_01010 -> level_21_11010
+
+    level_20_10100 -> level_21_10101
+    level_20_10100 -> level_21_10110
+    level_20_10100 -> level_21_11100
+
+    level_20_01001 -> level_21_01011
+    level_20_01001 -> level_21_01101
+    level_20_01001 -> level_21_11001
+
+    level_20_10010 -> level_21_10011
+    level_20_10010 -> level_21_10110
+    level_20_10010 -> level_21_11010
+
+    level_20_10001 -> level_21_10011
+    level_20_10001 -> level_21_10101
+    level_20_10001 -> level_21_11001
+
+    // allowable transitions from (3) to (4) out of level 21
+
+    level_21_00111 -> level_22_01111
+    level_21_00111 -> level_22_10111
+
+    level_21_01110 -> level_22_01111
+    level_21_01110 -> level_22_11110
+
+    level_21_11100 -> level_22_11101
+    level_21_11100 -> level_22_11110
+
+    level_21_01011 -> level_22_01111
+    level_21_01011 -> level_22_11011
+
+    level_21_01101 -> level_22_01111
+    level_21_01101 -> level_22_11101
+
+    level_21_11010 -> level_22_11011
+    level_21_11010 -> level_22_11110
+
+    level_21_10101 -> level_22_10111
+    level_21_10101 -> level_22_11101
+
+    level_21_10011 -> level_22_10111
+    level_21_10011 -> level_22_11011
+
+    level_21_11001 -> level_22_11011
+    level_21_11001 -> level_22_11101
+
+    level_21_10110 -> level_22_10111
+    level_21_10110 -> level_22_11110
+
+    // allowable transitions from (4) to (3) out of level 22
+
+    level_22_11110 -> level_23_11100
+    level_22_11110 -> level_23_11010
+    level_22_11110 -> level_23_10110
+    level_22_11110 -> level_23_01110
+
+    level_22_11101 -> level_23_11100
+    level_22_11101 -> level_23_11001
+    level_22_11101 -> level_23_10101
+    level_22_11101 -> level_23_01101
+
+    level_22_11011 -> level_23_11010
+    level_22_11011 -> level_23_11001
+    level_22_11011 -> level_23_10011
+    level_22_11011 -> level_23_01011
+
+    level_22_10111 -> level_23_10110
+    level_22_10111 -> level_23_10101
+    level_22_10111 -> level_23_10011
+    level_22_10111 -> level_23_00111
+
+    level_22_01111 -> level_23_01110
+    level_22_01111 -> level_23_01101
+    level_22_01111 -> level_23_01011
+    level_22_01111 -> level_23_00111
+
+    // allowable transitions from (3) to (4) out of level 23
+
+    level_23_00111 -> level_24_01111
+    level_23_00111 -> level_24_10111
+
+    level_23_01110 -> level_24_01111
+    level_23_01110 -> level_24_11110
+
+    level_23_11100 -> level_24_11101
+    level_23_11100 -> level_24_11110
+
+    level_23_01011 -> level_24_01111
+    level_23_01011 -> level_24_11011
+
+    level_23_01101 -> level_24_01111
+    level_23_01101 -> level_24_11101
+
+    level_23_11010 -> level_24_11011
+    level_23_11010 -> level_24_11110
+
+    level_23_10101 -> level_24_10111
+    level_23_10101 -> level_24_11101
+
+    level_23_10011 -> level_24_10111
+    level_23_10011 -> level_24_11011
+
+    level_23_11001 -> level_24_11011
+    level_23_11001 -> level_24_11101
+
+    level_23_10110 -> level_24_10111
+    level_23_10110 -> level_24_11110
+
+    // allowable transitions from (4) to (3) out of level 24
+
+    level_24_11110 -> level_25_11100
+    level_24_11110 -> level_25_11010
+    level_24_11110 -> level_25_10110
+    level_24_11110 -> level_25_01110
+
+    level_24_11101 -> level_25_11100
+    level_24_11101 -> level_25_11001
+    level_24_11101 -> level_25_10101
+    level_24_11101 -> level_25_01101
+
+    level_24_11011 -> level_25_11010
+    level_24_11011 -> level_25_11001
+    level_24_11011 -> level_25_10011
+    level_24_11011 -> level_25_01011
+
+    level_24_10111 -> level_25_10110
+    level_24_10111 -> level_25_10101
+    level_24_10111 -> level_25_10011
+    level_24_10111 -> level_25_00111
+
+    level_24_01111 -> level_25_01110
+    level_24_01111 -> level_25_01101
+    level_24_01111 -> level_25_01011
+    level_24_01111 -> level_25_00111
+
+    // allowable transitions from (3) to (4) out of level 25
+
+    level_25_00111 -> level_26_01111
+    level_25_00111 -> level_26_10111
+
+    level_25_01110 -> level_26_01111
+    level_25_01110 -> level_26_11110
+
+    level_25_11100 -> level_26_11101
+    level_25_11100 -> level_26_11110
+
+    level_25_01011 -> level_26_01111
+    level_25_01011 -> level_26_11011
+
+    level_25_01101 -> level_26_01111
+    level_25_01101 -> level_26_11101
+
+    level_25_11010 -> level_26_11011
+    level_25_11010 -> level_26_11110
+
+    level_25_10101 -> level_26_10111
+    level_25_10101 -> level_26_11101
+
+    level_25_10011 -> level_26_10111
+    level_25_10011 -> level_26_11011
+
+    level_25_11001 -> level_26_11011
+    level_25_11001 -> level_26_11101
+
+    level_25_10110 -> level_26_10111
+    level_25_10110 -> level_26_11110
+
+    // allowable transitions from (4) to (3) out of level 26
+
+    level_26_11110 -> level_27_11100
+    level_26_11110 -> level_27_11010
+    level_26_11110 -> level_27_10110
+    level_26_11110 -> level_27_01110
+
+    level_26_11101 -> level_27_11100
+    level_26_11101 -> level_27_11001
+    level_26_11101 -> level_27_10101
+    level_26_11101 -> level_27_01101
+
+    level_26_11011 -> level_27_11010
+    level_26_11011 -> level_27_11001
+    level_26_11011 -> level_27_10011
+    level_26_11011 -> level_27_01011
+
+    level_26_10111 -> level_27_10110
+    level_26_10111 -> level_27_10101
+    level_26_10111 -> level_27_10011
+    level_26_10111 -> level_27_00111
+
+    level_26_01111 -> level_27_01110
+    level_26_01111 -> level_27_01101
+    level_26_01111 -> level_27_01011
+    level_26_01111 -> level_27_00111
+
+    // allowable transitions from (3) to (4) out of level 27
+
+    level_27_00111 -> level_28_01111
+    level_27_00111 -> level_28_10111
+
+    level_27_01110 -> level_28_01111
+    level_27_01110 -> level_28_11110
+
+    level_27_11100 -> level_28_11101
+    level_27_11100 -> level_28_11110
+
+    level_27_01011 -> level_28_01111
+    level_27_01011 -> level_28_11011
+
+    level_27_01101 -> level_28_01111
+    level_27_01101 -> level_28_11101
+
+    level_27_11010 -> level_28_11011
+    level_27_11010 -> level_28_11110
+
+    level_27_10101 -> level_28_10111
+    level_27_10101 -> level_28_11101
+
+    level_27_10011 -> level_28_10111
+    level_27_10011 -> level_28_11011
+
+    level_27_11001 -> level_28_11011
+    level_27_11001 -> level_28_11101
+
+    level_27_10110 -> level_28_10111
+    level_27_10110 -> level_28_11110
+
+    // allowable transitions from (4) to (3) out of level 28
+
+    level_28_11110 -> level_29_11100
+    level_28_11110 -> level_29_11010
+    level_28_11110 -> level_29_10110
+    level_28_11110 -> level_29_01110
+
+    level_28_11101 -> level_29_11100
+    level_28_11101 -> level_29_11001
+    level_28_11101 -> level_29_10101
+    level_28_11101 -> level_29_01101
+
+    level_28_11011 -> level_29_11010
+    level_28_11011 -> level_29_11001
+    level_28_11011 -> level_29_10011
+    level_28_11011 -> level_29_01011
+
+    level_28_10111 -> level_29_10110
+    level_28_10111 -> level_29_10101
+    level_28_10111 -> level_29_10011
+    level_28_10111 -> level_29_00111
+
+    level_28_01111 -> level_29_01110
+    level_28_01111 -> level_29_01101
+    level_28_01111 -> level_29_01011
+    level_28_01111 -> level_29_00111
+
+    // allowable transitions from (3) to (4) out of level 29
+
+    level_29_00111 -> level_30_01111
+    level_29_00111 -> level_30_10111
+
+    level_29_01110 -> level_30_01111
+    level_29_01110 -> level_30_11110
+
+    level_29_11100 -> level_30_11101
+    level_29_11100 -> level_30_11110
+
+    level_29_01011 -> level_30_01111
+    level_29_01011 -> level_30_11011
+
+    level_29_01101 -> level_30_01111
+    level_29_01101 -> level_30_11101
+
+    level_29_11010 -> level_30_11011
+    level_29_11010 -> level_30_11110
+
+    level_29_10101 -> level_30_10111
+    level_29_10101 -> level_30_11101
+
+    level_29_10011 -> level_30_10111
+    level_29_10011 -> level_30_11011
+
+    level_29_11001 -> level_30_11011
+    level_29_11001 -> level_30_11101
+
+    level_29_10110 -> level_30_10111
+    level_29_10110 -> level_30_11110
+
+    // These are a pain to generate manually; I'm sure there's a function
+    // in Knuth (Vol. 4) something like
+    // `list-of-all-$n$-bit-binary-numbers-with-exactly-$k$-bits-set()';
+    // if I had that, I could say `level_$i$_$n(j)$ -> level_$i+1$_$n(k)$'
+    // instead of all this typing.
+
+    // allowable transitions from (4) to (5) out of level 30
+
+    level_30_01111 -> level_31_11111
+    level_30_10111 -> level_31_11111
+    level_30_11011 -> level_31_11111
+    level_30_11101 -> level_31_11111
+    level_30_11110 -> level_31_11111
+
+}
+
