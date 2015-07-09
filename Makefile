@@ -1,9 +1,10 @@
-order = 5
+target = $(generated_pdf_file)
 
-target = optimal_gray_code_banker_sequence
+order = 5
 
 chart_source = order-5_graph.dot
 pdf_file = order-5_graph.pdf
+
 generator = generate_binary
 generated_file = order-$(order)_graph_generated
 generator_source = $(generator).c
@@ -14,17 +15,15 @@ rm = rm -f
 cc = cc -Wall
 edit = vi
 
-all:: $(target) $(pdf_file) $(generator)
+all:: $(target)
 
-$(target): $(target).c Makefile
-	$(cc) -o $@ $<
-	mv $@.exe $@
+$(generated_pdf_file): $(generator)
+	./$(generator) 5 > $(generated_dot_file)
+	dot -T pdf $(generated_dot_file) -o $(generated_pdf_file)
 
 $(generator): $(generator_source) Makefile
 	gcc -Wall -Wextra -o $@ $<
 	mv $(generator).exe $@
-	./$(generator) 5 > $(generated_dot_file)
-	dot -T pdf $(generated_dot_file) -o $(generated_pdf_file)
 
 clean::
 	$(rm) $(target) $(pdf_file) $(generator) *.stackdump $(generated_dot_file) $(generated_pdf_file)
