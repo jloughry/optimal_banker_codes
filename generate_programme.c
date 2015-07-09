@@ -95,10 +95,10 @@ int main (int argc, char ** argv) {
 
             if (((row == 0) && (count_bits (p, '1') == 0))
                 || ((row == (1 << n) - 1) && (count_bits (p, '1') == n))) {
-                printf (",color=red,textcolor=red");
+                printf (",color=red,fontcolor=red");
             }
             else if (count_bits (p, '1') != cardinality[row]) {
-                printf (",color=grey,textcolor=grey");
+                printf (",color=grey,fontcolor=grey");
             }
 
             printf ("]\n");
