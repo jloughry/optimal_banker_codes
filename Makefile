@@ -2,9 +2,6 @@ target = $(generated_pdf_file)
 
 order = 5
 
-chart_source = order-5_graph.dot
-pdf_file = order-5_graph.pdf
-
 generator = generate_programme
 generated_file = order-$(order)_graph_generated
 generator_source = $(generator).c
@@ -14,6 +11,9 @@ generator_sources = $(generator_source) $(generator_header)
 generated_dot_file = $(generated_file).dot
 generated_pdf_file = $(generated_file).pdf
 
+generated_dot_files = order-*_graph_generated.dot
+generated_pdf_files = order-*_graph_generated.pdf
+
 rm = rm -f
 cc = cc -Wall
 edit = vi
@@ -21,7 +21,7 @@ edit = vi
 all:: $(target)
 
 $(generated_pdf_file): $(generator)
-	./$(generator) 5 > $(generated_dot_file)
+	./$(generator) $(order) > $(generated_dot_file)
 	dot -T pdf $(generated_dot_file) -o $(generated_pdf_file)
 
 $(generator): $(generator_sources) Makefile
@@ -29,17 +29,15 @@ $(generator): $(generator_sources) Makefile
 	mv $(generator_compiled) $@
 
 clean::
-	$(rm) $(target) $(pdf_file) $(generator) *.stackdump \
-		$(generated_dot_file) $(generated_pdf_file) $(bibtex_file)
+	$(rm) $(target) $(generator) *.stackdump \
+		$(generated_dot_files) $(generated_pdf_files) \
+		$(bibtex_file) typescript
 
 test: $(target)
-	./$(target) 5
+	./$(target) $(order)
 
 vi:
 	$(edit) $(generator_source)
-
-$(pdf_file): $(chart_source)
-	dot -T pdf $(chart_source) -o $(pdf_file)
 
 include common.mk
 

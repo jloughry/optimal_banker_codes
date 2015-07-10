@@ -5,6 +5,7 @@ void blank_line (void);
 int count_bits (char * binary_string, char digit);
 int * generate_cardinality_sequence (int n);
 void test_count_bits (void);
+int allowable (int from_row, int from_col, int to_row, int to_col, int * cardinality, int n);
 
 // These will only be needed until I get a proper generator written, but
 // they might be useful later as test cases for the generator.
@@ -13,7 +14,7 @@ int hand_generated_cardinality_sequence_1[] = { 0, 1 };
 
 int hand_generated_cardinality_sequence_2[] = { 0, 1, 2, 1 };
 
-int hand_generated_cardinality_sequence_3[] = { 0, 1, 2, 1, 2, 3, 4, 3 };
+int hand_generated_cardinality_sequence_3[] = { 0, 1, 2, 1, 2, 1, 2, 3 };
 
 int hand_generated_cardinality_sequence_4[] = { 0, 1, 2, 1, 2, 1, 2, 1,
     2, 3, 2, 3, 2, 3, 4, 3 };
@@ -52,7 +53,7 @@ int main (int argc, char ** argv) {
 
     // left side row markers
 
-    for (row = 0; row < (0x1 << n); row ++) {
+    for (row = 0; row < (1 << n); row ++) {
         printf ("    level_%d [label=\"%d (%d)\"]\n",
             row, row, cardinality[row]);
     }
@@ -65,7 +66,7 @@ int main (int argc, char ** argv) {
     blank_line ();
 
     printf ("    level_0");
-    for (row = 0; row < (0x1 << n); row ++) {
+    for (row = 0; row < (1 << n); row ++) {
         printf (" -> level_%d", row);
 
         // break long lines
@@ -76,6 +77,9 @@ int main (int argc, char ** argv) {
         }
     }
 
+    // The purpose of `ordering=out' is to keep DOT from re-ordering nodes
+    // on the page.
+
     blank_line ();
     blank_line ();
     printf ("    graph [ordering=out]\n");
@@ -85,12 +89,12 @@ int main (int argc, char ** argv) {
     printf ("    /* set of all possible states */\n");
     blank_line ();
 
-    for (row=0; row < (0x1 << n); row ++) {
+    for (row = 0; row < (1 << n); row ++) {
         printf ("    {\n");
         printf ("        rank=same; level_%d\n", row);
         blank_line ();
 
-        for (col=0; col < (0x1 << n); col ++) {
+        for (col = 0; col < (1 << n); col ++) {
             char * p = NULL;
 
             p = binary (col, n);
@@ -118,10 +122,10 @@ int main (int argc, char ** argv) {
     blank_line ();
     printf ("    /* Connect the states invisibly so they stay lined up vertically. */\n");
 
-    for (col=0; col < (0x1 << n); col ++) {
+    for (col = 0; col < (1 << n); col ++) {
         blank_line ();
 
-        for (row = 0; row < ((0x1 << n) - 1); row ++) {
+        for (row = 0; row < ((1 << n) - 1); row ++) {
             char * p = NULL;
 
             p = binary (col, n);
@@ -133,7 +137,7 @@ int main (int argc, char ** argv) {
     blank_line ();
     printf ("    /* Connect the states invisibly so they stay lined up horizontally. */\n");
 
-    for (row = 0; row < (0x1 << n); row ++) {
+    for (row = 0; row < (1 << n); row ++) {
         char * p = NULL;
 
         blank_line ();
@@ -141,7 +145,7 @@ int main (int argc, char ** argv) {
         printf ("    level_%d_%s", row, p);
         free (p);
 
-        for (col = 1; col < (0x1 << n); col ++) {
+        for (col = 1; col < (1 << n); col ++) {
             char * p = NULL;
 
             p = binary (col, n);
@@ -160,8 +164,27 @@ int main (int argc, char ** argv) {
     // Now generate the graph of allowable transitions.
 
     blank_line ();
+    printf ("    /* These are the allowable transitions. */\n");
+    blank_line ();
     printf ("    edge [style=solid,color=black]\n");
     blank_line ();
+
+    for (row = 0; row < ( (1 << n) - 1); row ++) {
+        for (col = 0; col < (1 << n); col ++) {
+            int row_plus_one_col = 0;
+
+            for (row_plus_one_col = 0; row_plus_one_col < (1 << n); row_plus_one_col ++) {
+                if (allowable (row, col, row + 1, row_plus_one_col, cardinality, n)) {
+
+                    assert (count_bits (binary (col,n), '1') == cardinality[row]);
+                    assert (count_bits (binary (row_plus_one_col, n), '1') == cardinality[row + 1]);
+
+                    printf ("    level_%d_%s -> level_%d_%s\n",
+                        row, binary(col, n), row + 1, binary (row_plus_one_col, n));
+                }
+            }
+        }
+    }
 
     // End of DOT source file.
 
@@ -196,7 +219,7 @@ char * binary (int n, int m) {
     }
     s[0] = '\0';
 
-    for (i = (0x1 << (m - 1)); i > 0; i >>= 1) {
+    for (i = (1 << (m - 1)); i > 0; i >>= 1) {
         strcat (s, ((n & i) == i) ? "1" : "0");
     }
 
@@ -275,5 +298,13 @@ int * generate_cardinality_sequence (int n) {
             break;
     }
     return cardinality;
+}
+
+int allowable (int from_row, int from_col, int to_row, int to_col, int * cardinality, int n) {
+    if ( (count_bits (binary (from_col, n), '1') == cardinality[from_row])
+        && (count_bits (binary (to_col, n), '1') == cardinality[to_row]) ) {
+            return 1;
+    }
+    return 0;
 }
 
