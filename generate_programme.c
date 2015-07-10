@@ -3,9 +3,22 @@
 char * binary (int n, int m);
 void blank_line (void);
 int count_bits (char * binary_string, char digit);
+int * generate_cardinality_sequence (int n);
 void test_count_bits (void);
 
-int hand_generated_cardinality_sequence[] = { 0, 1, 2, 1, 2, 1, 2, 1, 2, 1,
+// These will only be needed until I get a proper generator written, but
+// they might be useful later as test cases for the generator.
+
+int hand_generated_cardinality_sequence_1[] = { 0, 1 };
+
+int hand_generated_cardinality_sequence_2[] = { 0, 1, 2, 1 };
+
+int hand_generated_cardinality_sequence_3[] = { 0, 1, 2, 1, 2, 3, 4, 3 };
+
+int hand_generated_cardinality_sequence_4[] = { 0, 1, 2, 1, 2, 1, 2, 1,
+    2, 3, 2, 3, 2, 3, 4, 3 };
+
+int hand_generated_cardinality_sequence_5[] = { 0, 1, 2, 1, 2, 1, 2, 1, 2, 1,
     2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 5};
 
 int main (int argc, char ** argv) {
@@ -23,18 +36,9 @@ int main (int argc, char ** argv) {
             exit (EXIT_FAILURE);
     }
 
-    if (5 == n) {
-        cardinality = hand_generated_cardinality_sequence;
-    }
-    else {
-        int i = 0;
+    assert (n > 0);
 
-        cardinality = (int *) malloc (n);
-        assert (cardinality != NULL);
-        for (i = 0; i < n; i++) {
-            cardinality[i] = -1;
-        }
-    }
+    cardinality = generate_cardinality_sequence (n);
 
     printf ("/*\n");
     printf ("    dot -T pdf order-%d_graph_generated.dot -o order-%d_graph_generated.pdf\n",
@@ -164,6 +168,12 @@ int main (int argc, char ** argv) {
     printf ("}\n");
     blank_line ();
 
+    // Free memory if necessary.
+
+    if (n > 5) {
+        free (cardinality);
+    }
+
     return EXIT_SUCCESS;
 }
 
@@ -218,6 +228,8 @@ int count_bits (char * binary_string, char digit) {
     return count;
 }
 
+// Test cases for the count_bits() function.
+
 void test_count_bits (void) {
     assert (count_bits ("0", '1') == 0);
     assert (count_bits ("1", '1') == 1);
@@ -226,5 +238,42 @@ void test_count_bits (void) {
     assert (count_bits ("10101", 'a') == 0);
     assert (count_bits ("abc", '1') == 0);
     assert (count_bits ("", '1') == 0);
+}
+
+// Generate the list of cardinalities we need.
+//
+// If n > 5 then the caller is responsible for freeing the array.
+
+int * generate_cardinality_sequence (int n) {
+    int i = 0;
+    int * cardinality = NULL;
+
+    assert (n > 0);
+
+    switch (n) {
+        case 1:
+            cardinality = hand_generated_cardinality_sequence_1;
+            break;
+        case 2:
+            cardinality = hand_generated_cardinality_sequence_2;
+            break;
+        case 3:
+            cardinality = hand_generated_cardinality_sequence_3;
+            break;
+        case 4:
+            cardinality = hand_generated_cardinality_sequence_4;
+            break;
+        case 5:
+            cardinality = hand_generated_cardinality_sequence_5;
+            break;
+        default:
+            cardinality = (int *) malloc (n);
+            assert (cardinality != NULL);
+            for (i = 0; i < n; i ++) {
+                cardinality[i] = -1;
+            }
+            break;
+    }
+    return cardinality;
 }
 
