@@ -16,7 +16,8 @@ cardinality, int n);
 int odd (int n);
 int even (int n);
 void count_cardinalities (int n);
-void verify_hand_generated_cardinality_sequences (void);
+void verify_cardinality_sequence_data (int * index, int * sequence, int order);
+void verify_cardinality_sequence (int * sequence_data, int n);
 
 // This data structure is used for generating a tree in memory.
 

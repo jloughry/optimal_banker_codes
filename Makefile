@@ -1,4 +1,4 @@
-target = $(generated_pdf_file)
+target = $(generator)
 
 order = 4
 
@@ -26,6 +26,8 @@ $(generated_pdf_file): $(generator)
 $(generator): $(generator_sources) Makefile
 	gcc -g -Wall -Wextra -o $@ $<
 	mv $(generator_compiled) $@
+
+test: $(generated_pdf_file)
 
 clean::
 	$(rm) $(target) $(generator) *.stackdump \

@@ -16,11 +16,27 @@ int main (int argc, char ** argv) {
             exit (EXIT_FAILURE);
     }
 
-    verify_hand_generated_cardinality_sequences ();
+    // The reason the name is passed in twice is because it's not allowed
+    // to pass a multidimensional array directly into a function.
+
+    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_first_order[0],
+        hand_generated_cardinality_sequence_data_first_order[1], 1);
+    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_second_order[0],
+        hand_generated_cardinality_sequence_data_second_order[1], 2);
+    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_third_order[0],
+        hand_generated_cardinality_sequence_data_third_order[1], 3);
+    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_fourth_order[0],
+        hand_generated_cardinality_sequence_data_fourth_order[1], 4);
+    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_fifth_order[0],
+        hand_generated_cardinality_sequence_data_fifth_order[1], 5);
+    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_sixth_order[0],
+        hand_generated_cardinality_sequence_data_sixth_order[1], 6);
 
     assert (n > 0);
 
     cardinality = generate_cardinality_sequence (n);
+
+    verify_cardinality_sequence (cardinality, n);
 
     root = malloc (sizeof (struct node));
     assert (root);
@@ -239,7 +255,7 @@ char * binary (int n, int num_bits) {
 
     assert ( log (n) <= (double) num_bits );
 
-    s = malloc (num_bits + 1);
+    s = malloc (sizeof (char) * (num_bits + 1));
     if (!s) {
         fprintf (stderr, "malloc() failed\n");
         exit (EXIT_FAILURE);
@@ -295,6 +311,7 @@ void test_count_1_bits (void) {
 int * generate_cardinality_sequence (int n) {
     int i = 0;
     int * cardinality = NULL;
+    int length = 0;
 
     assert (n > 0);
 
@@ -324,9 +341,10 @@ int * generate_cardinality_sequence (int n) {
             assert (-1 == cardinality[1 << n]);
             break;
         default:
-            cardinality = (int *) malloc (n);
+            length = 1 << n;
+            cardinality = malloc (sizeof (int) * length);
             assert (cardinality != NULL);
-            for (i = 0; i < n; i ++) {
+            for (i = 0; i <= length; i ++) {
                 cardinality[i] = -1;
             }
             break;
@@ -371,53 +389,42 @@ void count_cardinalities (int n) {
     }
 }
 
-// Verify that each hand-made cardinality sequence is the right length.
+// Verify that hand-made cardinality sequence data are well-formed.
 
-void verify_hand_generated_cardinality_sequences (void) {
+void verify_cardinality_sequence_data (int * index, int * sequence, int order) {
     int i = 0;
+    int length = 0;
 
-    for (i = 0; i < (1 << 1); i ++) {
-        assert (hand_generated_cardinality_sequence_data_first_order[0][i] == i);
-        assert (hand_generated_cardinality_sequence_data_first_order[1][i] >= 0);
-        assert (hand_generated_cardinality_sequence_data_first_order[1][i] <= 1);
+    length = 1 << order;
+    for (i = 0; i < length; i ++) {
+        assert (index[i] == i);
+        assert (sequence[i] >= 0);
+        assert (sequence[i] <= order);
     }
-    assert (-1 == hand_generated_cardinality_sequence_data_first_order[1][i]);
-
-    for (i = 0; i < (1 << 2); i ++) {
-        assert (hand_generated_cardinality_sequence_data_second_order[0][i] == i);
-        assert (hand_generated_cardinality_sequence_data_second_order[1][i] >= 0);
-        assert (hand_generated_cardinality_sequence_data_second_order[1][i] <= 2);
-    }
-    assert (-1 == hand_generated_cardinality_sequence_data_second_order[1][i]);
-
-    for (i = 0; i < (1 << 3); i ++) {
-        assert (hand_generated_cardinality_sequence_data_third_order[0][i] == i);
-        assert (hand_generated_cardinality_sequence_data_third_order[1][i] >= 0);
-        assert (hand_generated_cardinality_sequence_data_third_order[1][i] <= 3);
-    }
-    assert (-1 == hand_generated_cardinality_sequence_data_third_order[1][i]);
-
-    for (i = 0; i < (1 << 4); i ++) {
-        assert (hand_generated_cardinality_sequence_data_fourth_order[0][i] == i);
-        assert (hand_generated_cardinality_sequence_data_fourth_order[1][i] >= 0);
-        assert (hand_generated_cardinality_sequence_data_fourth_order[1][i] <= 4);
-    }
-    assert (-1 == hand_generated_cardinality_sequence_data_fourth_order[1][i]);
-
-    for (i = 0; i < (1 << 5); i ++) {
-        assert (hand_generated_cardinality_sequence_data_fifth_order[0][i] == i);
-        assert (hand_generated_cardinality_sequence_data_fifth_order[1][i] >= 0);
-        assert (hand_generated_cardinality_sequence_data_fifth_order[1][i] <= 5);
-    }
-    assert (-1 == hand_generated_cardinality_sequence_data_fifth_order[1][i]);
-
-    for (i = 0; i < (1 << 6); i ++) {
-        assert (hand_generated_cardinality_sequence_data_sixth_order[0][i] == i);
-        assert (hand_generated_cardinality_sequence_data_sixth_order[1][i] >= 0);
-        assert (hand_generated_cardinality_sequence_data_sixth_order[1][i] <= 6);
-    }
-    assert (-1 == hand_generated_cardinality_sequence_data_sixth_order[1][i]);
+    assert (-1 == sequence[length]);
 
     return;
+}
+
+// Sanity check any cardinality sequence.
+
+void verify_cardinality_sequence (int * sequence, int n) {
+    int i = 0;
+    int length = 0;
+
+    length = 1 << n;
+    switch (sequence[0]) {
+        case -1:
+            for (i = 1; i <= length; i ++) {
+                assert (-1 == sequence[i]);
+            }
+            break;
+        default:
+            for (i = 0; i < length; i ++) {
+                assert ( (sequence[i] >= 0) && (sequence[i] <= n) );
+            }
+            assert (-1 == sequence[length]);
+            break;
+    }
 }
 
