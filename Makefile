@@ -14,7 +14,7 @@ generated_pdf_file = $(generated_file).pdf
 generated_dot_files = order-*_graph_generated.dot
 generated_pdf_files = order-*_graph_generated.pdf
 
-rm = rm -f
+rm = rm -fv
 edit = vi
 
 all:: $(target)
@@ -32,11 +32,11 @@ clean::
 		$(generated_dot_files) $(generated_pdf_files) \
 		$(bibtex_file) typescript
 
-test: $(target)
-	./$(target) $(order)
-
 vi:
 	$(edit) $(generator_source)
+
+header:
+	$(edit) $(generator_header)
 
 include common.mk
 

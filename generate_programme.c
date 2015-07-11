@@ -1,64 +1,5 @@
 #include "generate_programme.h"
 
-char * binary (int n, int num_bits);
-void blank_line (void);
-int count_1_bits (char * binary_string);
-int * generate_cardinality_sequence (int n);
-void test_count_1_bits (void);
-int allowable (int from_row, int from_col, int to_row, int to_col, int * cardinality, int n);
-int odd (int n);
-int even (int n);
-void count_cardinalities (int n);
-void verify_hand_generated_cardinality_sequences (void);
-
-typedef struct node node;
-struct node {
-    int n;
-    node ** nodes;
-};
-
-// These will only be needed until I get a proper generator written, but
-// they might be useful later as test cases for the generator. They have
-// index numbers built in for the paranoid validator.
-
-int hand_generated_cardinality_sequence_order_1[][3] = {
-    { 0, 1, 2 },
-    { 0, 1, -1 },
-};
-
-int hand_generated_cardinality_sequence_order_2[][5] = {
-    { 0, 1, 2, 3, 4 },
-    { 0, 1, 2, 1, -1 },
-};
-
-int hand_generated_cardinality_sequence_order_3[][9] = {
-    { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
-    { 0, 1, 2, 1, 2, 1, 2, 3, -1 },
-};
-
-int hand_generated_cardinality_sequence_order_4[][17] = {
-    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 },
-    { 0, 1, 2, 1, 2, 1, 2, 1, 2, 3,  2,  3,  2,  3,  4,  3, -1 },
-};
-
-int hand_generated_cardinality_sequence_order_5[][33] = {
-    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-        20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32 },
-    { 0, 1, 2, 1, 2, 1, 2, 1, 2, 1,  2,  3,  2,  3,  2,  3,  2,  3,  2,  3,
-        2,  3,  4,  3,  4,  3,  4,  3,  4,  3,  4,  5, -1 },
-};
-
-int hand_generated_cardinality_sequence_order_6[][65] = {
-    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-        20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
-        37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53,
-        54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64 },
-    { 0, 1, 2, 1, 2, 1, 2, 1, 2, 1,  2,  1,  2,  3,  2,  3,  2,  3,  2,  3,
-         2,  3,  2,  3,  2,  3,  2,  3,  2,  3,  2,  3,  4,  3,  4,  3,  4,
-         3,  4,  3,  4,  3,  4,  3,  4,  3,  4,  3,  4,  3,  4,  3,  4,  5,
-         4,  5,  4,  5,  4,  5,  4,  5,  6,  5, -1 },
-};
-
 int main (int argc, char ** argv) {
     int n = 0;
     int row = 0;
@@ -67,9 +8,6 @@ int main (int argc, char ** argv) {
     node * root = NULL;
 
     switch (argc) {
-        case 1:
-            n = 6;  // for gdb
-            break;
         case 2:
             n = atoi (argv[1]);
             break;
@@ -121,7 +59,7 @@ int main (int argc, char ** argv) {
 
         // break long lines
 
-        if ((row % 5) == 4) {
+        if ((row % 4) == 3) {
             blank_line ();
             printf ("        ");
         }
@@ -217,40 +155,49 @@ int main (int argc, char ** argv) {
 
             // break long lines
 
-            if ((col % 5) == 4) {
+            if ((col % 4) == 3) {
                 printf ("\n    ");
             }
         }
-        blank_line ();
+        // blank_line ();
     }
 
-    // Now generate the graph of allowable transitions.
+    // Now generate the graph of allowable transitions (but only if we have
+    // good cardinality data).
 
-    blank_line ();
-    printf ("    /* These are the allowable transitions. */\n");
-    blank_line ();
-    printf ("    edge [style=solid,color=black]\n");
-    blank_line ();
+    if (cardinality[0] >= 0) {
+        blank_line ();
+        printf ("    /* These are the allowable transitions. */\n");
+        blank_line ();
+        printf ("    edge [style=solid,color=black]\n");
+        blank_line ();
 
-    for (row = 0; row < ( (1 << n) - 1); row ++) {
-        for (col = 0; col < (1 << n); col ++) {
-            int row_plus_one_col = 0;
+        for (row = 0; row < ( (1 << n) - 1); row ++) {
+            for (col = 0; col < (1 << n); col ++) {
+                int row_plus_one_col = 0;
 
-            for (row_plus_one_col = 0; row_plus_one_col < (1 << n); row_plus_one_col ++) {
-                if (allowable (row, col, row + 1, row_plus_one_col, cardinality, n)) {
+                for (row_plus_one_col = 0; row_plus_one_col < (1 << n); row_plus_one_col ++) {
+                    if (allowable (row, col, row + 1, row_plus_one_col, cardinality, n)) {
 
-                    assert (count_1_bits (binary (col,n)) == cardinality[row]);
-                    assert (count_1_bits (binary (row_plus_one_col, n)) == cardinality[row + 1]);
+                        assert (count_1_bits (binary (col,n)) == cardinality[row]);
+                        assert (count_1_bits (binary (row_plus_one_col, n)) == cardinality[row + 1]);
 
-                    printf ("    level_%d_%s -> level_%d_%s\n",
-                        row, binary(col, n), row + 1, binary (row_plus_one_col, n));
+                        printf ("    level_%d_%s -> level_%d_%s\n",
+                            row, binary (col, n), row + 1, binary (row_plus_one_col, n));
+                    }
                 }
             }
+            blank_line ();
         }
+    }
+    else {
+        fprintf (stderr,
+            "We have no cardinality data; not attempting to generate the graph of allowed transitions.\n");
     }
 
     // End of DOT source file.
 
+    printf ("    /* end of .dot file */\n");
     printf ("}\n");
     blank_line ();
 
@@ -328,7 +275,7 @@ void test_count_1_bits (void) {
 
 // Generate the list of cardinalities we need.
 //
-// If n > 5 then the caller is responsible for freeing the array.
+// If n > 6 then the caller is responsible for freeing the array.
 
 int * generate_cardinality_sequence (int n) {
     int i = 0;
@@ -338,27 +285,27 @@ int * generate_cardinality_sequence (int n) {
 
     switch (n) {
         case 1:
-            cardinality = hand_generated_cardinality_sequence_order_1[1];
+            cardinality = hand_generated_cardinality_sequence_data_first_order[1];
             assert (-1 == cardinality[1 << n]);
             break;
         case 2:
-            cardinality = hand_generated_cardinality_sequence_order_2[1];
+            cardinality = hand_generated_cardinality_sequence_data_second_order[1];
             assert (-1 == cardinality[1 << n]);
             break;
         case 3:
-            cardinality = hand_generated_cardinality_sequence_order_3[1];
+            cardinality = hand_generated_cardinality_sequence_data_third_order[1];
             assert (-1 == cardinality[1 << n]);
             break;
         case 4:
-            cardinality = hand_generated_cardinality_sequence_order_4[1];
+            cardinality = hand_generated_cardinality_sequence_data_fourth_order[1];
             assert (-1 == cardinality[1 << n]);
             break;
         case 5:
-            cardinality = hand_generated_cardinality_sequence_order_5[1];
+            cardinality = hand_generated_cardinality_sequence_data_fifth_order[1];
             assert (-1 == cardinality[1 << n]);
             break;
         case 6:
-            cardinality = hand_generated_cardinality_sequence_order_6[1];
+            cardinality = hand_generated_cardinality_sequence_data_sixth_order[1];
             assert (-1 == cardinality[1 << n]);
             break;
         default:
@@ -391,7 +338,7 @@ int odd (int n) {
 // Is $n$ even?
 
 int even (int n) {
-    return !odd(n);
+    return !odd (n);
 }
 
 // This is a scaffolding function to count cardinalities.
@@ -415,46 +362,46 @@ void verify_hand_generated_cardinality_sequences (void) {
     int i = 0;
 
     for (i = 0; i < (1 << 1); i ++) {
-        assert (hand_generated_cardinality_sequence_order_1[0][i] == i);
-        assert (hand_generated_cardinality_sequence_order_1[1][i] >= 0);
-        assert (hand_generated_cardinality_sequence_order_1[1][i] <= 1);
+        assert (hand_generated_cardinality_sequence_data_first_order[0][i] == i);
+        assert (hand_generated_cardinality_sequence_data_first_order[1][i] >= 0);
+        assert (hand_generated_cardinality_sequence_data_first_order[1][i] <= 1);
     }
-    assert (-1 == hand_generated_cardinality_sequence_order_1[1][i]);
+    assert (-1 == hand_generated_cardinality_sequence_data_first_order[1][i]);
 
     for (i = 0; i < (1 << 2); i ++) {
-        assert (hand_generated_cardinality_sequence_order_2[0][i] == i);
-        assert (hand_generated_cardinality_sequence_order_2[1][i] >= 0);
-        assert (hand_generated_cardinality_sequence_order_2[1][i] <= 2);
+        assert (hand_generated_cardinality_sequence_data_second_order[0][i] == i);
+        assert (hand_generated_cardinality_sequence_data_second_order[1][i] >= 0);
+        assert (hand_generated_cardinality_sequence_data_second_order[1][i] <= 2);
     }
-    assert (-1 == hand_generated_cardinality_sequence_order_2[1][i]);
+    assert (-1 == hand_generated_cardinality_sequence_data_second_order[1][i]);
 
     for (i = 0; i < (1 << 3); i ++) {
-        assert (hand_generated_cardinality_sequence_order_3[0][i] == i);
-        assert (hand_generated_cardinality_sequence_order_3[1][i] >= 0);
-        assert (hand_generated_cardinality_sequence_order_3[1][i] <= 3);
+        assert (hand_generated_cardinality_sequence_data_third_order[0][i] == i);
+        assert (hand_generated_cardinality_sequence_data_third_order[1][i] >= 0);
+        assert (hand_generated_cardinality_sequence_data_third_order[1][i] <= 3);
     }
-    assert (-1 == hand_generated_cardinality_sequence_order_3[1][i]);
+    assert (-1 == hand_generated_cardinality_sequence_data_third_order[1][i]);
 
     for (i = 0; i < (1 << 4); i ++) {
-        assert (hand_generated_cardinality_sequence_order_4[0][i] == i);
-        assert (hand_generated_cardinality_sequence_order_4[1][i] >= 0);
-        assert (hand_generated_cardinality_sequence_order_4[1][i] <= 4);
+        assert (hand_generated_cardinality_sequence_data_fourth_order[0][i] == i);
+        assert (hand_generated_cardinality_sequence_data_fourth_order[1][i] >= 0);
+        assert (hand_generated_cardinality_sequence_data_fourth_order[1][i] <= 4);
     }
-    assert (-1 == hand_generated_cardinality_sequence_order_4[1][i]);
+    assert (-1 == hand_generated_cardinality_sequence_data_fourth_order[1][i]);
 
     for (i = 0; i < (1 << 5); i ++) {
-        assert (hand_generated_cardinality_sequence_order_5[0][i] == i);
-        assert (hand_generated_cardinality_sequence_order_5[1][i] >= 0);
-        assert (hand_generated_cardinality_sequence_order_5[1][i] <= 5);
+        assert (hand_generated_cardinality_sequence_data_fifth_order[0][i] == i);
+        assert (hand_generated_cardinality_sequence_data_fifth_order[1][i] >= 0);
+        assert (hand_generated_cardinality_sequence_data_fifth_order[1][i] <= 5);
     }
-    assert (-1 == hand_generated_cardinality_sequence_order_5[1][i]);
+    assert (-1 == hand_generated_cardinality_sequence_data_fifth_order[1][i]);
 
     for (i = 0; i < (1 << 6); i ++) {
-        assert (hand_generated_cardinality_sequence_order_6[0][i] == i);
-        assert (hand_generated_cardinality_sequence_order_6[1][i] >= 0);
-        assert (hand_generated_cardinality_sequence_order_6[1][i] <= 6);
+        assert (hand_generated_cardinality_sequence_data_sixth_order[0][i] == i);
+        assert (hand_generated_cardinality_sequence_data_sixth_order[1][i] >= 0);
+        assert (hand_generated_cardinality_sequence_data_sixth_order[1][i] <= 6);
     }
-    assert (-1 == hand_generated_cardinality_sequence_order_6[1][i]);
+    assert (-1 == hand_generated_cardinality_sequence_data_sixth_order[1][i]);
 
     return;
 }
