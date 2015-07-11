@@ -16,23 +16,9 @@ int main (int argc, char ** argv) {
             exit (EXIT_FAILURE);
     }
 
-    // The reason the name is passed in twice is because it's not allowed
-    // to pass a multidimensional array directly into a function.
-
-    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_first_order[0],
-        hand_generated_cardinality_sequence_data_first_order[1], 1);
-    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_second_order[0],
-        hand_generated_cardinality_sequence_data_second_order[1], 2);
-    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_third_order[0],
-        hand_generated_cardinality_sequence_data_third_order[1], 3);
-    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_fourth_order[0],
-        hand_generated_cardinality_sequence_data_fourth_order[1], 4);
-    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_fifth_order[0],
-        hand_generated_cardinality_sequence_data_fifth_order[1], 5);
-    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_sixth_order[0],
-        hand_generated_cardinality_sequence_data_sixth_order[1], 6);
-
     assert (n > 0);
+
+    verify_cardinality_sequence_data ();
 
     cardinality = generate_cardinality_sequence (n);
 
@@ -426,5 +412,27 @@ void verify_cardinality_sequence (int * sequence, int n) {
             assert (-1 == sequence[length]);
             break;
     }
+}
+
+// Validate the hand-made cardinality sequence data.
+
+void verify_cardinality_sequence_data (void) {
+    // The reason the name is passed in twice is because it's not allowed
+    // to pass a multidimensional array directly into a function.
+
+    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_first_order[0],
+        hand_generated_cardinality_sequence_data_first_order[1], 1);
+    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_second_order[0],
+        hand_generated_cardinality_sequence_data_second_order[1], 2);
+    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_third_order[0],
+        hand_generated_cardinality_sequence_data_third_order[1], 3);
+    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_fourth_order[0],
+        hand_generated_cardinality_sequence_data_fourth_order[1], 4);
+    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_fifth_order[0],
+        hand_generated_cardinality_sequence_data_fifth_order[1], 5);
+    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_sixth_order[0],
+        hand_generated_cardinality_sequence_data_sixth_order[1], 6);
+
+    return;
 }
 
