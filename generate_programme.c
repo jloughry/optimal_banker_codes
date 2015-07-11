@@ -124,15 +124,32 @@ int main (int argc, char ** argv) {
     printf ("    /* Connect the states invisibly so they stay lined up vertically. */\n");
 
     for (col = 0; col < (1 << n); col ++) {
+        char * p = NULL;
+
         blank_line ();
+        p = binary (col, n);
+        printf ("    level_%d_%s -> level_%d_%s; ", 0, p, 1, p);
+        free (p);
 
-        for (row = 0; row < ((1 << n) - 1); row ++) {
-            char * p = NULL;
-
+        for (row = 1; row < ((1 << n) - 1); row ++) {
             p = binary (col, n);
-            printf ("    level_%d_%s -> level_%d_%s\n", row, p, row + 1, p);
+            printf ("level_%d_%s -> level_%d_%s", row, p, row + 1, p);
             free (p);
+
+            if ( row < ((1 << n) - 2)) {
+                printf (";");
+            }
+
+            // break long lines
+
+            if ((row % 2) == 1) {
+                printf ("\n    ");
+            }
+            else if ( row < ((1 << n) - 2)) {
+                printf (" ");
+            }
         }
+        blank_line ();
     }
 
     blank_line ();
@@ -147,8 +164,6 @@ int main (int argc, char ** argv) {
         free (p);
 
         for (col = 1; col < (1 << n); col ++) {
-            char * p = NULL;
-
             p = binary (col, n);
             printf (" -> level_%d_%s", row, p);
             free (p);
@@ -159,14 +174,14 @@ int main (int argc, char ** argv) {
                 printf ("\n    ");
             }
         }
-        // blank_line ();
     }
+
+    blank_line ();
 
     // Now generate the graph of allowable transitions (but only if we have
     // good cardinality data).
 
     if (cardinality[0] >= 0) {
-        blank_line ();
         printf ("    /* These are the allowable transitions. */\n");
         blank_line ();
         printf ("    edge [style=solid,color=black]\n");
