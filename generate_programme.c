@@ -5,7 +5,8 @@ int main (int argc, char ** argv) {
     int row = 0;
     int col = 0;
     int * cardinality = NULL;
-    node * root = NULL;
+    tree_node * root = NULL;
+    int i = 0;
 
     switch (argc) {
         case 2:
@@ -17,17 +18,13 @@ int main (int argc, char ** argv) {
     }
 
     assert (n > 0);
+    assert (n < MAX_N);
 
-    verify_cardinality_sequence_data ();
+    verify_all_hand_made_cardinality_sequence_data ();
 
     cardinality = generate_cardinality_sequence (n);
 
     verify_cardinality_sequence (cardinality, n);
-
-    root = malloc (sizeof (struct node));
-    assert (root);
-    root->n = 0;
-    root->nodes = NULL;
 
     // Write the header of the DOT source file to stdout.
 
@@ -182,6 +179,16 @@ int main (int argc, char ** argv) {
 
     // Now generate the graph of allowable transitions (but only if we have
     // good cardinality data).
+
+    assert (NULL == root);
+    root = malloc (sizeof (tree_node));
+    assert (root);
+    root->level = 0;
+    root->value = 0;
+    for (i = 0; i < MAX_N; i ++) {
+        root->next[i] = NULL;
+    }
+    display_tree_node (root, n);
 
     if (cardinality[0] >= 0) {
         printf ("    /* These are the allowable transitions. */\n");
@@ -377,7 +384,7 @@ void count_cardinalities (int n) {
 
 // Verify that hand-made cardinality sequence data are well-formed.
 
-void verify_cardinality_sequence_data (int * index, int * sequence, int order) {
+void verify_one_cardinality_sequence_data (int * index, int * sequence, int order) {
     int i = 0;
     int length = 0;
 
@@ -416,23 +423,47 @@ void verify_cardinality_sequence (int * sequence, int n) {
 
 // Validate the hand-made cardinality sequence data.
 
-void verify_cardinality_sequence_data (void) {
+void verify_all_hand_made_cardinality_sequence_data (void) {
     // The reason the name is passed in twice is because it's not allowed
     // to pass a multidimensional array directly into a function.
 
-    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_first_order[0],
+    verify_one_cardinality_sequence_data (hand_generated_cardinality_sequence_data_first_order[0],
         hand_generated_cardinality_sequence_data_first_order[1], 1);
-    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_second_order[0],
+    verify_one_cardinality_sequence_data (hand_generated_cardinality_sequence_data_second_order[0],
         hand_generated_cardinality_sequence_data_second_order[1], 2);
-    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_third_order[0],
+    verify_one_cardinality_sequence_data (hand_generated_cardinality_sequence_data_third_order[0],
         hand_generated_cardinality_sequence_data_third_order[1], 3);
-    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_fourth_order[0],
+    verify_one_cardinality_sequence_data (hand_generated_cardinality_sequence_data_fourth_order[0],
         hand_generated_cardinality_sequence_data_fourth_order[1], 4);
-    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_fifth_order[0],
+    verify_one_cardinality_sequence_data (hand_generated_cardinality_sequence_data_fifth_order[0],
         hand_generated_cardinality_sequence_data_fifth_order[1], 5);
-    verify_cardinality_sequence_data (hand_generated_cardinality_sequence_data_sixth_order[0],
+    verify_one_cardinality_sequence_data (hand_generated_cardinality_sequence_data_sixth_order[0],
         hand_generated_cardinality_sequence_data_sixth_order[1], 6);
 
+    return;
+}
+
+// Display a single node of the tree.
+
+void display_tree_node (tree_node * p, int n) {
+    if (NULL == p) {
+        fprintf (stderr, "NULL tree_node.\n");
+    }
+    else {
+        fprintf (stderr, "tree_node %p: level %d, value %d has ", (void *) p, p->level, p->value);
+        if (p->next) {
+            int i = 0;
+
+            fprintf (stderr, "children");
+            for (i = 0; i < n; i++) {
+                fprintf (stderr, " %p", p->next[i]);
+            }
+            fprintf (stderr, ".\n");
+        }
+        else {
+            fprintf (stderr, "no children.\n");
+        }
+    }
     return;
 }
 

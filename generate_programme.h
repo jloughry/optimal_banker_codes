@@ -4,6 +4,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+// This data structure is used for generating a tree in memory.
+// There will be at most $n$ child nodes, but we don't know $n$ at compile
+// time.
+
+typedef struct tree_node tree_node;
+
+#define MAX_N 20
+
+struct tree_node {
+    int level;
+    int value;
+    tree_node * next[MAX_N]; // FIXME (make this dynamically allocated)
+};
+
 // Function prototypes:
 
 char * binary (int n, int num_bits);
@@ -11,22 +25,14 @@ void blank_line (void);
 int count_1_bits (char * binary_string);
 int * generate_cardinality_sequence (int n);
 void test_count_1_bits (void);
-int allowable (int from_row, int from_col, int to_row, int to_col, int *
-cardinality, int n);
+int allowable (int from_row, int from_col, int to_row, int to_col, int * cardinality, int n);
 int odd (int n);
 int even (int n);
 void count_cardinalities (int n);
-void verify_cardinality_sequence_data (int * index, int * sequence, int order);
+void verify_one_cardinality_sequence_data (int * index, int * sequence, int order);
+void verify_all_hand_made_cardinality_sequence_data (void);
 void verify_cardinality_sequence (int * sequence_data, int n);
-void verify_cardinality_sequence_data (void);
-
-// This data structure is used for generating a tree in memory.
-
-typedef struct node node;
-struct node {
-    int n;
-    node ** nodes;
-};
+void display_tree_node (tree_node * p, int n);
 
 // These will only be needed until I get a proper generator written, but
 // they might be useful later as test cases for the generator. They have
