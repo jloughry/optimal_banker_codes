@@ -33,6 +33,9 @@ void verify_one_cardinality_sequence_data (int * index, int * sequence, int orde
 void verify_all_hand_made_cardinality_sequence_data (void);
 void verify_cardinality_sequence (int * sequence_data, int n);
 void display_tree_node (tree_node * p, int n);
+void destroy_tree (tree_node ** root);
+void insert_tree_node (tree_node ** root, int n,
+    int from_level, int from_value, int to_level, int to_value);
 
 // These will only be needed until I get a proper generator written, but
 // they might be useful later as test cases for the generator. They have

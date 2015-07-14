@@ -208,6 +208,9 @@ int main (int argc, char ** argv) {
 
                         printf ("    level_%d_%s -> level_%d_%s\n",
                             row, binary (col, n), row + 1, binary (row_plus_one_col, n));
+
+                        // Add a tree node at the appropriate level.
+                        insert_tree_node (& root, n, row, col, row + 1, row_plus_one_col);
                     }
                 }
             }
@@ -231,7 +234,8 @@ int main (int argc, char ** argv) {
         free (cardinality);
     }
 
-    free (root);
+    destroy_tree (&root);
+    assert (NULL == root);
 
     return EXIT_SUCCESS;
 }
@@ -464,6 +468,68 @@ void display_tree_node (tree_node * p, int n) {
             fprintf (stderr, "no children.\n");
         }
     }
+    return;
+}
+
+// Free the memory used by an entire tree.
+
+void destroy_tree (tree_node ** root) {
+    int i = 0;
+
+    if (*root) {
+        for (i = 0; i < MAX_N; i ++) {
+            if ((*root)->next[i]) {
+                fprintf (stderr, "destroying child %d (%p)\n", i, (*root)->next[i]);
+                destroy_tree (&((*root)->next[i]));
+            }
+        }
+        fprintf (stderr, "destroying root %p\n", *root);
+        free (*root);
+        *root = NULL;
+    }
+    else {
+        fprintf (stderr, "root is null\n");
+    }
+    return;
+}
+
+// Insert a node in an existing tree at the indicated level.
+
+void insert_tree_node (tree_node ** root, int n,
+    int from_level, int from_value, int to_level, int to_value) {
+    tree_node * node_ptr = NULL;
+
+    assert (*root);
+
+    node_ptr = *root;
+    
+    assert (node_ptr);
+
+    fprintf (stderr, "in insert_tree_node(), *root = %p, n = %d\n", *root, n);
+    fprintf (stderr, "in insert_tree_node(), from_level = %d, from_value = %d\n", from_level, from_value);
+    fprintf (stderr, "in insert_tree_node(), to_level = %d, to_value = %d\n", to_level, to_value);
+
+    assert (from_level >= 0 && from_level < n);
+    assert (from_value >= 0 && from_value < (1 << n));
+    assert (to_level >= 0 && to_level < n);
+    assert (to_value >= 0 && to_value < (1 << n));
+    assert (to_level - from_level == 1);
+
+    // Search down through the tree to find from_level and from_value.
+    
+    // Search for the first free next slot.
+
+    // Make a new node and connect it to the free next slot.
+
+    // root = malloc (sizeof (tree_node));
+    // assert (root);
+    // root->level = 0;
+    // root->value = 0;
+    // for (i = 0; i < MAX_N; i ++) {
+        // root->next[i] = NULL;
+    // }
+    // display_tree_node (root, n);
+
     return;
 }
 
