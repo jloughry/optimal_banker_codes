@@ -5,8 +5,8 @@ int main (int argc, char ** argv) {
     int row = 0;
     int col = 0;
     int * cardinality = NULL;
-    tree_node * root = NULL;
-    int i = 0;
+    aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
+    aluminium_Christmas_tree * root = &big_dumb_array[0][0];
 
     switch (argc) {
         case 2:
@@ -18,7 +18,32 @@ int main (int argc, char ** argv) {
     }
 
     assert (n > 0);
-    assert (n < MAX_N);
+    assert (n < MAX_n);
+    assert (root);
+
+    // Initialise the big dumb array with sentinel values.
+
+    // Is it possible to malloc a two-dimensional array and index it?
+
+    /*
+    big_dumb_array = malloc ((1 << n) * sizeof (aluminium_Christmas_tree)
+        * (1 << n) * sizeof (aluminium_Christmas_tree));
+    assert (big_dumb_array);
+    */
+
+    for (row = 0; row < (1 << n); row ++) {
+        for (col = 0; col < (1 << n); col ++) {
+            int i = 0;
+
+            big_dumb_array[row][col].level = -1;
+            big_dumb_array[row][col].value = -99;
+            for (i = 0; i < 2 * MAX_n; i ++) {
+                big_dumb_array[row][col].next[i] = NULL;
+            }
+        }
+    }
+
+    display_tree_node (root);
 
     verify_all_hand_made_cardinality_sequence_data ();
 
@@ -180,17 +205,13 @@ int main (int argc, char ** argv) {
     // Now generate the graph of allowable transitions (but only if we have
     // good cardinality data).
 
-    assert (NULL == root);
-    root = malloc (sizeof (tree_node));
-    assert (root);
-    root->level = 0;
-    root->value = 0;
-    for (i = 0; i < MAX_N; i ++) {
-        root->next[i] = NULL;
-    }
-    display_tree_node (root, n);
+    // A great big shiny aluminium Christmas tree!
 
     if (cardinality[0] >= 0) {
+        int number_of_nodes_used = 0;
+        double fill_factor_n = 0.0;
+        double fill_factor_MAX_n = 0.0;
+
         printf ("    /* These are the allowable transitions. */\n");
         blank_line ();
         printf ("    edge [style=solid,color=black]\n");
@@ -199,8 +220,10 @@ int main (int argc, char ** argv) {
         for (row = 0; row < ( (1 << n) - 1); row ++) {
             for (col = 0; col < (1 << n); col ++) {
                 int row_plus_one_col = 0;
+                int pointer_number = 0;
 
                 for (row_plus_one_col = 0; row_plus_one_col < (1 << n); row_plus_one_col ++) {
+
                     if (allowable (row, col, row + 1, row_plus_one_col, cardinality, n)) {
 
                         assert (count_1_bits (binary (col,n)) == cardinality[row]);
@@ -209,13 +232,31 @@ int main (int argc, char ** argv) {
                         printf ("    level_%d_%s -> level_%d_%s\n",
                             row, binary (col, n), row + 1, binary (row_plus_one_col, n));
 
-                        // Add a tree node at the appropriate level.
-                        insert_tree_node (& root, n, row, col, row + 1, row_plus_one_col);
+                        assert (pointer_number < 2 * MAX_n);
+
+                        big_dumb_array[row][col].level = row;
+                        big_dumb_array[row][col].value = col;
+                        big_dumb_array[row][col].next[pointer_number] =
+                            &(big_dumb_array[row + 1][row_plus_one_col]);
+
+                        ++ pointer_number;
                     }
                 }
             }
             blank_line ();
         }
+        for (row = 0; row < (1 << n); row ++) {
+            for (col = 0; col < (1 << n); col ++) {
+                if (big_dumb_array[row][col].next[0]) {
+                    ++ number_of_nodes_used;
+                }
+            }
+        }
+        fill_factor_n = (double) number_of_nodes_used / ( pow(2.0, n) * pow (2.0, n) );
+        fill_factor_MAX_n = (double) number_of_nodes_used / ((1 << MAX_n) * (1 << MAX_n));
+        fprintf (stderr, "%d nodes used; fill factor = %lf based on %d (or %lf based on %d)\n",
+            number_of_nodes_used, fill_factor_n, n, fill_factor_MAX_n, MAX_n);
+        display_tree_node (root);
     }
     else {
         fprintf (stderr,
@@ -234,8 +275,8 @@ int main (int argc, char ** argv) {
         free (cardinality);
     }
 
-    destroy_tree (&root);
-    assert (NULL == root);
+    // destroy_tree (&root);
+    // assert (NULL == root);
 
     return EXIT_SUCCESS;
 }
@@ -449,18 +490,23 @@ void verify_all_hand_made_cardinality_sequence_data (void) {
 
 // Display a single node of the tree.
 
-void display_tree_node (tree_node * p, int n) {
+void display_tree_node (aluminium_Christmas_tree * p) {
     if (NULL == p) {
         fprintf (stderr, "NULL tree_node.\n");
     }
     else {
         fprintf (stderr, "tree_node %p: level %d, value %d has ", (void *) p, p->level, p->value);
-        if (p->next) {
+        if (p->next[0]) {
             int i = 0;
 
             fprintf (stderr, "children");
-            for (i = 0; i < n; i++) {
-                fprintf (stderr, " %p", p->next[i]);
+            for (i = 0; i < 2 * MAX_n; i++) {
+                if (NULL == p->next[i]) {
+                    break;
+                }
+                else {
+                    fprintf (stderr, " %p", p->next[i]);
+                }
             }
             fprintf (stderr, ".\n");
         }
@@ -468,68 +514,6 @@ void display_tree_node (tree_node * p, int n) {
             fprintf (stderr, "no children.\n");
         }
     }
-    return;
-}
-
-// Free the memory used by an entire tree.
-
-void destroy_tree (tree_node ** root) {
-    int i = 0;
-
-    if (*root) {
-        for (i = 0; i < MAX_N; i ++) {
-            if ((*root)->next[i]) {
-                fprintf (stderr, "destroying child %d (%p)\n", i, (*root)->next[i]);
-                destroy_tree (&((*root)->next[i]));
-            }
-        }
-        fprintf (stderr, "destroying root %p\n", *root);
-        free (*root);
-        *root = NULL;
-    }
-    else {
-        fprintf (stderr, "root is null\n");
-    }
-    return;
-}
-
-// Insert a node in an existing tree at the indicated level.
-
-void insert_tree_node (tree_node ** root, int n,
-    int from_level, int from_value, int to_level, int to_value) {
-    tree_node * node_ptr = NULL;
-
-    assert (*root);
-
-    node_ptr = *root;
-    
-    assert (node_ptr);
-
-    fprintf (stderr, "in insert_tree_node(), *root = %p, n = %d\n", *root, n);
-    fprintf (stderr, "in insert_tree_node(), from_level = %d, from_value = %d\n", from_level, from_value);
-    fprintf (stderr, "in insert_tree_node(), to_level = %d, to_value = %d\n", to_level, to_value);
-
-    assert (from_level >= 0 && from_level < n);
-    assert (from_value >= 0 && from_value < (1 << n));
-    assert (to_level >= 0 && to_level < n);
-    assert (to_value >= 0 && to_value < (1 << n));
-    assert (to_level - from_level == 1);
-
-    // Search down through the tree to find from_level and from_value.
-    
-    // Search for the first free next slot.
-
-    // Make a new node and connect it to the free next slot.
-
-    // root = malloc (sizeof (tree_node));
-    // assert (root);
-    // root->level = 0;
-    // root->value = 0;
-    // for (i = 0; i < MAX_N; i ++) {
-        // root->next[i] = NULL;
-    // }
-    // display_tree_node (root, n);
-
     return;
 }
 
