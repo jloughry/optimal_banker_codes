@@ -6,7 +6,7 @@ int main (int argc, char ** argv) {
     int col = 0;
     int * cardinality = NULL;
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
-    aluminium_Christmas_tree * root = &big_dumb_array[0][0];
+    aluminium_Christmas_tree * start = &big_dumb_array[0][0];
 
     switch (argc) {
         case 2:
@@ -19,7 +19,7 @@ int main (int argc, char ** argv) {
 
     assert (n > 0);
     assert (n < MAX_n);
-    assert (root);
+    assert (start);
 
     // Initialise the big dumb array with sentinel values.
 
@@ -43,7 +43,7 @@ int main (int argc, char ** argv) {
         }
     }
 
-    display_tree_node (root);
+    display_digraph_node (start);
 
     verify_all_hand_made_cardinality_sequence_data ();
 
@@ -256,7 +256,7 @@ int main (int argc, char ** argv) {
         fill_factor_MAX_n = (double) number_of_nodes_used / ((1 << MAX_n) * (1 << MAX_n));
         fprintf (stderr, "%d nodes used; fill factor = %lf based on %d (or %lf based on %d)\n",
             number_of_nodes_used, fill_factor_n, n, fill_factor_MAX_n, MAX_n);
-        display_tree_node (root);
+        display_digraph_node (start);
     }
     else {
         fprintf (stderr,
@@ -274,9 +274,6 @@ int main (int argc, char ** argv) {
     if (n > 6) {
         free (cardinality);
     }
-
-    // destroy_tree (&root);
-    // assert (NULL == root);
 
     return EXIT_SUCCESS;
 }
@@ -488,14 +485,14 @@ void verify_all_hand_made_cardinality_sequence_data (void) {
     return;
 }
 
-// Display a single node of the tree.
+// Display a single node of the digraph.
 
-void display_tree_node (aluminium_Christmas_tree * p) {
+void display_digraph_node (aluminium_Christmas_tree * p) {
     if (NULL == p) {
-        fprintf (stderr, "NULL tree_node.\n");
+        fprintf (stderr, "NULL digraph node.\n");
     }
     else {
-        fprintf (stderr, "tree_node %p: level %d, value %d has ", (void *) p, p->level, p->value);
+        fprintf (stderr, "digraph node %p: level %d, value %d has ", (void *) p, p->level, p->value);
         if (p->next[0]) {
             int i = 0;
 
