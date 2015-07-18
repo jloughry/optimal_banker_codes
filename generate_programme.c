@@ -37,7 +37,7 @@ int main (int argc, char ** argv) {
 
             big_dumb_array[row][col].level = -1;
             big_dumb_array[row][col].value = -99;
-            for (i = 0; i < 2 * MAX_n; i ++) {
+            for (i = 0; i < MAX_POINTERS; i ++) {
                 big_dumb_array[row][col].next[i] = NULL;
             }
         }
@@ -232,7 +232,7 @@ int main (int argc, char ** argv) {
                         printf ("    level_%d_%s -> level_%d_%s\n",
                             row, binary (col, n), row + 1, binary (row_plus_one_col, n));
 
-                        assert (pointer_number < 2 * MAX_n);
+                        assert (pointer_number < MAX_POINTERS);
 
                         big_dumb_array[row][col].level = row;
                         big_dumb_array[row][col].value = col;
@@ -497,7 +497,7 @@ void display_digraph_node (aluminium_Christmas_tree * p) {
             int i = 0;
 
             fprintf (stderr, "children");
-            for (i = 0; i < 2 * MAX_n; i++) {
+            for (i = 0; i < MAX_POINTERS; i++) {
                 if (NULL == p->next[i]) {
                     break;
                 }

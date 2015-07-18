@@ -4,13 +4,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-// This data structure is used for generating a tree in memory.
+// This data structure is used for generating a digraph in memory.
 // There will be at most $n$ child nodes, but we don't know $n$ at compile
 // time.
 
 typedef struct aluminium_Christmas_tree aluminium_Christmas_tree;
 
 #define MAX_n 7 // larger than 7, the programme segfaults.
+#define MAX_POINTERS (3 * MAX_n)
 
 /*
 I call this data structure a `great big shiny aluminium Christmas tree'
@@ -50,7 +51,7 @@ level_1_0001 -> level_2_1100
 struct aluminium_Christmas_tree {
     int level;
     int value;
-    aluminium_Christmas_tree * next[2 * MAX_n]; // FIXME: monitor for overflow
+    aluminium_Christmas_tree * next[3 * MAX_n]; // FIXME: monitor for overflow
 };
 
 // Function prototypes:
@@ -67,7 +68,7 @@ void count_cardinalities (int n);
 void verify_one_cardinality_sequence_data (int * index, int * sequence, int order);
 void verify_all_hand_made_cardinality_sequence_data (void);
 void verify_cardinality_sequence (int * sequence_data, int n);
-void display_tree_node (aluminium_Christmas_tree * p);
+void display_digraph_node (aluminium_Christmas_tree * p);
 
 // These will only be needed until I get a proper generator written, but
 // they might be useful later as test cases for the generator. They have
