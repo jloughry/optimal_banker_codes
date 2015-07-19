@@ -51,6 +51,9 @@ level_1_0001 -> level_2_1100
 struct aluminium_Christmas_tree {
     int level;
     int value;
+    int in_use;
+    int visited;
+    int num_children;
     aluminium_Christmas_tree * next[3 * MAX_n]; // FIXME: monitor for overflow
 };
 
@@ -68,7 +71,8 @@ void count_cardinalities (int n);
 void verify_one_cardinality_sequence_data (int * index, int * sequence, int order);
 void verify_all_hand_made_cardinality_sequence_data (void);
 void verify_cardinality_sequence (int * sequence_data, int n);
-void display_digraph_node (aluminium_Christmas_tree * p);
+void display_digraph_node (aluminium_Christmas_tree * p, int n);
+void depth_first_search (aluminium_Christmas_tree * p, int n);
 
 // These will only be needed until I get a proper generator written, but
 // they might be useful later as test cases for the generator. They have

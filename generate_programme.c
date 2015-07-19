@@ -37,13 +37,14 @@ int main (int argc, char ** argv) {
 
             big_dumb_array[row][col].level = -1;
             big_dumb_array[row][col].value = -99;
+            big_dumb_array[row][col].in_use = 0;
+            big_dumb_array[row][col].num_children = 0;
+            big_dumb_array[row][col].visited = 0;
             for (i = 0; i < MAX_POINTERS; i ++) {
                 big_dumb_array[row][col].next[i] = NULL;
             }
         }
     }
-
-    display_digraph_node (start);
 
     verify_all_hand_made_cardinality_sequence_data ();
 
@@ -236,8 +237,18 @@ int main (int argc, char ** argv) {
 
                         big_dumb_array[row][col].level = row;
                         big_dumb_array[row][col].value = col;
+                        big_dumb_array[row][col].in_use = 1;
                         big_dumb_array[row][col].next[pointer_number] =
                             &(big_dumb_array[row + 1][row_plus_one_col]);
+                        big_dumb_array[row][col].num_children++;
+
+                        fprintf (stderr, "recorded node %p (%d, %d) -> %p (%d, %d)\n",
+                            &big_dumb_array[row][col],
+                            big_dumb_array[row][col].level,
+                            big_dumb_array[row][col].value,
+                            &big_dumb_array[row + 1][row_plus_one_col],
+                            big_dumb_array[row + 1][row_plus_one_col].level,
+                            big_dumb_array[row + 1][row_plus_one_col].value);
 
                         ++ pointer_number;
                     }
@@ -245,18 +256,30 @@ int main (int argc, char ** argv) {
             }
             blank_line ();
         }
+        if (odd (n)) {
+            big_dumb_array[(1 << n) - 1][(1 << n) - 1].level = (1 << n) - 1;
+            big_dumb_array[(1 << n) - 1][(1 << n) - 1].value = (1 << n) - 1;
+            big_dumb_array[(1 << n) - 1][(1 << n) - 1].in_use = 1;
+
+            fprintf (stderr, "node %p (%d, %d) also created with %d children.\n",
+                &big_dumb_array[(1 << n) - 1][(1 << n) - 1],
+                big_dumb_array[(1 << n) - 1][(1 << n) - 1].level,
+                big_dumb_array[(1 << n) - 1][(1 << n) - 1].value,
+                big_dumb_array[(1 << n) - 1][(1 << n) - 1].num_children);
+        }
+
         for (row = 0; row < (1 << n); row ++) {
             for (col = 0; col < (1 << n); col ++) {
-                if (big_dumb_array[row][col].next[0]) {
+                if (big_dumb_array[row][col].in_use) {
                     ++ number_of_nodes_used;
                 }
             }
         }
+
         fill_factor_n = (double) number_of_nodes_used / ( pow(2.0, n) * pow (2.0, n) );
         fill_factor_MAX_n = (double) number_of_nodes_used / ((1 << MAX_n) * (1 << MAX_n));
-        fprintf (stderr, "%d nodes used; fill factor = %lf based on %d (or %lf based on %d)\n",
+        fprintf (stderr, "%d nodes used; fill factor = %lf based on n = %d (or %lf based on %d)\n",
             number_of_nodes_used, fill_factor_n, n, fill_factor_MAX_n, MAX_n);
-        display_digraph_node (start);
     }
     else {
         fprintf (stderr,
@@ -268,6 +291,9 @@ int main (int argc, char ** argv) {
     printf ("    /* end of .dot file */\n");
     printf ("}\n");
     blank_line ();
+
+    fprintf (stderr, "Beginning depth-first search on %p.\n", start);
+    depth_first_search (start, n);
 
     // Free memory if necessary.
 
@@ -487,17 +513,18 @@ void verify_all_hand_made_cardinality_sequence_data (void) {
 
 // Display a single node of the digraph.
 
-void display_digraph_node (aluminium_Christmas_tree * p) {
+void display_digraph_node (aluminium_Christmas_tree * p, int n) {
     if (NULL == p) {
         fprintf (stderr, "NULL digraph node.\n");
     }
     else {
-        fprintf (stderr, "digraph node %p: level %d, value %d has ", (void *) p, p->level, p->value);
+        fprintf (stderr, "digraph node %p: level %d, value %s has ",
+            (void *) p, p->level, binary (p->value, n));
         if (p->next[0]) {
             int i = 0;
 
-            fprintf (stderr, "children");
-            for (i = 0; i < MAX_POINTERS; i++) {
+            fprintf (stderr, "%d children", p->num_children);
+            for (i = 0; i < MAX_POINTERS; i ++) {
                 if (NULL == p->next[i]) {
                     break;
                 }
@@ -512,5 +539,22 @@ void display_digraph_node (aluminium_Christmas_tree * p) {
         }
     }
     return;
+}
+
+// Depth-first search entire digraph.
+
+void depth_first_search (aluminium_Christmas_tree * p, int n) {
+    int i = 0;
+
+    assert (p);
+
+    p->visited = 1;
+    display_digraph_node (p, n);
+
+    for (i = 0; i < p->num_children; i ++) {
+        if ( !(p->next[i]->visited) ) {
+            depth_first_search (p->next[i], n);
+        }
+    }
 }
 
