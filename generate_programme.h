@@ -10,8 +10,7 @@
 
 typedef struct aluminium_Christmas_tree aluminium_Christmas_tree;
 
-#define MAX_n 7 // larger than 7, the programme segfaults.
-#define MAX_POINTERS (3 * MAX_n)
+#define MAX_n 8 // larger than 8, the programme segfaults.
 
 struct aluminium_Christmas_tree {
     int level;

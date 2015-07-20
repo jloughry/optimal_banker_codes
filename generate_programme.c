@@ -18,7 +18,7 @@ int main (int argc, char ** argv) {
     }
 
     assert (n > 0);
-    assert (n < MAX_n);
+    assert (n <= MAX_n);
     assert (start);
 
     // Initialise the big dumb array with sentinel values.
@@ -244,7 +244,7 @@ int main (int argc, char ** argv) {
                             row, binary (col, n), row + 1, binary (row_plus_one_col, n),
                             &big_dumb_array[row][col], &big_dumb_array[row + 1][row_plus_one_col]);
 
-                        assert (pointer_number < MAX_POINTERS);
+                        assert (pointer_number < predicted_number_of_children);
 
                         big_dumb_array[row][col].level = row;
                         big_dumb_array[row][col].value = col;
@@ -259,6 +259,14 @@ int main (int argc, char ** argv) {
                             &(big_dumb_array[row + 1][row_plus_one_col]);
                         big_dumb_array[row][col].num_children++;
                         big_dumb_array[row][col].num_children_predicted = predicted_number_of_children;
+
+                        // Make sure child nodes exist if they are named.
+
+                        big_dumb_array[row + 1][row_plus_one_col].level = row + 1;
+                        big_dumb_array[row + 1][row_plus_one_col].value = row_plus_one_col;
+                        big_dumb_array[row + 1][row_plus_one_col].in_use = 1;
+
+                        // However, we don't know anything about *their* children.
 
 #ifdef DEBUG
                         fprintf (stderr,
@@ -366,6 +374,10 @@ char * binary (int n, int num_bits) {
     char * s = NULL;
 
     // Make sure the result fits in the specified number of bits.
+
+    if (n < 0) {
+        fprintf (stderr, "WARNING: in binary, n = %d\n", n);
+    }
 
     assert ( log (n) <= (double) num_bits );
 
