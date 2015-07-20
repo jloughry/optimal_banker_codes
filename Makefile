@@ -1,6 +1,6 @@
 target = $(generator)
 
-order = 3
+order = 2
 
 generator = generate_programme
 generated_file = order-$(order)_graph_generated

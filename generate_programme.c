@@ -33,17 +33,13 @@ int main (int argc, char ** argv) {
 
     for (row = 0; row < (1 << n); row ++) {
         for (col = 0; col < (1 << n); col ++) {
-            int i = 0;
-
             big_dumb_array[row][col].level = -1;
             big_dumb_array[row][col].value = -99;
             big_dumb_array[row][col].in_use = 0;
             big_dumb_array[row][col].num_children = 0;
             big_dumb_array[row][col].num_children_predicted = 0;
             big_dumb_array[row][col].visited = 0;
-            for (i = 0; i < MAX_POINTERS; i ++) {
-                big_dumb_array[row][col].next[i] = NULL;
-            }
+            big_dumb_array[row][col].next = NULL;
         }
     }
 
@@ -253,13 +249,20 @@ int main (int argc, char ** argv) {
                         big_dumb_array[row][col].level = row;
                         big_dumb_array[row][col].value = col;
                         big_dumb_array[row][col].in_use = 1;
+                        if (NULL == big_dumb_array[row][col].next) {
+                            big_dumb_array[row][col].next = malloc (sizeof (aluminium_Christmas_tree *)
+                                * predicted_number_of_children + 1);
+                            assert (big_dumb_array[row][col].next);
+                            big_dumb_array[row][col].next[0] = NULL; // NULL terminate array just in case.
+                        }
                         big_dumb_array[row][col].next[pointer_number] =
                             &(big_dumb_array[row + 1][row_plus_one_col]);
                         big_dumb_array[row][col].num_children++;
                         big_dumb_array[row][col].num_children_predicted = predicted_number_of_children;
 
+#ifdef DEBUG
                         fprintf (stderr,
-                            "recorded node %p (%d, %d) -> %p (%d, %d) with %d children predicted\n",
+                            "recorded node %p (%d, %d) -> %p (%d, %d) with %d ",
                             &big_dumb_array[row][col],
                             big_dumb_array[row][col].level,
                             big_dumb_array[row][col].value,
@@ -267,6 +270,16 @@ int main (int argc, char ** argv) {
                             big_dumb_array[row + 1][row_plus_one_col].level,
                             big_dumb_array[row + 1][row_plus_one_col].value,
                             predicted_number_of_children);
+                        switch (predicted_number_of_children) {
+                            case 1:
+                                fprintf (stderr, "child");
+                                break;
+                            default:
+                                fprintf (stderr, "children");
+                                break;
+                        }
+                        fprintf (stderr, " predicted.\n");
+#endif
 
                         ++ pointer_number;
                     }
@@ -330,6 +343,15 @@ int main (int argc, char ** argv) {
 
     if (n > 6) {
         free (cardinality);
+    }
+
+    for (row = 0; row < (1 << n); row ++) {
+        for (col = 0; col < (1 << n); col ++) {
+            if (big_dumb_array[row][col].next) {
+                free (big_dumb_array[row][col].next);
+                big_dumb_array[row][col].next = NULL;
+            }
+        }
     }
 
     return EXIT_SUCCESS;
@@ -565,17 +587,20 @@ void display_digraph_node (aluminium_Christmas_tree * p, int n) {
     else {
         fprintf (stderr, "digraph node %p: level %d, value %s has ",
             (void *) p, p->level, binary (p->value, n));
-        if (p->next[0]) {
+        if (p->num_children > 0) {
             int i = 0;
 
-            fprintf (stderr, "%d children", p->num_children);
-            for (i = 0; i < MAX_POINTERS; i ++) {
-                if (NULL == p->next[i]) {
+            fprintf (stderr, "%d ", p->num_children);
+            switch (p->num_children) {
+                case 1:
+                    fprintf (stderr, "child");
                     break;
-                }
-                else {
-                    fprintf (stderr, " %p", p->next[i]);
-                }
+                default:
+                    fprintf (stderr, "children");
+                    break;
+            }
+            for (i = 0; i < p->num_children; i ++) {
+                fprintf (stderr, " %p", p->next[i]);
             }
             fprintf (stderr, ".\n");
         }

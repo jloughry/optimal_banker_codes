@@ -20,7 +20,7 @@ struct aluminium_Christmas_tree {
     int visited;
     int num_children;
     int num_children_predicted;
-    aluminium_Christmas_tree * next[3 * MAX_n]; // FIXME: monitor for overflow
+    aluminium_Christmas_tree ** next;
 };
 
 /*
