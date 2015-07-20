@@ -460,7 +460,8 @@ int * generate_cardinality_sequence (int n) {
 // Is the indicated transition an allowable transition?
 
 int allowable (int from_row, int from_col, int to_row, int to_col, int * cardinality, int n) {
-    if ( (count_1_bits (binary (from_col, n)) == cardinality[from_row])
+    if ( 1 == count_1_bits (binary (( from_col ^ to_col ), n))
+        && (count_1_bits (binary (from_col, n)) == cardinality[from_row])
         && (count_1_bits (binary (to_col, n)) == cardinality[to_row]) ) {
             return 1;
     }
