@@ -21,7 +21,7 @@ all:: $(target)
 
 $(generated_pdf_file): $(generator)
 	./$(generator) $(order) > $(generated_dot_file)
-	# dot -T pdf $(generated_dot_file) -o $(generated_pdf_file)
+	dot -T pdf $(generated_dot_file) -o $(generated_pdf_file)
 
 $(generator): $(generator_sources) Makefile
 	gcc -g -Wall -Wextra -o $@ $<

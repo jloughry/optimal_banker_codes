@@ -13,6 +13,16 @@ typedef struct aluminium_Christmas_tree aluminium_Christmas_tree;
 #define MAX_n 7 // larger than 7, the programme segfaults.
 #define MAX_POINTERS (3 * MAX_n)
 
+struct aluminium_Christmas_tree {
+    int level;
+    int value;
+    int in_use;
+    int visited;
+    int num_children;
+    int num_children_predicted;
+    aluminium_Christmas_tree * next[3 * MAX_n]; // FIXME: monitor for overflow
+};
+
 /*
 I call this data structure a `great big shiny aluminium Christmas tree'
 (ref: A Charlie Brown Christmas, by Charles Schultz).
@@ -48,19 +58,12 @@ level_1_0001 -> level_2_1010
 level_1_0001 -> level_2_1100
 */
 
-struct aluminium_Christmas_tree {
-    int level;
-    int value;
-    int in_use;
-    int visited;
-    int num_children;
-    aluminium_Christmas_tree * next[3 * MAX_n]; // FIXME: monitor for overflow
-};
-
 // Function prototypes:
 
 char * binary (int n, int num_bits);
 void blank_line (void);
+int count_bits (char * binary_string, char bit_value);
+int count_0_bits (char * binary_string);
 int count_1_bits (char * binary_string);
 int * generate_cardinality_sequence (int n);
 void test_count_1_bits (void);

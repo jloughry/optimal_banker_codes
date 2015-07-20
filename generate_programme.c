@@ -39,6 +39,7 @@ int main (int argc, char ** argv) {
             big_dumb_array[row][col].value = -99;
             big_dumb_array[row][col].in_use = 0;
             big_dumb_array[row][col].num_children = 0;
+            big_dumb_array[row][col].num_children_predicted = 0;
             big_dumb_array[row][col].visited = 0;
             for (i = 0; i < MAX_POINTERS; i ++) {
                 big_dumb_array[row][col].next[i] = NULL;
@@ -222,6 +223,7 @@ int main (int argc, char ** argv) {
             for (col = 0; col < (1 << n); col ++) {
                 int row_plus_one_col = 0;
                 int pointer_number = 0;
+                int predicted_number_of_children = 0;
 
                 for (row_plus_one_col = 0; row_plus_one_col < (1 << n); row_plus_one_col ++) {
 
@@ -230,8 +232,21 @@ int main (int argc, char ** argv) {
                         assert (count_1_bits (binary (col,n)) == cardinality[row]);
                         assert (count_1_bits (binary (row_plus_one_col, n)) == cardinality[row + 1]);
 
-                        printf ("    level_%d_%s -> level_%d_%s\n",
-                            row, binary (col, n), row + 1, binary (row_plus_one_col, n));
+                        switch (cardinality[row] - cardinality[row + 1]) {
+                            case -1:
+                                predicted_number_of_children = count_0_bits (binary (col, n));
+                                break;
+                            case 1:
+                                predicted_number_of_children = count_1_bits (binary (col, n));
+                                break;
+                            default:
+                                assert (0); // This should never happen.
+                                break;
+                        }
+
+                        printf ("    level_%d_%s -> level_%d_%s [label=\"%p -> %p\"]\n",
+                            row, binary (col, n), row + 1, binary (row_plus_one_col, n),
+                            &big_dumb_array[row][col], &big_dumb_array[row + 1][row_plus_one_col]);
 
                         assert (pointer_number < MAX_POINTERS);
 
@@ -241,14 +256,17 @@ int main (int argc, char ** argv) {
                         big_dumb_array[row][col].next[pointer_number] =
                             &(big_dumb_array[row + 1][row_plus_one_col]);
                         big_dumb_array[row][col].num_children++;
+                        big_dumb_array[row][col].num_children_predicted = predicted_number_of_children;
 
-                        fprintf (stderr, "recorded node %p (%d, %d) -> %p (%d, %d)\n",
+                        fprintf (stderr,
+                            "recorded node %p (%d, %d) -> %p (%d, %d) with %d children predicted\n",
                             &big_dumb_array[row][col],
                             big_dumb_array[row][col].level,
                             big_dumb_array[row][col].value,
                             &big_dumb_array[row + 1][row_plus_one_col],
                             big_dumb_array[row + 1][row_plus_one_col].level,
-                            big_dumb_array[row + 1][row_plus_one_col].value);
+                            big_dumb_array[row + 1][row_plus_one_col].value,
+                            predicted_number_of_children);
 
                         ++ pointer_number;
                     }
@@ -280,6 +298,19 @@ int main (int argc, char ** argv) {
         fill_factor_MAX_n = (double) number_of_nodes_used / ((1 << MAX_n) * (1 << MAX_n));
         fprintf (stderr, "%d nodes used; fill factor = %lf based on n = %d (or %lf based on %d)\n",
             number_of_nodes_used, fill_factor_n, n, fill_factor_MAX_n, MAX_n);
+
+        for (row = 0; row < (1 << n); row ++) {
+            for (col = 0; col < (1 << n); col ++) {
+                if (big_dumb_array[row][col].num_children
+                    != big_dumb_array[row][col].num_children_predicted) {
+                    fprintf (stderr, "misprediction: row %d, col %d; predicted %d, got %d\n",
+                        row, col,
+                        big_dumb_array[row][col].num_children_predicted,
+                        big_dumb_array[row][col].num_children);
+                }
+            }
+        }
+
     }
     else {
         fprintf (stderr,
@@ -336,9 +367,10 @@ void blank_line (void) {
     printf ("\n");
 }
 
-// Count the `1' bits in a string representation of a binary number.
+// Count the number of bits in a string representation of a binary number
+// that are of the flavour specified.
 
-int count_1_bits (char * binary_string) {
+int count_bits (char * binary_string, char bit_value) {
     char * p = NULL;
     int count = 0;
 
@@ -347,12 +379,24 @@ int count_1_bits (char * binary_string) {
     assert (p != NULL);
 
     while (*p) {
-        if ('1' == *p) {
+        if (bit_value == *p) {
             ++ count;
         }
         ++ p;
     }
     return count;
+}
+
+// Count the `1' bits in a string representation of a binary number.
+
+int count_1_bits (char * binary_string) {
+    return count_bits (binary_string, '1');
+}
+
+// Count the `0' bits in a string representation of a binary number.
+
+int count_0_bits (char * binary_string) {
+    return count_bits (binary_string, '0');
 }
 
 // Test cases for the count_1_bits() function.
