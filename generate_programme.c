@@ -625,18 +625,44 @@ void display_digraph_node (aluminium_Christmas_tree * p, int n) {
 
 // Depth-first search entire digraph.
 
+/* The following pseudocode is from:
+
+http://stackoverflow.com/questions/14886260/building-an-all-paths-algorithm-for-a-dag
+
+AllPaths(currentNode):
+    result = EmptyList()
+    foreach child in children(node):
+        subpaths = AllPaths(child)
+        foreach subpath in subpaths:
+            Append(result, currentNode + subpath)
+    return result
+*/
+
 void depth_first_search (aluminium_Christmas_tree * p, int n) {
     int i = 0;
+    struct list_node * result_list = NULL;
 
     assert (p);
 
-    p->visited = 1;
+    result_list = malloc (sizeof (struct list_node));
+    assert (result_list);
+    result_list->num = 0;
+    result_list->next = NULL;
+
     display_digraph_node (p, n);
 
     for (i = 0; i < p->num_children; i ++) {
-        if ( !(p->next[i]->visited) ) {
-            depth_first_search (p->next[i], n);
+        struct list_node * end_of_list = result_list;
+
+        while (end_of_list->next) {
+            end_of_list = end_of_list->next;
         }
+        end_of_list->next = malloc (sizeof (struct list_node));
+        assert (end_of_list->next);
+        end_of_list->next->num = i;
+        end_of_list->next->next = NULL;
+
+        depth_first_search (p->next[i], n);
     }
 }
 

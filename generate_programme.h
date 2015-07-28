@@ -22,6 +22,11 @@ struct aluminium_Christmas_tree {
     aluminium_Christmas_tree ** next;
 };
 
+struct list_node {
+    int num;
+    struct list_node * next;
+};
+
 /*
 I call this data structure a `great big shiny aluminium Christmas tree'
 (ref: A Charlie Brown Christmas, by Charles Schultz).
