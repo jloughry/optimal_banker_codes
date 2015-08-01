@@ -641,6 +641,7 @@ AllPaths(currentNode):
 void depth_first_search (aluminium_Christmas_tree * p, int n) {
     int i = 0;
     struct list_node * result_list = NULL;
+    struct list_node * result_list_cursor = NULL;
 
     assert (p);
 
@@ -654,6 +655,7 @@ void depth_first_search (aluminium_Christmas_tree * p, int n) {
     for (i = 0; i < p->num_children; i ++) {
         struct list_node * end_of_list = result_list;
 
+        // Put a new node on the end of the result list.
         while (end_of_list->next) {
             end_of_list = end_of_list->next;
         }
@@ -663,6 +665,15 @@ void depth_first_search (aluminium_Christmas_tree * p, int n) {
         end_of_list->next->next = NULL;
 
         depth_first_search (p->next[i], n);
+
+        // Display the result list.
+        result_list_cursor = result_list;
+        fprintf (stderr, "result_list = ");
+        while (result_list_cursor) {
+            fprintf (stderr, "%s ", binary (result_list_cursor->num, n));
+            result_list_cursor = result_list_cursor->next;
+        }
+        fprintf (stderr, "\n");
     }
 }
 
