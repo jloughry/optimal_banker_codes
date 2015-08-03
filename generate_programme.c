@@ -12,6 +12,7 @@ int main (int argc, char ** argv) {
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
     aluminium_Christmas_tree * start = &big_dumb_array[0][0];
     int i = 0;
+    double efficiency = 0.0;
 
     switch (argc) {
         case 2:
@@ -353,10 +354,11 @@ int main (int argc, char ** argv) {
         sequence_accumulator[i] = -1;
     }
 
-    fprintf (stderr, "Beginning depth-first search on %p.\n", start);
+    fprintf (stderr, "Beginning depth-first search on %p\n", start);
     depth_first_search (start, n);
-    fprintf (stderr, "%ld sequences found; %ld rejected.\n",
-        good_sequences, bad_sequences);
+    efficiency = (double)(good_sequences + bad_sequences) / (double) factorial (1 << n);
+    fprintf (stderr, "%ld sequences found; %ld rejected; there are %ld permutations, efficiency = %lf.\n",
+        good_sequences, bad_sequences, factorial (1 << n), 1.0 - efficiency);
 
     // Free memory if necessary.
 
@@ -599,6 +601,19 @@ void verify_all_hand_made_cardinality_sequence_data (void) {
         hand_generated_cardinality_sequence_data_sixth_order[1], 6);
 
     return;
+}
+
+// Compute the factorial of n.
+
+long factorial (long n) {
+    assert (n > 0);
+
+    if (1 == n) {
+        return 1;
+    }
+    else {
+        return n * factorial (n - 1);
+    }
 }
 
 // Display a single node of the digraph.
