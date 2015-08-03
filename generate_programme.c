@@ -675,6 +675,9 @@ void depth_first_search (aluminium_Christmas_tree * p, int n) {
         for (j = 0; j < (1 << n); j ++) {
             if (duplicate_check[j] != 1) {
                 bad_sequences++;
+                if (0 == bad_sequences % 1000000) {
+                    fprintf (stderr, "rejected %d\n", bad_sequences);
+                }
                 break;
             }
         }
@@ -687,7 +690,6 @@ void depth_first_search (aluminium_Christmas_tree * p, int n) {
             }
             fprintf (stderr, "\n");
         }
-
         free (duplicate_check);
     }
 }
