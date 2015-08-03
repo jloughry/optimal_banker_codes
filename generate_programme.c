@@ -1,5 +1,9 @@
 #include "generate_programme.h"
 
+int sequence_accumulator[MAX_n];
+int bad_sequences = 0;
+int good_sequences = 0;
+
 int main (int argc, char ** argv) {
     int n = 0;
     int row = 0;
@@ -7,6 +11,7 @@ int main (int argc, char ** argv) {
     int * cardinality = NULL;
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
     aluminium_Christmas_tree * start = &big_dumb_array[0][0];
+    int i = 0;
 
     switch (argc) {
         case 2:
@@ -344,8 +349,14 @@ int main (int argc, char ** argv) {
     printf ("}\n");
     blank_line ();
 
+    for (i = 0; i < MAX_n; i ++) {
+        sequence_accumulator[i] = -1;
+    }
+
     fprintf (stderr, "Beginning depth-first search on %p.\n", start);
     depth_first_search (start, n);
+    fprintf (stderr, "%d sequences found; %d rejected.\n",
+        good_sequences, bad_sequences);
 
     // Free memory if necessary.
 
@@ -640,40 +651,44 @@ AllPaths(currentNode):
 
 void depth_first_search (aluminium_Christmas_tree * p, int n) {
     int i = 0;
-    struct list_node * result_list = NULL;
-    struct list_node * result_list_cursor = NULL;
 
     assert (p);
 
-    result_list = malloc (sizeof (struct list_node));
-    assert (result_list);
-    result_list->num = 0;
-    result_list->next = NULL;
-
-    display_digraph_node (p, n);
+    sequence_accumulator[p->level] = p->value;
 
     for (i = 0; i < p->num_children; i ++) {
-        struct list_node * end_of_list = result_list;
-
-        // Put a new node on the end of the result list.
-        while (end_of_list->next) {
-            end_of_list = end_of_list->next;
-        }
-        end_of_list->next = malloc (sizeof (struct list_node));
-        assert (end_of_list->next);
-        end_of_list->next->num = i;
-        end_of_list->next->next = NULL;
-
         depth_first_search (p->next[i], n);
+    }
 
-        // Display the result list.
-        result_list_cursor = result_list;
-        fprintf (stderr, "result_list = ");
-        while (result_list_cursor) {
-            fprintf (stderr, "%s ", binary (result_list_cursor->num, n));
-            result_list_cursor = result_list_cursor->next;
+    // As soon as we have a full sequence, check for duplicates.
+    if (p->level == ((1 << n) - 1)) {
+        int * duplicate_check = NULL;
+        int j = 0;
+
+        duplicate_check = calloc (1 << n, sizeof (int));
+        assert (duplicate_check);
+
+        for (j = 0; j < (1 << n); j ++) {
+            ++duplicate_check[sequence_accumulator[j]];
         }
-        fprintf (stderr, "\n");
+
+        for (j = 0; j < (1 << n); j ++) {
+            if (duplicate_check[j] != 1) {
+                bad_sequences++;
+                break;
+            }
+        }
+
+        if (j == (1 << n)) {
+            good_sequences++;
+            fprintf (stderr, "found: ");
+            for (j = 0; j < (1 << n); j ++) {
+                fprintf (stderr, "%2d ", sequence_accumulator[j]);
+            }
+            fprintf (stderr, "\n");
+        }
+
+        free (duplicate_check);
     }
 }
 
