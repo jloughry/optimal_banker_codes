@@ -1,8 +1,8 @@
 #include "generate_programme.h"
 
 int sequence_accumulator[MAX_n];
-int bad_sequences = 0;
-int good_sequences = 0;
+long bad_sequences = 0;
+long good_sequences = 0;
 
 int main (int argc, char ** argv) {
     int n = 0;
@@ -355,7 +355,7 @@ int main (int argc, char ** argv) {
 
     fprintf (stderr, "Beginning depth-first search on %p.\n", start);
     depth_first_search (start, n);
-    fprintf (stderr, "%d sequences found; %d rejected.\n",
+    fprintf (stderr, "%ld sequences found; %ld rejected.\n",
         good_sequences, bad_sequences);
 
     // Free memory if necessary.
@@ -676,7 +676,7 @@ void depth_first_search (aluminium_Christmas_tree * p, int n) {
             if (duplicate_check[j] != 1) {
                 bad_sequences++;
                 if (0 == bad_sequences % 1000000) {
-                    fprintf (stderr, "rejected %d\n", bad_sequences);
+                    fprintf (stderr, "rejected %ld\n", bad_sequences);
                 }
                 break;
             }
