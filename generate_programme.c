@@ -357,9 +357,12 @@ int main (int argc, char ** argv) {
     fprintf (stderr, "Beginning depth-first search on %p\n", start);
     depth_first_search (start, n);
     efficiency = (double)(good_sequences + bad_sequences) / (double) factorial (1 << n);
-    fprintf (stderr,
-        "%lld sequences found; %lld rejected; there are %lld permutations, efficiency = %lf.\n",
-        good_sequences, bad_sequences, factorial (1 << n), 1.0 - efficiency);
+    printfcomma (good_sequences);
+    fprintf (stderr, " sequences found; ");
+    printfcomma (bad_sequences);
+    fprintf (stderr, " rejected; there are ");
+    printfcomma (factorial (1 << n));
+    fprintf (stderr, " permutations, efficiency = %lf.\n", 1.0 - efficiency);
 
     // Free memory if necessary.
 
@@ -617,6 +620,28 @@ long long factorial (long n) {
     }
 }
 
+// Display large numbers with thousands separators.
+//
+// Source of this neat code: http://stackoverflow.com/questions/1449805/
+// how-to-format-a-number-from-1123456789-to-1-123-456-789-in-c
+
+void printfcomma2 (long long n) {
+    if (n < 1000) {
+        fprintf (stderr, "%lld", n);
+        return;
+    }
+    printfcomma2 (n / 1000);
+    fprintf (stderr, ",%03lld", n % 1000);
+}
+
+void printfcomma (long long n) {
+    if (n < 0) {
+        fprintf (stderr, "-");
+        n = -n;
+    }
+    printfcomma2 (n);
+}
+
 // Display a single node of the digraph.
 
 void display_digraph_node (aluminium_Christmas_tree * p, int n) {
@@ -692,7 +717,9 @@ void depth_first_search (aluminium_Christmas_tree * p, int n) {
             if (duplicate_check[j] != 1) {
                 bad_sequences++;
                 if (0 == bad_sequences % 1000000) {
-                    fprintf (stderr, "rejected %lld\n", bad_sequences);
+                    fprintf (stderr, "rejected ");
+                    printfcomma (bad_sequences);
+                    fprintf (stderr, "\n");
                 }
                 break;
             }
