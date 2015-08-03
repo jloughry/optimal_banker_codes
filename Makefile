@@ -1,6 +1,9 @@
 target = $(generator)
 
-order = 5
+order = 4
+
+# DEBUG_FLAGS = -DDEBUG
+DEBUG_FLAGS =
 
 generator = generate_programme
 generated_file = order-$(order)_graph_generated
@@ -24,7 +27,7 @@ $(generated_pdf_file): $(generator)
 	dot -T pdf $(generated_dot_file) -o $(generated_pdf_file)
 
 $(generator): $(generator_sources) Makefile
-	gcc -g -Wall -Wextra -o $@ $<
+	gcc -g -Wall -Wextra $(DEBUG_FLAGS) -o $@ $<
 	mv $(generator_compiled) $@
 
 test: $(generated_pdf_file)

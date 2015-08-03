@@ -3,6 +3,12 @@
 int sequence_accumulator[MAX_n];
 long long bad_sequences = 0;
 long long good_sequences = 0;
+long long predicted_number_of_candidate_sequences = 0;
+
+// For some reason I don't understand, if the following variable is defined
+// inside main(), the programme segfaults.
+
+int children_per_node_at_level[MAX_n];
 
 int main (int argc, char ** argv) {
     int n = 0;
@@ -12,7 +18,7 @@ int main (int argc, char ** argv) {
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
     aluminium_Christmas_tree * start = &big_dumb_array[0][0];
     int i = 0;
-    long double efficiency = 0.0;
+    double efficiency = 0.0;
 
     switch (argc) {
         case 2:
@@ -44,7 +50,6 @@ int main (int argc, char ** argv) {
             big_dumb_array[row][col].in_use = 0;
             big_dumb_array[row][col].num_children = 0;
             big_dumb_array[row][col].num_children_predicted = 0;
-            big_dumb_array[row][col].visited = 0;
             big_dumb_array[row][col].next = NULL;
         }
     }
@@ -266,6 +271,10 @@ int main (int argc, char ** argv) {
                         big_dumb_array[row][col].num_children++;
                         big_dumb_array[row][col].num_children_predicted = predicted_number_of_children;
 
+                        // Why does the following line cause a segfault in error check later?
+
+                        children_per_node_at_level[row] = predicted_number_of_children;
+
                         // Make sure child nodes exist if they are named.
 
                         big_dumb_array[row + 1][row_plus_one_col].level = row + 1;
@@ -321,23 +330,30 @@ int main (int argc, char ** argv) {
             }
         }
 
+        predicted_number_of_candidate_sequences = 1;
+        for (row = 0; row < (1 << n) - 1; row ++) {
+            predicted_number_of_candidate_sequences *= children_per_node_at_level[row];
+        }
+
         fill_factor_n = (double) number_of_nodes_used / ( pow(2.0, n) * pow (2.0, n) );
         fill_factor_MAX_n = (double) number_of_nodes_used / ((1 << MAX_n) * (1 << MAX_n));
         fprintf (stderr, "%d nodes used; fill factor = %lf based on n = %d (or %lf based on %d)\n",
             number_of_nodes_used, fill_factor_n, n, fill_factor_MAX_n, MAX_n);
 
+        // Error check.
+
         for (row = 0; row < (1 << n); row ++) {
             for (col = 0; col < (1 << n); col ++) {
                 if (big_dumb_array[row][col].num_children
                     != big_dumb_array[row][col].num_children_predicted) {
-                    fprintf (stderr, "misprediction: row %d, col %d; predicted %d, got %d\n",
-                        row, col,
+                    fprintf (stderr,
+                        "misprediction: row %d, col %d (%p); predicted %d children, got %d children\n",
+                        row, col, &big_dumb_array[row][col],
                         big_dumb_array[row][col].num_children_predicted,
                         big_dumb_array[row][col].num_children);
                 }
             }
         }
-
     }
     else {
         fprintf (stderr,
@@ -356,13 +372,19 @@ int main (int argc, char ** argv) {
 
     fprintf (stderr, "Beginning depth-first search on %p\n", start);
     depth_first_search (start, n);
-    efficiency = (long double)(good_sequences + bad_sequences) / (long double) factorial (1 << n);
+    efficiency = (double)(good_sequences + bad_sequences) / (double) factorial (1 << n);
     printfcomma (good_sequences);
     fprintf (stderr, " sequences found; ");
     printfcomma (bad_sequences);
     fprintf (stderr, " rejected; there are ");
     printfcomma (factorial (1 << n));
-    fprintf (stderr, " permutations, efficiency = %llf.\n", 1.0 - efficiency);
+    fprintf (stderr, " permutations, efficiency = %lg.\n", 1.0 - efficiency);
+
+    if (good_sequences + bad_sequences == predicted_number_of_candidate_sequences) {
+        fprintf (stderr, "The total number of candidate sequences (");
+        printfcomma (predicted_number_of_candidate_sequences);
+        fprintf (stderr, ") was predicted correctly.\n");
+    }
 
     // Free memory if necessary.
 
@@ -677,19 +699,6 @@ void display_digraph_node (aluminium_Christmas_tree * p, int n) {
 
 // Depth-first search entire digraph.
 
-/* The following pseudocode is from:
-
-http://stackoverflow.com/questions/14886260/building-an-all-paths-algorithm-for-a-dag
-
-AllPaths(currentNode):
-    result = EmptyList()
-    foreach child in children(node):
-        subpaths = AllPaths(child)
-        foreach subpath in subpaths:
-            Append(result, currentNode + subpath)
-    return result
-*/
-
 void depth_first_search (aluminium_Christmas_tree * p, int n) {
     int i = 0;
 
@@ -719,7 +728,9 @@ void depth_first_search (aluminium_Christmas_tree * p, int n) {
                 if (0 == bad_sequences % 1000000) {
                     fprintf (stderr, "rejected ");
                     printfcomma (bad_sequences);
-                    fprintf (stderr, "\n");
+                    fprintf (stderr, " sequences (%lf%% of total); found %lld so far.\n",
+                        100.0 * bad_sequences / predicted_number_of_candidate_sequences,
+                        good_sequences);
                 }
                 break;
             }

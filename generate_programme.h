@@ -16,7 +16,6 @@ struct aluminium_Christmas_tree {
     int level;
     int value;
     int in_use;
-    int visited;
     int num_children;
     int num_children_predicted;
     aluminium_Christmas_tree ** next;
