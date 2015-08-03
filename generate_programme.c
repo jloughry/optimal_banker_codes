@@ -12,7 +12,7 @@ int main (int argc, char ** argv) {
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
     aluminium_Christmas_tree * start = &big_dumb_array[0][0];
     int i = 0;
-    double efficiency = 0.0;
+    long double efficiency = 0.0;
 
     switch (argc) {
         case 2:
@@ -356,13 +356,13 @@ int main (int argc, char ** argv) {
 
     fprintf (stderr, "Beginning depth-first search on %p\n", start);
     depth_first_search (start, n);
-    efficiency = (double)(good_sequences + bad_sequences) / (double) factorial (1 << n);
+    efficiency = (long double)(good_sequences + bad_sequences) / (long double) factorial (1 << n);
     printfcomma (good_sequences);
     fprintf (stderr, " sequences found; ");
     printfcomma (bad_sequences);
     fprintf (stderr, " rejected; there are ");
     printfcomma (factorial (1 << n));
-    fprintf (stderr, " permutations, efficiency = %lf.\n", 1.0 - efficiency);
+    fprintf (stderr, " permutations, efficiency = %llf.\n", 1.0 - efficiency);
 
     // Free memory if necessary.
 
