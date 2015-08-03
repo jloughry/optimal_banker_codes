@@ -1,8 +1,8 @@
 #include "generate_programme.h"
 
 int sequence_accumulator[MAX_n];
-long bad_sequences = 0;
-long good_sequences = 0;
+long long bad_sequences = 0;
+long long good_sequences = 0;
 
 int main (int argc, char ** argv) {
     int n = 0;
@@ -357,7 +357,8 @@ int main (int argc, char ** argv) {
     fprintf (stderr, "Beginning depth-first search on %p\n", start);
     depth_first_search (start, n);
     efficiency = (double)(good_sequences + bad_sequences) / (double) factorial (1 << n);
-    fprintf (stderr, "%ld sequences found; %ld rejected; there are %ld permutations, efficiency = %lf.\n",
+    fprintf (stderr,
+        "%lld sequences found; %lld rejected; there are %lld permutations, efficiency = %lf.\n",
         good_sequences, bad_sequences, factorial (1 << n), 1.0 - efficiency);
 
     // Free memory if necessary.
@@ -605,7 +606,7 @@ void verify_all_hand_made_cardinality_sequence_data (void) {
 
 // Compute the factorial of n.
 
-long factorial (long n) {
+long long factorial (long n) {
     assert (n > 0);
 
     if (1 == n) {
@@ -691,7 +692,7 @@ void depth_first_search (aluminium_Christmas_tree * p, int n) {
             if (duplicate_check[j] != 1) {
                 bad_sequences++;
                 if (0 == bad_sequences % 1000000) {
-                    fprintf (stderr, "rejected %ld\n", bad_sequences);
+                    fprintf (stderr, "rejected %lld\n", bad_sequences);
                 }
                 break;
             }
