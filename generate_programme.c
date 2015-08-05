@@ -380,11 +380,13 @@ int main (int argc, char ** argv) {
     printfcomma (factorial (1 << n));
     fprintf (stderr, " permutations, efficiency = %lg.\n", 1.0 - efficiency);
 
-    if (good_sequences + bad_sequences == predicted_number_of_candidate_sequences) {
-        fprintf (stderr, "The total number of candidate sequences (");
-        printfcomma (predicted_number_of_candidate_sequences);
-        fprintf (stderr, ") was predicted correctly.\n");
+    fprintf (stderr, "The total number of candidate sequences (");
+    printfcomma (predicted_number_of_candidate_sequences);
+    fprintf (stderr, ") was ");
+    if (good_sequences + bad_sequences != predicted_number_of_candidate_sequences) {
+        fprintf (stderr, "not ");
     }
+    fprintf (stderr, "predicted correctly.\n");
 
     // Free memory if necessary.
 
@@ -701,10 +703,33 @@ void display_digraph_node (aluminium_Christmas_tree * p, int n) {
 
 void depth_first_search (aluminium_Christmas_tree * p, int n) {
     int i = 0;
+    int * early_dup_check = NULL; // ZZZ
+    int edci = 0; // ZZZ
 
     assert (p);
 
     sequence_accumulator[p->level] = p->value;
+
+    // ZZZZZZZZZZZZZZZZZZ
+
+    early_dup_check = calloc (1 << n, sizeof (int));
+    assert (early_dup_check);
+    // fprintf (stderr, "early_dup_check = [");
+    for (edci = 0; edci < p->level; edci ++) {
+        ++ early_dup_check[sequence_accumulator[edci]];
+        // fprintf (stderr, "%d", early_dup_check[sequence_accumulator[edci]]);
+    }
+    // fprintf (stderr, "]\n");
+    for (edci = 0; edci < p->level; edci ++) {
+        if (early_dup_check[sequence_accumulator[edci]] > 1) {
+            // fprintf (stderr, "early dup check returning early!\n");
+            free (early_dup_check);
+            return;
+        }
+    }
+    free (early_dup_check);
+
+    // ZZZZZZZZZZZZZZZZ
 
     for (i = 0; i < p->num_children; i ++) {
         depth_first_search (p->next[i], n);
@@ -719,7 +744,7 @@ void depth_first_search (aluminium_Christmas_tree * p, int n) {
         assert (duplicate_check);
 
         for (j = 0; j < (1 << n); j ++) {
-            ++duplicate_check[sequence_accumulator[j]];
+            ++ duplicate_check[sequence_accumulator[j]];
         }
 
         for (j = 0; j < (1 << n); j ++) {
@@ -738,11 +763,13 @@ void depth_first_search (aluminium_Christmas_tree * p, int n) {
 
         if (j == (1 << n)) {
             good_sequences++;
+            /*
             fprintf (stderr, "found: ");
             for (j = 0; j < (1 << n); j ++) {
                 fprintf (stderr, "%2d ", sequence_accumulator[j]);
             }
             fprintf (stderr, "\n");
+            */
         }
         free (duplicate_check);
     }
