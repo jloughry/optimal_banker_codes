@@ -78,10 +78,12 @@ void verify_one_cardinality_sequence_data (int * index, int * sequence, int orde
 void verify_all_hand_made_cardinality_sequence_data (void);
 void verify_cardinality_sequence (int * sequence_data, int n);
 void display_digraph_node (aluminium_Christmas_tree * p, int n);
-void depth_first_search (aluminium_Christmas_tree * p, int n);
+void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequence, int n);
 long long factorial (long n);
 void printfcomma2 (long long n);
 void printfcomma (long long n);
+int sanity_check_sequence (int * sequence, int * cardinality, int n);
+void emit_sequence (int * sequence, int n);
 
 // These will only be needed until I get a proper generator written, but
 // they might be useful later as test cases for the generator. They have

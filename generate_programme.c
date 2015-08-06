@@ -1,7 +1,6 @@
 #include "generate_programme.h"
 
 int sequence_accumulator[MAX_n];
-long long bad_sequences = 0;
 long long good_sequences = 0;
 long long predicted_number_of_candidate_sequences = 0;
 
@@ -18,7 +17,6 @@ int main (int argc, char ** argv) {
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
     aluminium_Christmas_tree * start = &big_dumb_array[0][0];
     int i = 0;
-    double efficiency = 0.0;
 
     switch (argc) {
         case 2:
@@ -337,6 +335,7 @@ int main (int argc, char ** argv) {
 
         fill_factor_n = (double) number_of_nodes_used / ( pow(2.0, n) * pow (2.0, n) );
         fill_factor_MAX_n = (double) number_of_nodes_used / ((1 << MAX_n) * (1 << MAX_n));
+
         fprintf (stderr, "%d nodes used; fill factor = %lf based on n = %d (or %lf based on %d)\n",
             number_of_nodes_used, fill_factor_n, n, fill_factor_MAX_n, MAX_n);
 
@@ -366,27 +365,27 @@ int main (int argc, char ** argv) {
     printf ("}\n");
     blank_line ();
 
+    fprintf (stderr, "\n");
+
+    // Initialise the sequence accumulator (outside of the recursive fn).
+
     for (i = 0; i < MAX_n; i ++) {
         sequence_accumulator[i] = -1;
     }
 
-    fprintf (stderr, "Beginning depth-first search on %p\n", start);
-    depth_first_search (start, n);
-    efficiency = (double)(good_sequences + bad_sequences) / (double) factorial (1 << n);
-    printfcomma (good_sequences);
-    fprintf (stderr, " sequences found; ");
-    printfcomma (bad_sequences);
-    fprintf (stderr, " rejected; there are ");
-    printfcomma (factorial (1 << n));
-    fprintf (stderr, " permutations, efficiency = %lg.\n", 1.0 - efficiency);
+    depth_first_search (start, cardinality, n);
 
-    fprintf (stderr, "The total number of candidate sequences (");
-    printfcomma (predicted_number_of_candidate_sequences);
-    fprintf (stderr, ") was ");
-    if (good_sequences + bad_sequences != predicted_number_of_candidate_sequences) {
-        fprintf (stderr, "not ");
+    fprintf (stderr, "\n");
+    printfcomma (good_sequences);
+    switch (good_sequences) {
+        case 1:
+            fprintf (stderr, " sequence");
+            break;
+        default:
+            fprintf (stderr, " sequences");
+            break;
     }
-    fprintf (stderr, "predicted correctly.\n");
+    fprintf (stderr, " found.\n");
 
     // Free memory if necessary.
 
@@ -666,6 +665,40 @@ void printfcomma (long long n) {
     printfcomma2 (n);
 }
 
+// Display an entire sequence.
+
+void emit_sequence (int * sequence, int n) {
+    int i = 0;
+
+    fprintf (stderr, "found:");
+    for (i = 0; i < (1 << n); i ++) {
+        fprintf (stderr, "%2d ", sequence[i]);
+    }
+    fprintf (stderr, "\n");
+    return;
+}
+
+// Check that a sequence satisfies the requirements.
+
+int sanity_check_sequence (int * sequence, int * cardinality, int n) {
+    int i = 0;
+
+    assert (sequence[0] == 0);
+    for (i = 0; i < (1 << n); i ++) {
+        if (count_1_bits (binary (sequence[i], n)) != cardinality[i]) {
+            int j = 0;
+
+            fprintf (stderr, "sanity check failed on sequence ");
+            for (j = 0; j < (1 << n); j ++) {
+                fprintf (stderr, " %2d", sequence[j]);
+            }
+            fprintf (stderr, ", count_1_bits (\"%d\") != %d\n",
+                count_1_bits (binary (sequence[i], n)), cardinality[i]);
+        }
+    }
+    return 1;
+}
+
 // Display a single node of the digraph.
 
 void display_digraph_node (aluminium_Christmas_tree * p, int n) {
@@ -701,41 +734,38 @@ void display_digraph_node (aluminium_Christmas_tree * p, int n) {
 
 // Depth-first search entire digraph.
 
-void depth_first_search (aluminium_Christmas_tree * p, int n) {
+void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequence, int n) {
     int i = 0;
-    int * early_dup_check = NULL; // ZZZ
-    int edci = 0; // ZZZ
+    int * early_dup_check = NULL;
 
     assert (p);
 
     sequence_accumulator[p->level] = p->value;
 
-    // ZZZZZZZZZZZZZZZZZZ
+    // Make sure the sequence so far has not repeated.
 
     early_dup_check = calloc (1 << n, sizeof (int));
     assert (early_dup_check);
-    // fprintf (stderr, "early_dup_check = [");
-    for (edci = 0; edci < p->level; edci ++) {
-        ++ early_dup_check[sequence_accumulator[edci]];
-        // fprintf (stderr, "%d", early_dup_check[sequence_accumulator[edci]]);
-    }
-    // fprintf (stderr, "]\n");
-    for (edci = 0; edci < p->level; edci ++) {
-        if (early_dup_check[sequence_accumulator[edci]] > 1) {
-            // fprintf (stderr, "early dup check returning early!\n");
+
+    for (i = 0; i < p->level; i ++) {
+        ++ early_dup_check[sequence_accumulator[i]];
+        if (early_dup_check[sequence_accumulator[i]] > 1) {
             free (early_dup_check);
             return;
         }
     }
     free (early_dup_check);
 
-    // ZZZZZZZZZZZZZZZZ
+    // The following loop could be multi-threaded for up to $n$ cores.
 
     for (i = 0; i < p->num_children; i ++) {
-        depth_first_search (p->next[i], n);
+        depth_first_search (p->next[i], cardinality_sequence, n);
     }
 
+    // The following check might be redundant with early dup check; I'm not sure yet.
+
     // As soon as we have a full sequence, check for duplicates.
+
     if (p->level == ((1 << n) - 1)) {
         int * duplicate_check = NULL;
         int j = 0;
@@ -749,27 +779,24 @@ void depth_first_search (aluminium_Christmas_tree * p, int n) {
 
         for (j = 0; j < (1 << n); j ++) {
             if (duplicate_check[j] != 1) {
-                bad_sequences++;
-                if (0 == bad_sequences % 1000000) {
-                    fprintf (stderr, "rejected ");
-                    printfcomma (bad_sequences);
-                    fprintf (stderr, " sequences (%lf%% of total); found %lld so far.\n",
-                        100.0 * bad_sequences / predicted_number_of_candidate_sequences,
-                        good_sequences);
-                }
                 break;
             }
         }
 
         if (j == (1 << n)) {
-            good_sequences++;
-            /*
-            fprintf (stderr, "found: ");
-            for (j = 0; j < (1 << n); j ++) {
-                fprintf (stderr, "%2d ", sequence_accumulator[j]);
+            if (sanity_check_sequence (sequence_accumulator, cardinality_sequence, n)) {
+                emit_sequence (sequence_accumulator, n);
+                ++ good_sequences;
             }
-            fprintf (stderr, "\n");
-            */
+            else {
+                int j = 0;
+
+                fprintf (stderr, "sanity check failed on sequence ");
+                for (j = 0; j < (1 << n); j ++) {
+                    fprintf (stderr, "%2d ", sequence_accumulator[j]);
+                }
+                fprintf (stderr, "\n");
+            }
         }
         free (duplicate_check);
     }
