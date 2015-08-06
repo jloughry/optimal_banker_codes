@@ -682,9 +682,21 @@ void emit_sequence (int * sequence, int n) {
 
 void sanity_check_sequence (int * sequence, int * cardinality, int n) {
     int i = 0;
+    int * dup_check_accumulator = NULL;
 
+    // Preconditions:
+    assert (sequence);
+    assert (cardinality);
+    assert (n > 0);
+
+    // First check: that the sequence begins with zero.
     assert (sequence[0] == 0);
 
+    // There isn't a good way to check that the sequence is the right
+    // length; consider putting a terminating -1 on the end of all
+    // sequences as a sentinel.
+
+    // Second check: that the cardinality of every element is right.
     for (i = 0; i < (1 << n); i ++) {
         if (count_1_bits (binary (sequence[i], n)) != cardinality[i]) {
             int j = 0;
@@ -700,7 +712,14 @@ void sanity_check_sequence (int * sequence, int * cardinality, int n) {
         }
     }
 
-    // TODO: check for duplicates in the sequence.
+    // Third check: that there are no duplicates in the sequence.
+    dup_check_accumulator = calloc (1 << n, sizeof (int));
+    assert (dup_check_accumulator);
+    for (i = 0; i < (1 << n); i++) {
+        ++ dup_check_accumulator[sequence[i]];
+        assert (dup_check_accumulator[sequence[i]] == 1);
+    }
+    free (dup_check_accumulator);
 }
 
 // Display a single node of the digraph.
@@ -779,10 +798,7 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
 
         for (j = 0; j < (1 << n); j ++) {
             ++ duplicate_check[sequence_accumulator[j]];
-        }
-
-        for (j = 0; j < (1 << n); j ++) {
-            if (duplicate_check[j] != 1) {
+            if (duplicate_check[sequence_accumulator[j]] != 1) {
                 break;
             }
         }
