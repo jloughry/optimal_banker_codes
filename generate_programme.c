@@ -680,10 +680,11 @@ void emit_sequence (int * sequence, int n) {
 
 // Check that a sequence satisfies the requirements.
 
-int sanity_check_sequence (int * sequence, int * cardinality, int n) {
+void sanity_check_sequence (int * sequence, int * cardinality, int n) {
     int i = 0;
 
     assert (sequence[0] == 0);
+
     for (i = 0; i < (1 << n); i ++) {
         if (count_1_bits (binary (sequence[i], n)) != cardinality[i]) {
             int j = 0;
@@ -694,9 +695,12 @@ int sanity_check_sequence (int * sequence, int * cardinality, int n) {
             }
             fprintf (stderr, ", count_1_bits (\"%d\") != %d\n",
                 count_1_bits (binary (sequence[i], n)), cardinality[i]);
+
+            assert (0); // Fail on purpose.
         }
     }
-    return 1;
+
+    // TODO: check for duplicates in the sequence.
 }
 
 // Display a single node of the digraph.
@@ -784,20 +788,11 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
         }
 
         if (j == (1 << n)) {
-            if (sanity_check_sequence (sequence_accumulator, cardinality_sequence, n)) {
-                emit_sequence (sequence_accumulator, n);
-                ++ good_sequences;
-            }
-            else {
-                int j = 0;
-
-                fprintf (stderr, "sanity check failed on sequence ");
-                for (j = 0; j < (1 << n); j ++) {
-                    fprintf (stderr, "%2d ", sequence_accumulator[j]);
-                }
-                fprintf (stderr, "\n");
-            }
+            sanity_check_sequence (sequence_accumulator, cardinality_sequence, n);
+            emit_sequence (sequence_accumulator, n);
+            ++ good_sequences;
         }
+
         free (duplicate_check);
     }
 }

@@ -82,7 +82,7 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
 long long factorial (long n);
 void printfcomma2 (long long n);
 void printfcomma (long long n);
-int sanity_check_sequence (int * sequence, int * cardinality, int n);
+void sanity_check_sequence (int * sequence, int * cardinality, int n);
 void emit_sequence (int * sequence, int n);
 
 // These will only be needed until I get a proper generator written, but
