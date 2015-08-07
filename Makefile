@@ -17,6 +17,8 @@ generated_pdf_file = $(generated_file).pdf
 generated_dot_files = order-*_graph_generated.dot
 generated_pdf_files = order-*_graph_generated.pdf
 
+.PHONY: test clean $(generated_pdf_file)
+
 rm = rm -fv
 edit = vi
 
