@@ -14,6 +14,7 @@ int main (int argc, char ** argv) {
     int row = 0;
     int col = 0;
     int * cardinality = NULL;
+    int * testing_cardinality = NULL;
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
     aluminium_Christmas_tree * start = &big_dumb_array[0][0];
     int i = 0;
@@ -51,6 +52,16 @@ int main (int argc, char ** argv) {
             big_dumb_array[row][col].next = NULL;
         }
     }
+
+    testing_cardinality = new_cardinality_array (n);
+    assert (testing_cardinality);
+    fprintf (stderr, "testing_cardinality = ");
+    for (i = 0; i < (1 << n) + 1; i ++) {
+        fprintf (stderr, "%d ", testing_cardinality[i]);
+    }
+    fprintf (stderr, "\n");
+    free (testing_cardinality);
+    testing_cardinality = NULL;
 
     verify_all_hand_made_cardinality_sequence_data ();
 
@@ -144,6 +155,7 @@ int main (int argc, char ** argv) {
             printf ("]\n");
 
             free (p);
+            p = NULL;
         }
         printf ("    }\n");
         blank_line ();
@@ -161,11 +173,13 @@ int main (int argc, char ** argv) {
         p = binary (col, n);
         printf ("    level_%d_%s -> level_%d_%s; ", 0, p, 1, p);
         free (p);
+        p = NULL;
 
         for (row = 1; row < ((1 << n) - 1); row ++) {
             p = binary (col, n);
             printf ("level_%d_%s -> level_%d_%s", row, p, row + 1, p);
             free (p);
+            p = NULL;
 
             if ( row < ((1 << n) - 2)) {
                 printf (";");
@@ -193,11 +207,13 @@ int main (int argc, char ** argv) {
         p = binary (0, n);
         printf ("    level_%d_%s", row, p);
         free (p);
+        p = NULL;
 
         for (col = 1; col < (1 << n); col ++) {
             p = binary (col, n);
             printf (" -> level_%d_%s", row, p);
             free (p);
+            p = NULL;
 
             // break long lines
 
@@ -391,6 +407,7 @@ int main (int argc, char ** argv) {
 
     if (n > 6) {
         free (cardinality);
+        cardinality = NULL;
     }
 
     for (row = 0; row < (1 << n); row ++) {
@@ -566,6 +583,7 @@ void count_cardinalities (int n) {
         p = binary (i, n);
         fprintf (stderr, "%d\n", count_1_bits (p));
         free (p);
+        p = NULL;
     }
 }
 
@@ -643,6 +661,46 @@ long long factorial (long n) {
     }
 }
 
+// Number of subsets of $k$ elements from a set of size $n$
+
+long long n_choose_k (int n, int k) {
+    assert (n > 0);
+    assert (k > 0);
+    assert (k <= n);
+
+    switch (n) {
+        case 1:
+            return k;
+            break;
+        default:
+            return factorial (n) / (factorial (k) * factorial (n - k));
+            break;
+    }
+    assert (1 == 0); // This should never happen.
+}
+
+// Return a newly allocated array of length $n+1$ elements containing the
+// cardinality sequence for any $n$.
+//
+// The caller is responsible for freeing the returned array.
+
+int * new_cardinality_array (int n) {
+    int * a = NULL;
+    int i = 0;
+
+    a = malloc (((1 << n) + 1) * sizeof (int));
+    assert (a);
+
+    a[0] = 0;
+    a[n] = -1;
+
+    for (i = 1; i <= n_choose_k (n, 1); i += 2) {
+        a[i] = 1;
+    }
+
+    return a;
+}
+
 // Display large numbers with thousands separators.
 //
 // Source of this neat code: http://stackoverflow.com/questions/1449805/
@@ -670,7 +728,9 @@ void printfcomma (long long n) {
 void emit_sequence (int * sequence, int n) {
     int i = 0;
 
-    fprintf (stderr, "found:");
+    fprintf (stderr, "found ");
+    printfcomma (good_sequences);
+    fprintf (stderr, ":");
     for (i = 0; i < (1 << n); i ++) {
         fprintf (stderr, "%2d ", sequence[i]);
     }
@@ -720,6 +780,7 @@ void sanity_check_sequence (int * sequence, int * cardinality, int n) {
         assert (dup_check_accumulator[sequence[i]] == 1);
     }
     free (dup_check_accumulator);
+    dup_check_accumulator = NULL;
 }
 
 // Display a single node of the digraph.
@@ -774,10 +835,12 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
         ++ early_dup_check[sequence_accumulator[i]];
         if (early_dup_check[sequence_accumulator[i]] > 1) {
             free (early_dup_check);
+            early_dup_check = NULL;
             return;
         }
     }
     free (early_dup_check);
+    early_dup_check = NULL;
 
     // The following loop could be multi-threaded for up to $n$ cores.
 
@@ -810,6 +873,7 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
         }
 
         free (duplicate_check);
+        duplicate_check = NULL;
     }
 }
 
