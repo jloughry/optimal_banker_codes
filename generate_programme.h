@@ -85,6 +85,7 @@ void printfcomma (long long n);
 void sanity_check_sequence (int * sequence, int * cardinality, int n);
 void emit_sequence (int * sequence, int n);
 long long n_choose_k (int n, int k);
+void test_n_choose_k_function (void);
 int * new_cardinality_array (int n);
 
 // These will only be needed until I get a proper generator written, but

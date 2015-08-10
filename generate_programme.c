@@ -651,13 +651,16 @@ void verify_all_hand_made_cardinality_sequence_data (void) {
 // Compute the factorial of n.
 
 long long factorial (long n) {
-    assert (n > 0);
+    assert (n >= 0);
 
-    if (1 == n) {
-        return 1;
-    }
-    else {
-        return n * factorial (n - 1);
+    switch (n) {
+        case 0:
+        case 1:
+            return 1;
+            break;
+        default:
+            return n * factorial (n - 1);
+            break;
     }
 }
 
@@ -677,6 +680,15 @@ long long n_choose_k (int n, int k) {
             break;
     }
     assert (1 == 0); // This should never happen.
+}
+
+// Test the n_choose_k function.
+
+void test_n_choose_k_function (void) {
+    fprintf (stderr, "n_choose_k (4, 1) = %lld\n", n_choose_k (4, 1));
+    fprintf (stderr, "n_choose_k (4, 2) = %lld\n", n_choose_k (4, 2));
+    fprintf (stderr, "n_choose_k (4, 3) = %lld\n", n_choose_k (4, 3));
+    fprintf (stderr, "n_choose_k (4, 4) = %lld\n", n_choose_k (4, 4));
 }
 
 // Return a newly allocated array of length $n+1$ elements containing the
