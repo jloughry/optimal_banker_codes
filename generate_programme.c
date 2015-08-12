@@ -530,6 +530,7 @@ void test_generate_cardinality_sequence_function_helper (int order) {
     for (i = 0; i < length_of_sequence; i ++) {
         assert (new_cardinality_sequence[i] == known_good_sequence[i]);
     }
+    verify_cardinality_sequence (new_cardinality_sequence, order);
     free (new_cardinality_sequence);
     new_cardinality_sequence = NULL;
 }
@@ -597,19 +598,21 @@ void verify_cardinality_sequence (int * sequence, int n) {
     int length = 0;
 
     length = 1 << n;
-    switch (sequence[0]) {
-        case -1:
-            for (i = 1; i <= length; i ++) {
-                assert (-1 == sequence[i]);
-            }
-            break;
-        default:
-            for (i = 0; i < length; i ++) {
-                assert ( (sequence[i] >= 0) && (sequence[i] <= n) );
-            }
-            assert (-1 == sequence[length]);
-            break;
+
+    for (i = 0; i < length; i ++) {
+        // Verify all values are within the allowed range.
+        assert ( (sequence[i] >= 0) && (sequence[i] <= n) );
+
+        // Acid test: all adjacent values differ by exactly 1.
+        if (i > 0) {
+            assert (1 == abs (sequence[i] - sequence[i - 1]));
+        }
+        if (i < length - 1) {
+            assert (1 == abs (sequence[i] - sequence[i + 1]));
+        }
     }
+    // Verify the sequence is properly terminated with a sentinel.
+    assert (-1 == sequence[length]);
 }
 
 // Validate the hand-made cardinality sequence data.
