@@ -68,7 +68,6 @@ void blank_line (void);
 int count_bits (char * binary_string, char bit_value);
 int count_0_bits (char * binary_string);
 int count_1_bits (char * binary_string);
-int * generate_cardinality_sequence (int n);
 void test_count_1_bits (void);
 int allowable (int from_row, int from_col, int to_row, int to_col, int * cardinality, int n);
 int odd (int n);
@@ -86,7 +85,10 @@ void sanity_check_sequence (int * sequence, int * cardinality, int n);
 void emit_sequence (int * sequence, int n);
 long long n_choose_k (int n, int k);
 void test_n_choose_k_function (void);
-int * new_cardinality_array (int n);
+int * generate_cardinality_sequence (int n);
+int first_empty_slot (int * a, int length);
+void test_generate_cardinality_sequence_function (void);
+void test_generate_cardinality_sequence_function_helper (int order);
 
 // These will only be needed until I get a proper generator written, but
 // they might be useful later as test cases for the generator. They have

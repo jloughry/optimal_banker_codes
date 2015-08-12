@@ -14,7 +14,6 @@ int main (int argc, char ** argv) {
     int row = 0;
     int col = 0;
     int * cardinality = NULL;
-    int * testing_cardinality = NULL;
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
     aluminium_Christmas_tree * start = &big_dumb_array[0][0];
     int i = 0;
@@ -32,15 +31,8 @@ int main (int argc, char ** argv) {
     assert (n <= MAX_n);
     assert (start);
 
-    // Initialise the big dumb array with sentinel values.
-
-    // Is it possible to malloc a two-dimensional array and index it?
-
-    /*
-    big_dumb_array = malloc ((1 << n) * sizeof (aluminium_Christmas_tree)
-        * (1 << n) * sizeof (aluminium_Christmas_tree));
-    assert (big_dumb_array);
-    */
+    // Initialise the big dumb array with sentinel values. Is it possible
+    // directly to malloc a two-dimensional array and still index it?
 
     for (row = 0; row < (1 << n); row ++) {
         for (col = 0; col < (1 << n); col ++) {
@@ -53,17 +45,8 @@ int main (int argc, char ** argv) {
         }
     }
 
-    testing_cardinality = new_cardinality_array (n);
-    assert (testing_cardinality);
-    fprintf (stderr, "testing_cardinality = ");
-    for (i = 0; i < (1 << n) + 1; i ++) {
-        fprintf (stderr, "%d ", testing_cardinality[i]);
-    }
-    fprintf (stderr, "\n");
-    free (testing_cardinality);
-    testing_cardinality = NULL;
-
     verify_all_hand_made_cardinality_sequence_data ();
+    test_generate_cardinality_sequence_function ();
 
     cardinality = generate_cardinality_sequence (n);
 
@@ -395,20 +378,16 @@ int main (int argc, char ** argv) {
     printfcomma (good_sequences);
     switch (good_sequences) {
         case 1:
-            fprintf (stderr, " sequence");
+            fprintf (stderr, " sequence was");
             break;
         default:
-            fprintf (stderr, " sequences");
+            fprintf (stderr, " sequences were");
             break;
     }
-    fprintf (stderr, " found.\n");
+    fprintf (stderr, " found in all.\n");
 
-    // Free memory if necessary.
-
-    if (n > 6) {
-        free (cardinality);
-        cardinality = NULL;
-    }
+    free (cardinality);
+    cardinality = NULL;
 
     for (row = 0; row < (1 << n); row ++) {
         for (col = 0; col < (1 << n); col ++) {
@@ -500,52 +479,59 @@ void test_count_1_bits (void) {
     assert (count_1_bits ("") == 0);
 }
 
-// Generate the list of cardinalities we need.
-//
-// If n > 6 then the caller is responsible for freeing the array.
+// Test the function that generates an arbitrary cardinality sequence.
 
-int * generate_cardinality_sequence (int n) {
+void test_generate_cardinality_sequence_function (void) {
     int i = 0;
-    int * cardinality = NULL;
-    int length = 0;
 
-    assert (n > 0);
+    for (i = 1; i <= 6; i ++) {
+        test_generate_cardinality_sequence_function_helper (i);
+    }
+    return;
+}
 
-    switch (n) {
+void test_generate_cardinality_sequence_function_helper (int order) {
+    int * new_cardinality_sequence = NULL;
+    int * known_good_sequence = NULL;
+    int i = 0;
+    int length_of_sequence = 0;
+
+    assert (order > 0);
+    assert (order <= 6);
+
+    switch (order) {
         case 1:
-            cardinality = hand_generated_cardinality_sequence_data_first_order[1];
-            assert (-1 == cardinality[1 << n]);
+            known_good_sequence = hand_generated_cardinality_sequence_data_first_order[1];
             break;
         case 2:
-            cardinality = hand_generated_cardinality_sequence_data_second_order[1];
-            assert (-1 == cardinality[1 << n]);
+            known_good_sequence = hand_generated_cardinality_sequence_data_second_order[1];
             break;
         case 3:
-            cardinality = hand_generated_cardinality_sequence_data_third_order[1];
-            assert (-1 == cardinality[1 << n]);
+            known_good_sequence = hand_generated_cardinality_sequence_data_third_order[1];
             break;
         case 4:
-            cardinality = hand_generated_cardinality_sequence_data_fourth_order[1];
-            assert (-1 == cardinality[1 << n]);
+            known_good_sequence = hand_generated_cardinality_sequence_data_fourth_order[1];
             break;
         case 5:
-            cardinality = hand_generated_cardinality_sequence_data_fifth_order[1];
-            assert (-1 == cardinality[1 << n]);
+            known_good_sequence = hand_generated_cardinality_sequence_data_fifth_order[1];
             break;
         case 6:
-            cardinality = hand_generated_cardinality_sequence_data_sixth_order[1];
-            assert (-1 == cardinality[1 << n]);
+            known_good_sequence = hand_generated_cardinality_sequence_data_sixth_order[1];
             break;
         default:
-            length = 1 << n;
-            cardinality = malloc (sizeof (int) * length);
-            assert (cardinality != NULL);
-            for (i = 0; i <= length; i ++) {
-                cardinality[i] = -1;
-            }
+            assert (1 == 0); // This should never happen.
             break;
     }
-    return cardinality;
+
+    length_of_sequence = 1 << order;
+    new_cardinality_sequence = generate_cardinality_sequence (order);
+    assert (-1 == new_cardinality_sequence[length_of_sequence]);
+    assert (-1 == known_good_sequence[length_of_sequence]);
+    for (i = 0; i < length_of_sequence; i ++) {
+        assert (new_cardinality_sequence[i] == known_good_sequence[i]);
+    }
+    free (new_cardinality_sequence);
+    new_cardinality_sequence = NULL;
 }
 
 // Is the indicated transition an allowable transition?
@@ -668,12 +654,15 @@ long long factorial (long n) {
 
 long long n_choose_k (int n, int k) {
     assert (n > 0);
-    assert (k > 0);
+    assert (k >= 0);
     assert (k <= n);
 
     switch (n) {
+        case 0:
+            return 1;
+            break;
         case 1:
-            return k;
+            return n;
             break;
         default:
             return factorial (n) / (factorial (k) * factorial (n - k));
@@ -685,10 +674,25 @@ long long n_choose_k (int n, int k) {
 // Test the n_choose_k function.
 
 void test_n_choose_k_function (void) {
-    fprintf (stderr, "n_choose_k (4, 1) = %lld\n", n_choose_k (4, 1));
-    fprintf (stderr, "n_choose_k (4, 2) = %lld\n", n_choose_k (4, 2));
-    fprintf (stderr, "n_choose_k (4, 3) = %lld\n", n_choose_k (4, 3));
-    fprintf (stderr, "n_choose_k (4, 4) = %lld\n", n_choose_k (4, 4));
+    assert (n_choose_k (4, 0) == 1);
+    assert (n_choose_k (4, 1) == 4);
+    assert (n_choose_k (4, 2) == 6);
+    assert (n_choose_k (4, 3) == 4);
+    assert (n_choose_k (4, 4) == 1);
+}
+
+// Return the index of the first -1 value in the array.
+
+int first_empty_slot (int * a, int length) {
+    int i = 0;
+
+    while (i < length) {
+        if (-1 == a[i]) {
+            break;
+        }
+        ++ i;
+    }
+    return i;
 }
 
 // Return a newly allocated array of length $n+1$ elements containing the
@@ -696,21 +700,38 @@ void test_n_choose_k_function (void) {
 //
 // The caller is responsible for freeing the returned array.
 
-int * new_cardinality_array (int n) {
-    int * a = NULL;
+int * generate_cardinality_sequence (int n) {
+    int * cardinality_sequence = NULL;
+    int length = 0;
     int i = 0;
+    int k = 0;
 
-    a = malloc (((1 << n) + 1) * sizeof (int));
-    assert (a);
+    // test_n_choose_k_function ();
 
-    a[0] = 0;
-    a[n] = -1;
+    length = (1 << n) + 1;
 
-    for (i = 1; i <= n_choose_k (n, 1); i += 2) {
-        a[i] = 1;
+    cardinality_sequence = malloc (length * sizeof (int));
+    assert (cardinality_sequence);
+
+    // Initialise the cardinality array to `empty'.
+
+    for (i = 0; i < length; i ++) {
+        cardinality_sequence[i] = -1;
     }
 
-    return a;
+    for (k = 0; k <= n; k ++) {
+        int starting_position = 0;
+        int how_many = 0;
+
+        starting_position = first_empty_slot (cardinality_sequence, length);
+        how_many = n_choose_k (n, k);
+
+        for (i = 0; i < how_many; i ++) {
+            cardinality_sequence[starting_position + (2 * i)] = k;
+        }
+    }
+
+    return cardinality_sequence;
 }
 
 // Display large numbers with thousands separators.
@@ -740,9 +761,12 @@ void printfcomma (long long n) {
 void emit_sequence (int * sequence, int n) {
     int i = 0;
 
-    fprintf (stderr, "found ");
     printfcomma (good_sequences);
-    fprintf (stderr, ":");
+    fprintf (stderr, " sequence");
+    if (good_sequences != 1) {
+        fprintf (stderr, "s");
+    }
+    fprintf (stderr, " found:");
     for (i = 0; i < (1 << n); i ++) {
         fprintf (stderr, "%2d ", sequence[i]);
     }
@@ -880,8 +904,8 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
 
         if (j == (1 << n)) {
             sanity_check_sequence (sequence_accumulator, cardinality_sequence, n);
-            emit_sequence (sequence_accumulator, n);
             ++ good_sequences;
+            emit_sequence (sequence_accumulator, n);
         }
 
         free (duplicate_check);
