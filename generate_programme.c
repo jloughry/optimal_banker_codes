@@ -49,8 +49,7 @@ int main (int argc, char ** argv) {
     test_generate_cardinality_sequence_function ();
 
     cardinality = generate_cardinality_sequence (n);
-
-    verify_cardinality_sequence (cardinality, n);
+    acid_test_for_cardinality_sequence (cardinality, n);
 
     // Write the header of the DOT source file to stdout.
 
@@ -435,6 +434,8 @@ char * binary (int n, int num_bits) {
 
 void blank_line (void) {
     printf ("\n");
+
+    return;
 }
 
 // Count the number of bits in a string representation of a binary number
@@ -477,6 +478,8 @@ void test_count_1_bits (void) {
     assert (count_1_bits ("10101") == 3);
     assert (count_1_bits ("abc") == 0);
     assert (count_1_bits ("") == 0);
+
+    return;
 }
 
 // Test the function that generates an arbitrary cardinality sequence.
@@ -530,9 +533,11 @@ void test_generate_cardinality_sequence_function_helper (int order) {
     for (i = 0; i < length_of_sequence; i ++) {
         assert (new_cardinality_sequence[i] == known_good_sequence[i]);
     }
-    verify_cardinality_sequence (new_cardinality_sequence, order);
+    acid_test_for_cardinality_sequence (new_cardinality_sequence, order);
     free (new_cardinality_sequence);
     new_cardinality_sequence = NULL;
+
+    return;
 }
 
 // Is the indicated transition an allowable transition?
@@ -572,6 +577,7 @@ void count_cardinalities (int n) {
         free (p);
         p = NULL;
     }
+    return;
 }
 
 // Verify that hand-made cardinality sequence data are well-formed.
@@ -581,29 +587,47 @@ void verify_one_cardinality_sequence_data (int * index, int * sequence, int orde
     int length = 0;
 
     length = 1 << order;
+
+    // Verify that the index is well-formed.
     for (i = 0; i < length; i ++) {
         assert (index[i] == i);
-        assert (sequence[i] >= 0);
-        assert (sequence[i] <= order);
     }
-    assert (-1 == sequence[length]);
+
+    // Verify the sequence itself.
+    acid_test_for_cardinality_sequence (sequence, order);
 
     return;
 }
 
 // Sanity check any cardinality sequence.
 
-void verify_cardinality_sequence (int * sequence, int n) {
+// Since 1,2,1,2,... is a valid subsequence, we can't really test for
+// quasi-monotonicity. However, by verifying that the sequence starts 
+// at 0 and ends with $n$, and that adjacent values always differ by
+// exactly 1, it can be proved that the sequence must ratchet upward.
+
+void acid_test_for_cardinality_sequence (int * sequence, int n) {
     int i = 0;
     int length = 0;
 
     length = 1 << n;
 
+    assert (0 == sequence[0]);
+    assert (-1 == sequence[length]);
+
+    if (odd (n)) {
+        assert (n == sequence[length - 1]);
+    }
+    else {
+        assert (n == sequence[length - 2]);
+    }
+
     for (i = 0; i < length; i ++) {
         // Verify all values are within the allowed range.
         assert ( (sequence[i] >= 0) && (sequence[i] <= n) );
 
-        // Acid test: all adjacent values differ by exactly 1.
+        // Verify all adjacent values differ by exactly 1.
+        assert (1 == (sequence[1] - sequence[0]));
         if (i > 0) {
             assert (1 == abs (sequence[i] - sequence[i - 1]));
         }
@@ -611,8 +635,7 @@ void verify_cardinality_sequence (int * sequence, int n) {
             assert (1 == abs (sequence[i] - sequence[i + 1]));
         }
     }
-    // Verify the sequence is properly terminated with a sentinel.
-    assert (-1 == sequence[length]);
+    return;
 }
 
 // Validate the hand-made cardinality sequence data.
@@ -651,6 +674,7 @@ long long factorial (long n) {
             return n * factorial (n - 1);
             break;
     }
+    assert (1 == 0); // This should never happen.
 }
 
 // Number of subsets of $k$ elements from a set of size $n$
@@ -682,6 +706,8 @@ void test_n_choose_k_function (void) {
     assert (n_choose_k (4, 2) == 6);
     assert (n_choose_k (4, 3) == 4);
     assert (n_choose_k (4, 4) == 1);
+
+    return;
 }
 
 // Return the index of the first -1 value in the array.
@@ -749,6 +775,8 @@ void printfcomma2 (long long n) {
     }
     printfcomma2 (n / 1000);
     fprintf (stderr, ",%03lld", n % 1000);
+
+    return;
 }
 
 void printfcomma (long long n) {
@@ -757,6 +785,8 @@ void printfcomma (long long n) {
         n = -n;
     }
     printfcomma2 (n);
+
+    return;
 }
 
 // Display an entire sequence.
@@ -774,6 +804,7 @@ void emit_sequence (int * sequence, int n) {
         fprintf (stderr, "%2d ", sequence[i]);
     }
     fprintf (stderr, "\n");
+
     return;
 }
 
@@ -820,6 +851,8 @@ void sanity_check_sequence (int * sequence, int * cardinality, int n) {
     }
     free (dup_check_accumulator);
     dup_check_accumulator = NULL;
+
+    return;
 }
 
 // Display a single node of the digraph.
@@ -914,5 +947,6 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
         free (duplicate_check);
         duplicate_check = NULL;
     }
+    return;
 }
 
