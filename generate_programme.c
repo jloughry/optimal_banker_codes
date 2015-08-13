@@ -792,19 +792,45 @@ void printfcomma (long long n) {
 // Display an entire sequence.
 
 void emit_sequence (int * sequence, int n) {
-    int i = 0;
-
     printfcomma (good_sequences);
     fprintf (stderr, " sequence");
     if (good_sequences != 1) {
         fprintf (stderr, "s");
     }
-    fprintf (stderr, " found:");
-    for (i = 0; i < (1 << n); i ++) {
-        fprintf (stderr, "%2d ", sequence[i]);
-    }
+    fprintf (stderr, " found: ");
+    display_sequence_helper (sequence, n);
     fprintf (stderr, "\n");
 
+    return;
+}
+
+void display_sequence_helper (int * sequence, int n) {
+    int two_to_the_n = 0;
+    int field_width = 0;
+    int i = 0;
+
+    two_to_the_n = 1 << n;
+    field_width = log10 (two_to_the_n) + 1;
+    for (i = 0; i < two_to_the_n; i ++) {
+        switch (field_width) {
+            case 1:
+            default:
+                fprintf (stderr, "%d ", sequence[i]);
+                break;
+            case 2:
+                fprintf (stderr, "%2d ", sequence[i]);
+                break;
+            case 3:
+                fprintf (stderr, "%3d ", sequence[i]);
+                break;
+            case 4:
+                fprintf (stderr, "%4d ", sequence[i]);
+                break;
+            case 5:
+                fprintf (stderr, "%4d ", sequence[i]);
+                break;
+        }
+    }
     return;
 }
 
@@ -823,18 +849,14 @@ void sanity_check_sequence (int * sequence, int * cardinality, int n) {
     assert (sequence[0] == 0);
 
     // There isn't a good way to check that the sequence is the right
-    // length; consider putting a terminating -1 on the end of all
+    // length; TODO: consider putting a terminating -1 on the end of all
     // sequences as a sentinel.
 
     // Second check: that the cardinality of every element is right.
     for (i = 0; i < (1 << n); i ++) {
         if (count_1_bits (binary (sequence[i], n)) != cardinality[i]) {
-            int j = 0;
-
             fprintf (stderr, "sanity check failed on sequence ");
-            for (j = 0; j < (1 << n); j ++) {
-                fprintf (stderr, " %2d", sequence[j]);
-            }
+            display_sequence_helper (sequence, n);
             fprintf (stderr, ", count_1_bits (\"%d\") != %d\n",
                 count_1_bits (binary (sequence[i], n)), cardinality[i]);
 

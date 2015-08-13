@@ -83,6 +83,7 @@ void printfcomma2 (long long n);
 void printfcomma (long long n);
 void sanity_check_sequence (int * sequence, int * cardinality, int n);
 void emit_sequence (int * sequence, int n);
+void display_sequence_helper (int * sequence, int n);
 long long n_choose_k (int n, int k);
 void test_n_choose_k_function (void);
 int * generate_cardinality_sequence (int n);
