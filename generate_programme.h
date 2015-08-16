@@ -133,3 +133,7 @@ int hand_generated_cardinality_sequence_data_sixth_order[][65] = {
          4,  5,  4,  5,  4,  5,  4,  5,  6,  5, -1 },
 };
 
+// The following is used in printf statements when writing the .dot file.
+
+#define TAB "    "
+

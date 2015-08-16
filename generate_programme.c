@@ -54,30 +54,30 @@ int main (int argc, char ** argv) {
     // Write the header of the DOT source file to stdout.
 
     printf ("/*\n");
-    printf ("    dot -T pdf order-%d_graph_generated.dot -o order-%d_graph_generated.pdf\n",
+    printf (TAB "dot -T pdf order-%d_graph_generated.dot -o order-%d_graph_generated.pdf\n",
         n, n);
     printf ("*/\n");
     blank_line ();
     printf ("digraph order%d {\n", n);
     blank_line ();
-    printf ("    node [shape=plaintext]\n");
+    printf (TAB "node [shape=plaintext]\n");
     blank_line ();
 
     // Draw row markers down the left side of the graph.
 
     for (row = 0; row < (1 << n); row ++) {
-        printf ("    level_%d [label=\"%d (%d)\"]\n",
+        printf (TAB "level_%d [label=\"%d (%d)\"]\n",
             row, row, cardinality[row]);
     }
 
     blank_line ();
-    printf ("    /* Connect the left side row markers invisibly so they stay lined up. */\n");
+    printf (TAB "/* Connect the left side row markers invisibly so they stay lined up. */\n");
 
     blank_line ();
-    printf ("    edge [style=invis]\n");
+    printf (TAB "edge [style=invis]\n");
     blank_line ();
 
-    printf ("    level_0");
+    printf (TAB "level_0");
     for (row = 0; row < (1 << n); row ++) {
         printf (" -> level_%d", row);
 
@@ -85,7 +85,7 @@ int main (int argc, char ** argv) {
 
         if ((row % 4) == 3) {
             blank_line ();
-            printf ("        ");
+            printf (TAB TAB);
         }
     }
 
@@ -94,16 +94,16 @@ int main (int argc, char ** argv) {
 
     blank_line ();
     blank_line ();
-    printf ("    graph [ordering=out]\n");
-    printf ("    node [shape=rect]\n");
+    printf (TAB "graph [ordering=out]\n");
+    printf (TAB "node [shape=rect]\n");
     blank_line ();
 
-    printf ("    /* set of all possible states */\n");
+    printf (TAB "/* set of all possible states */\n");
     blank_line ();
 
     for (row = 0; row < (1 << n); row ++) {
-        printf ("    {\n");
-        printf ("        rank=same; level_%d\n", row);
+        printf (TAB "{\n");
+        printf (TAB TAB "rank=same; level_%d\n", row);
         blank_line ();
 
         for (col = 0; col < (1 << n); col ++) {
@@ -111,7 +111,7 @@ int main (int argc, char ** argv) {
 
             p = binary (col, n);
 
-            printf ("        level_%d_%s [label=\"%s\"", row, p, p);
+            printf (TAB TAB "level_%d_%s [label=\"%s\"", row, p, p);
 
             // The all-zeroes state is always gone through; colour it red.
 
@@ -139,21 +139,21 @@ int main (int argc, char ** argv) {
             free (p);
             p = NULL;
         }
-        printf ("    }\n");
+        printf (TAB "}\n");
         blank_line ();
     }
 
-    printf ("    edge [style=invis]\n");
+    printf (TAB "edge [style=invis]\n");
 
     blank_line ();
-    printf ("    /* Connect the states invisibly so they stay lined up vertically. */\n");
+    printf (TAB "/* Connect the states invisibly so they stay lined up vertically. */\n");
 
     for (col = 0; col < (1 << n); col ++) {
         char * p = NULL;
 
         blank_line ();
         p = binary (col, n);
-        printf ("    level_%d_%s -> level_%d_%s; ", 0, p, 1, p);
+        printf (TAB "level_%d_%s -> level_%d_%s; ", 0, p, 1, p);
         free (p);
         p = NULL;
 
@@ -170,7 +170,7 @@ int main (int argc, char ** argv) {
             // break long lines
 
             if ((row % 2) == 1) {
-                printf ("\n    ");
+                printf ("\n" TAB);
             }
             else if ( row < ((1 << n) - 2)) {
                 printf (" ");
@@ -180,14 +180,14 @@ int main (int argc, char ** argv) {
     }
 
     blank_line ();
-    printf ("    /* Connect the states invisibly so they stay lined up horizontally. */\n");
+    printf (TAB "/* Connect the states invisibly so they stay lined up horizontally. */\n");
 
     for (row = 0; row < (1 << n); row ++) {
         char * p = NULL;
 
         blank_line ();
         p = binary (0, n);
-        printf ("    level_%d_%s", row, p);
+        printf (TAB "level_%d_%s", row, p);
         free (p);
         p = NULL;
 
@@ -200,7 +200,7 @@ int main (int argc, char ** argv) {
             // break long lines
 
             if ((col % 4) == 3) {
-                printf ("\n    ");
+                printf ("\n" TAB);
             }
         }
     }
@@ -217,9 +217,9 @@ int main (int argc, char ** argv) {
         double fill_factor_n = 0.0;
         double fill_factor_MAX_n = 0.0;
 
-        printf ("    /* These are the allowable transitions. */\n");
+        printf (TAB "/* These are the allowable transitions. */\n");
         blank_line ();
-        printf ("    edge [style=solid,color=black]\n");
+        printf (TAB "edge [style=solid,color=black]\n");
         blank_line ();
 
         for (row = 0; row < ( (1 << n) - 1); row ++) {
@@ -247,7 +247,7 @@ int main (int argc, char ** argv) {
                                 break;
                         }
 
-                        printf ("    level_%d_%s -> level_%d_%s [label=\"%p -> %p\"]\n",
+                        printf (TAB "level_%d_%s -> level_%d_%s [label=\"%p -> %p\"]\n",
                             row, binary (col, n), row + 1, binary (row_plus_one_col, n),
                             &big_dumb_array[row][col], &big_dumb_array[row + 1][row_plus_one_col]);
 
@@ -359,7 +359,7 @@ int main (int argc, char ** argv) {
 
     // End of DOT source file.
 
-    printf ("    /* end of .dot file */\n");
+    printf (TAB "/* end of .dot file */\n");
     printf ("}\n");
     blank_line ();
 
