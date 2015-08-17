@@ -2,6 +2,7 @@
 
 int sequence_accumulator[MAX_n];
 long long good_sequences = 0;
+long long rejected_paths = 0;
 long long predicted_number_of_candidate_sequences = 0;
 
 // For some reason I don't understand, if the following variable is defined
@@ -247,7 +248,7 @@ int main (int argc, char ** argv) {
                                 break;
                         }
 
-                        printf (TAB "level_%d_%s -> level_%d_%s [label=\"%p -> %p\"]\n",
+                        printf (TAB "level_%d_%s -> level_%d_%s [label=\"%p to %p\"]\n",
                             row, binary (col, n), row + 1, binary (row_plus_one_col, n),
                             &big_dumb_array[row][col], &big_dumb_array[row + 1][row_plus_one_col]);
 
@@ -264,7 +265,7 @@ int main (int argc, char ** argv) {
                         }
                         big_dumb_array[row][col].next[pointer_number] =
                             &(big_dumb_array[row + 1][row_plus_one_col]);
-                        big_dumb_array[row][col].num_children++;
+                        big_dumb_array[row][col].num_children ++;
                         big_dumb_array[row][col].num_children_predicted = predicted_number_of_children;
 
                         // Why does the following line cause a segfault in error check later?
@@ -384,6 +385,13 @@ int main (int argc, char ** argv) {
             break;
     }
     fprintf (stderr, " found in all.\n");
+
+    fprintf (stderr, "predicted_number_of_candidate_sequences = ");
+    printfcomma (predicted_number_of_candidate_sequences);
+    fprintf (stderr, "\n");
+    fprintf (stderr, "number of decisions eliminated by early termination = ");
+    printfcomma (rejected_paths);
+    fprintf (stderr, "\n");
 
     free (cardinality);
     cardinality = NULL;
@@ -867,7 +875,7 @@ void sanity_check_sequence (int * sequence, int * cardinality, int n) {
     // Third check: that there are no duplicates in the sequence.
     dup_check_accumulator = calloc (1 << n, sizeof (int));
     assert (dup_check_accumulator);
-    for (i = 0; i < (1 << n); i++) {
+    for (i = 0; i < (1 << n); i ++) {
         ++ dup_check_accumulator[sequence[i]];
         assert (dup_check_accumulator[sequence[i]] == 1);
     }
@@ -920,7 +928,8 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
 
     sequence_accumulator[p->level] = p->value;
 
-    // Make sure the sequence so far has not repeated.
+    // Make sure the sequence so far has not repeated. This is the key to
+    // early disqualification or early termination of the search.
 
     early_dup_check = calloc (1 << n, sizeof (int));
     assert (early_dup_check);
@@ -928,6 +937,14 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
     for (i = 0; i < p->level; i ++) {
         ++ early_dup_check[sequence_accumulator[i]];
         if (early_dup_check[sequence_accumulator[i]] > 1) {
+            long long eliminated_subpaths = 1;
+            int row = 0;
+
+            for (row = i; row < (1 << n) - 1; row ++) {
+                eliminated_subpaths *= children_per_node_at_level[row];
+            }
+            rejected_paths += eliminated_subpaths;
+
             free (early_dup_check);
             early_dup_check = NULL;
             return;
@@ -944,7 +961,9 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
 
     // The following check might be redundant with early dup check; I'm not sure yet.
 
-    // As soon as we have a full sequence, check for duplicates.
+    // As soon as we have a full sequence, check for duplicates. NOTE:
+    // waiting until we have a full sequence to check if it contains any
+    // duplicates is far too slow to be useful.
 
     if (p->level == ((1 << n) - 1)) {
         int * duplicate_check = NULL;
