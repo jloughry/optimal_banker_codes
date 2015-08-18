@@ -944,6 +944,11 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
                 eliminated_subpaths *= children_per_node_at_level[row];
             }
             rejected_paths += eliminated_subpaths;
+            if (0 == (rejected_paths % 1000000)) {
+                fprintf (stderr, "eliminated ");
+                printfcomma (rejected_paths);
+                fprintf (stderr, "\n");
+            }
 
             free (early_dup_check);
             early_dup_check = NULL;
