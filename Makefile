@@ -1,9 +1,13 @@
 target = $(generator)
 
-order = 7
+order = 4
 
 # DEBUG_FLAGS = -DDEBUG
 DEBUG_FLAGS =
+
+GCC_FLAGS = -Wall -Wextra
+GDB_FLAGS = -g
+LINKER_FLAGS = -lgmp
 
 generator = generate_programme
 generated_file = order-$(order)_graph_generated
@@ -28,8 +32,12 @@ $(generated_pdf_file): $(generator)
 	./$(generator) $(order) > $(generated_dot_file)
 	dot -T pdf $(generated_dot_file) -o $(generated_pdf_file)
 
+#
+# In Cygwin, it's necessary to put -lgmp last on the command line.
+#
+
 $(generator): $(generator_sources) Makefile
-	gcc -g -Wall -Wextra $(DEBUG_FLAGS) -o $@ $<
+	gcc $(GDB_FLAGS) $(GCC_FLAGS) $(DEBUG_FLAGS) -o $@ $< $(LINKER_FLAGS)
 	mv $(generator_compiled) $@
 
 test: $(generated_pdf_file)

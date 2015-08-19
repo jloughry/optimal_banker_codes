@@ -2,8 +2,8 @@
 
 int sequence_accumulator[MAX_n];
 long long good_sequences = 0;
-long long rejected_paths = 0;
 long long predicted_number_of_candidate_sequences = 0;
+static mpz_t rejected_paths; // Using the GNU multiple precision library.
 
 // For some reason I don't understand, if the following variable is defined
 // inside main(), the programme segfaults.
@@ -18,6 +18,8 @@ int main (int argc, char ** argv) {
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
     aluminium_Christmas_tree * start = &big_dumb_array[0][0];
     int i = 0;
+
+    mpz_init (rejected_paths);
 
     switch (argc) {
         case 2:
@@ -389,9 +391,10 @@ int main (int argc, char ** argv) {
     fprintf (stderr, "predicted_number_of_candidate_sequences = ");
     printfcomma (predicted_number_of_candidate_sequences);
     fprintf (stderr, "\n");
-    fprintf (stderr, "number of decisions eliminated by early termination = ");
-    printfcomma (rejected_paths);
-    fprintf (stderr, "\n");
+
+    gmp_fprintf (stderr,
+        "number of decisions eliminated by early termination = %Zd\n",
+        rejected_paths);
 
     free (cardinality);
     cardinality = NULL;
@@ -937,18 +940,16 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
     for (i = 0; i < p->level; i ++) {
         ++ early_dup_check[sequence_accumulator[i]];
         if (early_dup_check[sequence_accumulator[i]] > 1) {
-            long long eliminated_subpaths = 1;
+            mpz_t eliminated_subpaths;
             int row = 0;
 
+            mpz_init_set_ui (eliminated_subpaths, 1);
+
             for (row = i; row < (1 << n) - 1; row ++) {
-                eliminated_subpaths *= children_per_node_at_level[row];
+                mpz_mul_ui (eliminated_subpaths,
+                    eliminated_subpaths, children_per_node_at_level[row]);
             }
-            rejected_paths += eliminated_subpaths;
-            if (0 == (rejected_paths % 1000000)) {
-                fprintf (stderr, "eliminated ");
-                printfcomma (rejected_paths);
-                fprintf (stderr, "\n");
-            }
+            mpz_add (rejected_paths, rejected_paths, eliminated_subpaths);
 
             free (early_dup_check);
             early_dup_check = NULL;
