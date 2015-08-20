@@ -393,8 +393,9 @@ int main (int argc, char ** argv) {
     fprintf (stderr, "\n");
 
     gmp_fprintf (stderr,
-        "number of decisions eliminated by early termination = %Zd\n",
-        rejected_paths);
+        "number of decisions eliminated by early termination = ");
+    gmp_printfcomma (rejected_paths);
+    gmp_fprintf (stderr, "\n");
 
     free (cardinality);
     cardinality = NULL;
@@ -776,7 +777,7 @@ int * generate_cardinality_sequence (int n) {
 
 // Display large numbers with thousands separators.
 //
-// Source of this neat code: http://stackoverflow.com/questions/1449805/
+// Modified from: http://stackoverflow.com/questions/1449805/
 // how-to-format-a-number-from-1123456789-to-1-123-456-789-in-c
 
 void printfcomma2 (long long n) {
@@ -796,6 +797,36 @@ void printfcomma (long long n) {
         n = -n;
     }
     printfcomma2 (n);
+
+    return;
+}
+
+void gmp_printfcomma2 (mpz_t n) {
+    mpz_t n_div_1000;
+    mpz_t n_mod_1000;
+
+    mpz_init (n_div_1000);
+    mpz_init (n_mod_1000);
+
+    if (mpz_cmp_ui (n, 1000) < 0) {
+        gmp_fprintf (stderr, "%Zd", n);
+        return;
+    }
+
+    mpz_tdiv_q_ui (n_div_1000, n, 1000);
+    mpz_mod_ui (n_mod_1000, n, 1000);
+    gmp_printfcomma2 (n_div_1000);
+    gmp_fprintf (stderr, ",%03Zd", n_mod_1000);
+
+    return;
+}
+
+void gmp_printfcomma (mpz_t n) {
+    if (mpz_cmp_ui (n, 0) < 0) {
+        gmp_fprintf (stderr, "-");
+        mpz_neg (n, n);
+    }
+    gmp_printfcomma2 (n);
 
     return;
 }

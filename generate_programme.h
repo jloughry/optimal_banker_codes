@@ -82,6 +82,8 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
 long long factorial (long n);
 void printfcomma2 (long long n);
 void printfcomma (long long n);
+void gmp_printfcomma2 (mpz_t n);
+void gmp_printfcomma (mpz_t n);
 void sanity_check_sequence (int * sequence, int * cardinality, int n);
 void emit_sequence (int * sequence, int n);
 void display_sequence_helper (int * sequence, int n);
