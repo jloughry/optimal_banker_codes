@@ -1,9 +1,10 @@
 #include "generate_programme.h"
 
 int sequence_accumulator[MAX_n];
-long long good_sequences = 0;
-long long predicted_number_of_candidate_sequences = 0;
-static mpz_t rejected_paths; // Using the GNU multiple precision library.
+
+static mpz_t good_sequences; // Using the GNU multiple precision library.
+static mpz_t predicted_number_of_candidate_sequences;
+static mpz_t rejected_paths;
 
 // For some reason I don't understand, if the following variable is defined
 // inside main(), the programme segfaults.
@@ -18,8 +19,12 @@ int main (int argc, char ** argv) {
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
     aluminium_Christmas_tree * start = &big_dumb_array[0][0];
     int i = 0;
+    mpz_t predicted_number_of_candidate_sequences_at_row_n;
 
     mpz_init (rejected_paths);
+    mpz_init (predicted_number_of_candidate_sequences);
+    mpz_init (predicted_number_of_candidate_sequences_at_row_n);
+    mpz_init (good_sequences);
 
     switch (argc) {
         case 2:
@@ -329,9 +334,14 @@ int main (int argc, char ** argv) {
             }
         }
 
-        predicted_number_of_candidate_sequences = 1;
+        mpz_set_ui (predicted_number_of_candidate_sequences, 1);
+
         for (row = 0; row < (1 << n) - 1; row ++) {
-            predicted_number_of_candidate_sequences *= children_per_node_at_level[row];
+            mpz_mul_ui (predicted_number_of_candidate_sequences_at_row_n,
+                predicted_number_of_candidate_sequences,
+                children_per_node_at_level[row]);
+            mpz_set (predicted_number_of_candidate_sequences,
+                predicted_number_of_candidate_sequences_at_row_n);
         }
 
         fill_factor_n = (double) number_of_nodes_used / ( pow(2.0, n) * pow (2.0, n) );
@@ -377,19 +387,17 @@ int main (int argc, char ** argv) {
     depth_first_search (start, cardinality, n);
 
     fprintf (stderr, "\n");
-    printfcomma (good_sequences);
-    switch (good_sequences) {
-        case 1:
-            fprintf (stderr, " sequence was");
-            break;
-        default:
-            fprintf (stderr, " sequences were");
-            break;
+    gmp_printfcomma (good_sequences);
+    if (mpz_cmp_ui (good_sequences, 1) == 0) {
+        fprintf (stderr, " sequence was");
+    }
+    else {
+        fprintf (stderr, " sequences were");
     }
     fprintf (stderr, " found in all.\n");
 
     fprintf (stderr, "predicted_number_of_candidate_sequences = ");
-    printfcomma (predicted_number_of_candidate_sequences);
+    gmp_printfcomma (predicted_number_of_candidate_sequences);
     fprintf (stderr, "\n");
 
     gmp_fprintf (stderr,
@@ -815,6 +823,7 @@ void gmp_printfcomma2 (mpz_t n) {
 
     mpz_tdiv_q_ui (n_div_1000, n, 1000);
     mpz_mod_ui (n_mod_1000, n, 1000);
+
     gmp_printfcomma2 (n_div_1000);
     gmp_fprintf (stderr, ",%03Zd", n_mod_1000);
 
@@ -834,9 +843,9 @@ void gmp_printfcomma (mpz_t n) {
 // Display an entire sequence.
 
 void emit_sequence (int * sequence, int n) {
-    printfcomma (good_sequences);
+    gmp_printfcomma (good_sequences);
     fprintf (stderr, " sequence");
-    if (good_sequences != 1) {
+    if (mpz_cmp_ui (good_sequences, 1) != 0) {
         fprintf (stderr, "s");
     }
     fprintf (stderr, " found: ");
@@ -972,15 +981,30 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
         ++ early_dup_check[sequence_accumulator[i]];
         if (early_dup_check[sequence_accumulator[i]] > 1) {
             mpz_t eliminated_subpaths;
+            mpz_t eliminated_subpaths_at_row_n;
+            mpz_t rejected_paths_this_time;
+            mpz_t rejected_paths_mod_1000000;
             int row = 0;
 
+            mpz_init (eliminated_subpaths_at_row_n);
+            mpz_init (rejected_paths_this_time);
+            mpz_init (rejected_paths_mod_1000000);
             mpz_init_set_ui (eliminated_subpaths, 1);
 
             for (row = i; row < (1 << n) - 1; row ++) {
-                mpz_mul_ui (eliminated_subpaths,
+                mpz_mul_ui (eliminated_subpaths_at_row_n,
                     eliminated_subpaths, children_per_node_at_level[row]);
+                mpz_set (eliminated_subpaths, eliminated_subpaths_at_row_n);
             }
-            mpz_add (rejected_paths, rejected_paths, eliminated_subpaths);
+            mpz_add (rejected_paths_this_time, rejected_paths, eliminated_subpaths);
+            mpz_set (rejected_paths, rejected_paths_this_time);
+
+            mpz_mod_ui (rejected_paths_mod_1000000, rejected_paths, 1000000);
+            if (mpz_cmp_ui (rejected_paths_mod_1000000, 0) == 0) {
+                fprintf (stderr, "rejected ");
+                gmp_printfcomma (rejected_paths);
+                fprintf (stderr, " paths.\n");
+            }
 
             free (early_dup_check);
             early_dup_check = NULL;
@@ -1018,7 +1042,7 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
 
         if (j == (1 << n)) {
             sanity_check_sequence (sequence_accumulator, cardinality_sequence, n);
-            ++ good_sequences;
+            mpz_add_ui (good_sequences, good_sequences, 1);
             emit_sequence (sequence_accumulator, n);
         }
 
