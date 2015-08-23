@@ -4,6 +4,7 @@ int sequence_accumulator[MAX_n];
 
 static mpz_t good_sequences; // Using the GNU multiple precision library.
 static mpz_t predicted_number_of_candidate_sequences;
+static mpz_t predicted_number_of_candidate_sequences_at_row_n;
 static mpz_t rejected_paths;
 
 // For some reason I don't understand, if the following variable is defined
@@ -19,12 +20,11 @@ int main (int argc, char ** argv) {
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
     aluminium_Christmas_tree * start = &big_dumb_array[0][0];
     int i = 0;
-    mpz_t predicted_number_of_candidate_sequences_at_row_n;
 
-    mpz_init (rejected_paths);
+    mpz_init (good_sequences);
     mpz_init (predicted_number_of_candidate_sequences);
     mpz_init (predicted_number_of_candidate_sequences_at_row_n);
-    mpz_init (good_sequences);
+    mpz_init (rejected_paths);
 
     switch (argc) {
         case 2:
@@ -980,32 +980,6 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
     for (i = 0; i < p->level; i ++) {
         ++ early_dup_check[sequence_accumulator[i]];
         if (early_dup_check[sequence_accumulator[i]] > 1) {
-            mpz_t eliminated_subpaths;
-            mpz_t eliminated_subpaths_at_row_n;
-            mpz_t rejected_paths_this_time;
-            mpz_t rejected_paths_mod_1000000;
-            int row = 0;
-
-            mpz_init (eliminated_subpaths_at_row_n);
-            mpz_init (rejected_paths_this_time);
-            mpz_init (rejected_paths_mod_1000000);
-            mpz_init_set_ui (eliminated_subpaths, 1);
-
-            for (row = i; row < (1 << n) - 1; row ++) {
-                mpz_mul_ui (eliminated_subpaths_at_row_n,
-                    eliminated_subpaths, children_per_node_at_level[row]);
-                mpz_set (eliminated_subpaths, eliminated_subpaths_at_row_n);
-            }
-            mpz_add (rejected_paths_this_time, rejected_paths, eliminated_subpaths);
-            mpz_set (rejected_paths, rejected_paths_this_time);
-
-            mpz_mod_ui (rejected_paths_mod_1000000, rejected_paths, 1000000);
-            if (mpz_cmp_ui (rejected_paths_mod_1000000, 0) == 0) {
-                fprintf (stderr, "rejected ");
-                gmp_printfcomma (rejected_paths);
-                fprintf (stderr, " paths.\n");
-            }
-
             free (early_dup_check);
             early_dup_check = NULL;
             return;
