@@ -37,6 +37,8 @@ int main (int argc, char ** argv) {
     assert (n <= MAX_n);
     assert (start);
 
+    test_count_1_bits ();
+
     // Initialise the big dumb array with sentinel values. Is it possible
     // directly to malloc a two-dimensional array and still index it?
 
@@ -345,8 +347,17 @@ int main (int argc, char ** argv) {
         fill_factor_n = (double) number_of_nodes_used / ( pow(2.0, n) * pow (2.0, n) );
         fill_factor_MAX_n = (double) number_of_nodes_used / ((1 << MAX_n) * (1 << MAX_n));
 
-        fprintf (stderr, "%d nodes used; fill factor = %lf based on n = %d (or %lf based on %d)\n",
-            number_of_nodes_used, fill_factor_n, n, fill_factor_MAX_n, MAX_n);
+        fprintf (stderr, "%d nodes used; fill factor = %lf based on n = %d",
+            number_of_nodes_used, fill_factor_n, n);
+
+        if (n < MAX_n) {
+            fprintf (stderr, " (or %lf based on %d)", fill_factor_MAX_n, MAX_n);
+        }
+        fprintf (stderr, "\n");
+
+        fprintf (stderr, "The predicted number of candidate sequences is ");
+        gmp_printfcomma (predicted_number_of_candidate_sequences);
+        fprintf (stderr, ".\n");
 
         // Error check.
 
@@ -394,9 +405,9 @@ int main (int argc, char ** argv) {
     }
     fprintf (stderr, " found in all.\n");
 
-    fprintf (stderr, "predicted_number_of_candidate_sequences = ");
+    fprintf (stderr, "The predicted number of candidate sequences was ");
     gmp_printfcomma (predicted_number_of_candidate_sequences);
-    fprintf (stderr, "\n");
+    fprintf (stderr, ".\n");
 
     free (cardinality);
     cardinality = NULL;
@@ -677,56 +688,6 @@ void verify_all_hand_made_cardinality_sequence_data (void) {
     return;
 }
 
-// Compute the factorial of n.
-
-long long factorial (long n) {
-    assert (n >= 0);
-
-    switch (n) {
-        case 0:
-        case 1:
-            return 1;
-            break;
-        default:
-            return n * factorial (n - 1);
-            break;
-    }
-    assert (1 == 0); // This should never happen.
-}
-
-// Number of subsets of $k$ elements from a set of size $n$
-
-long long n_choose_k (int n, int k) {
-    assert (n > 0);
-    assert (k >= 0);
-    assert (k <= n);
-
-    switch (n) {
-        case 0:
-            return 1;
-            break;
-        case 1:
-            return n;
-            break;
-        default:
-            return factorial (n) / (factorial (k) * factorial (n - k));
-            break;
-    }
-    assert (1 == 0); // This should never happen.
-}
-
-// Test the n_choose_k function.
-
-void test_n_choose_k_function (void) {
-    assert (n_choose_k (4, 0) == 1);
-    assert (n_choose_k (4, 1) == 4);
-    assert (n_choose_k (4, 2) == 6);
-    assert (n_choose_k (4, 3) == 4);
-    assert (n_choose_k (4, 4) == 1);
-
-    return;
-}
-
 // Return the index of the first -1 value in the array.
 
 int first_empty_slot (int * a, int length) {
@@ -752,8 +713,6 @@ int * generate_cardinality_sequence (int n) {
     int i = 0;
     int k = 0;
 
-    // test_n_choose_k_function ();
-
     length = (1 << n) + 1;
 
     cardinality_sequence = malloc (length * sizeof (int));
@@ -768,9 +727,14 @@ int * generate_cardinality_sequence (int n) {
     for (k = 0; k <= n; k ++) {
         int starting_position = 0;
         int how_many = 0;
+        mpz_t binomial_coefficient;
+
+        mpz_init (binomial_coefficient);
+        mpz_bin_uiui (binomial_coefficient, n, k); // same as "n choose k"
+        how_many = mpz_get_ui (binomial_coefficient);
+        mpz_clear (binomial_coefficient);
 
         starting_position = first_empty_slot (cardinality_sequence, length);
-        how_many = n_choose_k (n, k);
 
         for (i = 0; i < how_many; i ++) {
             cardinality_sequence[starting_position + (2 * i)] = k;
@@ -784,27 +748,6 @@ int * generate_cardinality_sequence (int n) {
 //
 // Modified from: http://stackoverflow.com/questions/1449805/
 // how-to-format-a-number-from-1123456789-to-1-123-456-789-in-c
-
-void printfcomma2 (long long n) {
-    if (n < 1000) {
-        fprintf (stderr, "%lld", n);
-        return;
-    }
-    printfcomma2 (n / 1000);
-    fprintf (stderr, ",%03lld", n % 1000);
-
-    return;
-}
-
-void printfcomma (long long n) {
-    if (n < 0) {
-        fprintf (stderr, "-");
-        n = -n;
-    }
-    printfcomma2 (n);
-
-    return;
-}
 
 void gmp_printfcomma2 (mpz_t n) {
     mpz_t n_div_1000;
