@@ -5,7 +5,6 @@ int sequence_accumulator[MAX_n];
 static mpz_t good_sequences; // Using the GNU multiple precision library.
 static mpz_t predicted_number_of_candidate_sequences;
 static mpz_t predicted_number_of_candidate_sequences_at_row_n;
-static mpz_t rejected_paths;
 
 // For some reason I don't understand, if the following variable is defined
 // inside main(), the programme segfaults.
@@ -24,7 +23,6 @@ int main (int argc, char ** argv) {
     mpz_init (good_sequences);
     mpz_init (predicted_number_of_candidate_sequences);
     mpz_init (predicted_number_of_candidate_sequences_at_row_n);
-    mpz_init (rejected_paths);
 
     switch (argc) {
         case 2:
@@ -400,11 +398,6 @@ int main (int argc, char ** argv) {
     gmp_printfcomma (predicted_number_of_candidate_sequences);
     fprintf (stderr, "\n");
 
-    gmp_fprintf (stderr,
-        "number of decisions eliminated by early termination = ");
-    gmp_printfcomma (rejected_paths);
-    gmp_fprintf (stderr, "\n");
-
     free (cardinality);
     cardinality = NULL;
 
@@ -416,6 +409,10 @@ int main (int argc, char ** argv) {
             }
         }
     }
+
+    mpz_clear (good_sequences);
+    mpz_clear (predicted_number_of_candidate_sequences);
+    mpz_clear (predicted_number_of_candidate_sequences_at_row_n);
 
     return EXIT_SUCCESS;
 }
@@ -826,6 +823,9 @@ void gmp_printfcomma2 (mpz_t n) {
 
     gmp_printfcomma2 (n_div_1000);
     gmp_fprintf (stderr, ",%03Zd", n_mod_1000);
+
+    mpz_clear (n_div_1000);
+    mpz_clear (n_mod_1000);
 
     return;
 }
