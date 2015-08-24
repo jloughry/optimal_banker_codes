@@ -60,6 +60,7 @@ int main (int argc, char ** argv) {
     acid_test_for_cardinality_sequence (cardinality, n);
 
     fprintf (stderr, "Version %d\n", VERSION);
+    write_checkpoint_file (n);
 
     // Write the header of the DOT source file to stdout.
 
@@ -872,6 +873,67 @@ void sanity_check_sequence (int * sequence, int * cardinality, int n) {
     free (dup_check_accumulator);
     dup_check_accumulator = NULL;
 
+    return;
+}
+
+// Dump a file containing enough checkpoint data to restart in process.
+
+void write_checkpoint_file (int n) {
+    FILE * fp_out = NULL;
+
+    fp_out = fopen (CHECKPOINT_FILE, "w");
+    if (NULL == fp_out) {
+        fprintf (stderr, "Unable to open checkpoint file for writing: %s (continuing)\n",
+            strerror (errno));
+    }
+    else {
+        fprintf (fp_out, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n");
+        open_XML_tag (fp_out, "checkpoint", 0);
+            write_XML_integer_value (fp_out, "version", VERSION, 1);
+            write_XML_integer_value (fp_out, "order", n, 1);
+        close_XML_tag (fp_out, "checkpoint", 0);
+        if (fclose (fp_out)) {
+            fprintf (stderr, "Error closing checkpoint file: %s (continuing)\n",
+                strerror (errno));
+        }
+    }
+    return;
+}
+
+void emit_tabs (FILE * fp, int how_deep) {
+    int i = 0;
+
+    for (i = 0; i < how_deep; i ++) {
+        fprintf (fp, TAB);
+    }
+    return;
+}
+
+void open_XML_tag (FILE * fp, char * tag, int nesting) {
+    emit_tabs (fp, nesting);
+    fprintf (fp, "<%s>\n", tag);
+    return;
+}
+
+void close_XML_tag (FILE * fp, char * tag, int nesting) {
+    emit_tabs (fp, nesting);
+    fprintf (fp, "</%s>\n", tag);
+    return;
+}
+
+void write_XML_string_value (FILE * fp, char * tag, char * value, int nesting) {
+    open_XML_tag (fp, tag, nesting);
+    emit_tabs (fp, nesting + 1);
+    fprintf (fp, "%s\n", value);
+    close_XML_tag (fp, tag, nesting);
+    return;
+}
+
+void write_XML_integer_value (FILE * fp, char * tag, int value, int nesting) {
+    open_XML_tag (fp, tag, nesting);
+    emit_tabs (fp, nesting + 1);
+    fprintf (fp, "%d\n", value);
+    close_XML_tag (fp, tag, nesting);
     return;
 }
 

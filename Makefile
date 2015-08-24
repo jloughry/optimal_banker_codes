@@ -21,6 +21,7 @@ generated_pdf_file = $(generated_file).pdf
 generated_dot_files = order-*_graph_generated.dot
 generated_pdf_files = order-*_graph_generated.pdf
 debug_symbol_files = $(generator).dSYN
+checkpoint_file = checkpoint.xml
 
 .PHONY: test clean $(generated_pdf_file)
 
@@ -46,7 +47,9 @@ test: $(generated_pdf_file)
 clean::
 	$(rm) $(target) $(generator) *.stackdump \
 		$(generated_dot_files) $(generated_pdf_files) \
-		$(bibtex_file) typescript
+		$(bibtex_file) typescript \
+		$(checkpoint_file)
+
 	$(rm) -r $(debug_symbol_files)
 
 vi:

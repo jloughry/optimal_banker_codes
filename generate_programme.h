@@ -1,11 +1,13 @@
 #include <assert.h>
+#include <errno.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <gmp.h>
+#include <gmp.h>    // must be included after stdlib.h
 
 #define VERSION 1
+#define CHECKPOINT_FILE "checkpoint.xml"
 
 // This data structure is used for generating a digraph in memory.
 // There will be at most $n$ child nodes, but we don't know $n$ at compile
@@ -90,6 +92,12 @@ int * generate_cardinality_sequence (int n);
 int first_empty_slot (int * a, int length);
 void test_generate_cardinality_sequence_function (void);
 void test_generate_cardinality_sequence_function_helper (int order);
+void write_checkpoint_file (int n);
+void emit_tabs (FILE * fp, int how_deep);
+void open_XML_tag (FILE * fp, char * tag, int nesting);
+void close_XML_tag (FILE * fp, char * tag, int nesting);
+void write_XML_string_value (FILE * fp, char * tag, char * value, int nesting);
+void write_XML_integer_value (FILE * fp, char * tag, int value, int nesting);
 
 // These will only be needed until I get a proper generator written, but
 // they might be useful later as test cases for the generator. They have
