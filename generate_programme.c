@@ -1,10 +1,14 @@
 #include "generate_programme.h"
 
+#define VERSION 2
+
 int sequence_accumulator[MAX_n];
 
 static mpz_t good_sequences; // Using the GNU multiple precision library.
 static mpz_t predicted_number_of_candidate_sequences;
 static mpz_t predicted_number_of_candidate_sequences_at_row_n;
+
+static time_t last_time_checked;
 
 // For some reason I don't understand, if the following variable is defined
 // inside main(), the programme segfaults.
@@ -37,6 +41,9 @@ int main (int argc, char ** argv) {
     assert (n <= MAX_n);
     assert (start);
 
+    update_clock ();
+    checkpoint (n, -99);
+
     test_count_1_bits ();
 
     // Initialise the big dumb array with sentinel values. Is it possible
@@ -60,7 +67,6 @@ int main (int argc, char ** argv) {
     acid_test_for_cardinality_sequence (cardinality, n);
 
     fprintf (stderr, "Version %d\n", VERSION);
-    write_checkpoint_file (n);
 
     // Write the header of the DOT source file to stdout.
 
@@ -876,10 +882,20 @@ void sanity_check_sequence (int * sequence, int * cardinality, int n) {
     return;
 }
 
-// Dump a file containing enough checkpoint data to restart in process.
+void update_clock (void) {
+    last_time_checked = time (NULL);
+    if (-1 == last_time_checked) {
+        fprintf (stderr, "time (NULL) returned -1\n");
+    }
+    return;
+}
 
-void write_checkpoint_file (int n) {
+// Dump a file containing enough checkpoint data to restart the process.
+
+void checkpoint (int n, int level) {
     FILE * fp_out = NULL;
+
+    fprintf (stderr, "CHECKPOINT\n");
 
     fp_out = fopen (CHECKPOINT_FILE, "w");
     if (NULL == fp_out) {
@@ -887,10 +903,11 @@ void write_checkpoint_file (int n) {
             strerror (errno));
     }
     else {
-        fprintf (fp_out, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n");
+        fprintf (fp_out, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
         open_XML_tag (fp_out, "checkpoint", 0);
             write_XML_integer_value (fp_out, "version", VERSION, 1);
             write_XML_integer_value (fp_out, "order", n, 1);
+            write_XML_integer_value (fp_out, "level", level, 1);
         close_XML_tag (fp_out, "checkpoint", 0);
         if (fclose (fp_out)) {
             fprintf (stderr, "Error closing checkpoint file: %s (continuing)\n",

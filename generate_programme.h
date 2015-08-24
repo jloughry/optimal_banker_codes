@@ -4,10 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <gmp.h>    // must be included after stdlib.h
 
-#define VERSION 1
 #define CHECKPOINT_FILE "checkpoint.xml"
+#define CHECKPOINT_INTERVAL_IN_SECONDS  10.0    //
 
 // This data structure is used for generating a digraph in memory.
 // There will be at most $n$ child nodes, but we don't know $n$ at compile
@@ -92,7 +93,8 @@ int * generate_cardinality_sequence (int n);
 int first_empty_slot (int * a, int length);
 void test_generate_cardinality_sequence_function (void);
 void test_generate_cardinality_sequence_function_helper (int order);
-void write_checkpoint_file (int n);
+void update_clock (void);
+void checkpoint (int n, int level);
 void emit_tabs (FILE * fp, int how_deep);
 void open_XML_tag (FILE * fp, char * tag, int nesting);
 void close_XML_tag (FILE * fp, char * tag, int nesting);
