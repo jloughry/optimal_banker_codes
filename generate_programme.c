@@ -59,11 +59,15 @@ int main (int argc, char ** argv) {
     cardinality = generate_cardinality_sequence (n);
     acid_test_for_cardinality_sequence (cardinality, n);
 
+    fprintf (stderr, "Version %d\n", VERSION);
+
     // Write the header of the DOT source file to stdout.
 
     printf ("/*\n");
     printf (TAB "dot -T pdf order-%d_graph_generated.dot -o order-%d_graph_generated.pdf\n",
         n, n);
+    blank_line ();
+    printf (TAB "This was made by Version %d of the generator.\n", VERSION);
     printf ("*/\n");
     blank_line ();
     printf ("digraph order%d {\n", n);

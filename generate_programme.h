@@ -5,6 +5,8 @@
 #include <string.h>
 #include <gmp.h>
 
+#define VERSION 1
+
 // This data structure is used for generating a digraph in memory.
 // There will be at most $n$ child nodes, but we don't know $n$ at compile
 // time.
