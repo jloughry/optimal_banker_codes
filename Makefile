@@ -1,6 +1,6 @@
 target = $(generator)
 
-order = 4
+order = 8
 
 # DEBUG_FLAGS = -DDEBUG
 DEBUG_FLAGS =
@@ -47,8 +47,7 @@ test: $(generated_pdf_file)
 clean::
 	$(rm) $(target) $(generator) *.stackdump \
 		$(generated_dot_files) $(generated_pdf_files) \
-		$(bibtex_file) typescript \
-		$(checkpoint_file)
+		$(bibtex_file) typescript
 
 	$(rm) -r $(debug_symbol_files)
 

@@ -1,6 +1,6 @@
 #include "generate_programme.h"
 
-#define VERSION 2
+#define VERSION 3
 
 int sequence_accumulator[MAX_n];
 
@@ -903,11 +903,20 @@ void checkpoint (int n, int level) {
             strerror (errno));
     }
     else {
+        int i = 0;
+
         fprintf (fp_out, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
         open_XML_tag (fp_out, "checkpoint", 0);
             write_XML_integer_value (fp_out, "version", VERSION, 1);
             write_XML_integer_value (fp_out, "order", n, 1);
             write_XML_integer_value (fp_out, "level", level, 1);
+            write_XML_mpz_integer_value (fp_out, "good_sequences", good_sequences, 1);
+            open_XML_tag (fp_out, "solution", 1);
+            for (i = 0; i < (1 << n); i ++) {
+                write_XML_integer_value (fp_out, "sequence_accumulator",
+                    sequence_accumulator[i], 2);
+            }
+            close_XML_tag (fp_out, "solution", 1);
         close_XML_tag (fp_out, "checkpoint", 0);
         if (fclose (fp_out)) {
             fprintf (stderr, "Error closing checkpoint file: %s (continuing)\n",
@@ -950,6 +959,14 @@ void write_XML_integer_value (FILE * fp, char * tag, int value, int nesting) {
     open_XML_tag (fp, tag, nesting);
     emit_tabs (fp, nesting + 1);
     fprintf (fp, "%d\n", value);
+    close_XML_tag (fp, tag, nesting);
+    return;
+}
+
+void write_XML_mpz_integer_value (FILE * fp, char * tag, mpz_t value, int nesting) {
+    open_XML_tag (fp, tag, nesting);
+    emit_tabs (fp, nesting + 1);
+    gmp_fprintf (fp, "%Zd\n", value);
     close_XML_tag (fp, tag, nesting);
     return;
 }
@@ -1044,6 +1061,10 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
             sanity_check_sequence (sequence_accumulator, cardinality_sequence, n);
             mpz_add_ui (good_sequences, good_sequences, 1);
             emit_sequence (sequence_accumulator, n);
+            // Don't do it if it's going to happen a thousand times every second.
+            if (n < 5 || n > 7) {
+                checkpoint (n, p->level);
+            }
         }
 
         free (duplicate_check);
