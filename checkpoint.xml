@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <checkpoint>
     <version>
-        5
+        6
     </version>
     <order>
         4
     </order>
+    <starting_time>
+        1440743703
+    </starting_time>
+    <now>
+        1440743703
+    </now>
     <level>
         15
     </level>

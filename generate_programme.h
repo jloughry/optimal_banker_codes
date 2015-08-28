@@ -103,6 +103,7 @@ void open_XML_tag (FILE * fp, char * tag, int nesting);
 void close_XML_tag (FILE * fp, char * tag, int nesting);
 void write_XML_string_value (FILE * fp, char * tag, char * value, int nesting);
 void write_XML_integer_value (FILE * fp, char * tag, int value, int nesting);
+void write_XML_long_long_value (FILE * fp, char * tag, long long value, int nesting);
 void write_XML_mpz_integer_value (FILE * fp, char * tag, mpz_t value, int nesting);
 
 // These will only be needed until I get a proper generator written, but

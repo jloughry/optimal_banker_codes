@@ -1,9 +1,10 @@
 #include "generate_programme.h"
 
-#define VERSION 5
+#define VERSION 6
 
 int sequence_accumulator[MAX_n];
 int sequence_is_valid = FALSE;
+time_t starting_time = 0;
 
 static mpz_t good_sequences; // Using the GNU multiple precision library.
 static mpz_t predicted_number_of_candidate_sequences;
@@ -24,6 +25,8 @@ int main (int argc, char ** argv) {
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
     aluminium_Christmas_tree * start = &big_dumb_array[0][0];
     int i = 0;
+
+    starting_time = time (NULL);
 
     mpz_init (good_sequences);
     mpz_init (predicted_number_of_candidate_sequences);
@@ -903,11 +906,17 @@ void checkpoint (int n, int level) {
     }
     else {
         int i = 0;
+        time_t now = 0;
+
+        now = time (NULL);
 
         fprintf (fp_out, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
         open_XML_tag (fp_out, "checkpoint", 0);
             write_XML_integer_value (fp_out, "version", VERSION, 1);
             write_XML_integer_value (fp_out, "order", n, 1);
+            write_XML_long_long_value (fp_out,
+                "starting_time", (long long) starting_time, 1);
+            write_XML_long_long_value (fp_out, "now", (long long) now, 1);
             write_XML_integer_value (fp_out, "level", level, 1);
             write_XML_mpz_integer_value (fp_out,
                 "good_sequences", good_sequences, 1);
@@ -964,6 +973,14 @@ void write_XML_integer_value (FILE * fp, char * tag, int value, int nesting) {
     open_XML_tag (fp, tag, nesting);
     emit_tabs (fp, nesting + 1);
     fprintf (fp, "%d\n", value);
+    close_XML_tag (fp, tag, nesting);
+    return;
+}
+
+void write_XML_long_long_value (FILE * fp, char * tag, long long value, int nesting) {
+    open_XML_tag (fp, tag, nesting);
+    emit_tabs (fp, nesting + 1);
+    fprintf (fp, "%lld\n", value);
     close_XML_tag (fp, tag, nesting);
     return;
 }
