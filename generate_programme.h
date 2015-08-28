@@ -8,7 +8,6 @@
 #include <gmp.h>    // must be included after stdlib.h
 
 #define CHECKPOINT_FILE "checkpoint.xml"
-#define CHECKPOINT_INTERVAL_IN_SECONDS  10.0
 
 #define FALSE 0
 #define TRUE !FALSE
@@ -96,8 +95,7 @@ int * generate_cardinality_sequence (int n);
 int first_empty_slot (int * a, int length);
 void test_generate_cardinality_sequence_function (void);
 void test_generate_cardinality_sequence_function_helper (int order);
-void update_clock (void);
-void checkpoint (int n, int level);
+void checkpoint (int n);
 void emit_tabs (FILE * fp, int how_deep);
 void open_XML_tag (FILE * fp, char * tag, int nesting);
 void close_XML_tag (FILE * fp, char * tag, int nesting);

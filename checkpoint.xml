@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <checkpoint>
     <version>
-        6
+        7
     </version>
     <order>
         4
     </order>
     <starting_time>
-        1440743703
+        1440776582
     </starting_time>
     <now>
-        1440743703
+        1440776583
     </now>
-    <level>
-        15
-    </level>
     <good_sequences>
         24
     </good_sequences>

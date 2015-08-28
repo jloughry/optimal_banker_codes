@@ -1,6 +1,6 @@
 #include "generate_programme.h"
 
-#define VERSION 6
+#define VERSION 7
 
 int sequence_accumulator[MAX_n];
 int sequence_is_valid = FALSE;
@@ -9,8 +9,6 @@ time_t starting_time = 0;
 static mpz_t good_sequences; // Using the GNU multiple precision library.
 static mpz_t predicted_number_of_candidate_sequences;
 static mpz_t predicted_number_of_candidate_sequences_at_row_n;
-
-static time_t last_time_checked;
 
 // For some reason I don't understand, if the following variable is defined
 // inside main(), the programme segfaults.
@@ -45,8 +43,7 @@ int main (int argc, char ** argv) {
     assert (n <= MAX_n);
     assert (start);
 
-    update_clock ();
-    checkpoint (n, -99);
+    checkpoint (n);
 
     test_count_1_bits ();
 
@@ -886,17 +883,9 @@ void sanity_check_sequence (int * sequence, int * cardinality, int n) {
     return;
 }
 
-void update_clock (void) {
-    last_time_checked = time (NULL);
-    if (-1 == last_time_checked) {
-        fprintf (stderr, "time (NULL) returned -1\n");
-    }
-    return;
-}
-
 // Dump a file containing enough checkpoint data to restart the process.
 
-void checkpoint (int n, int level) {
+void checkpoint (int n) {
     FILE * fp_out = NULL;
 
     fp_out = fopen (CHECKPOINT_FILE, "w");
@@ -917,7 +906,6 @@ void checkpoint (int n, int level) {
             write_XML_long_long_value (fp_out,
                 "starting_time", (long long) starting_time, 1);
             write_XML_long_long_value (fp_out, "now", (long long) now, 1);
-            write_XML_integer_value (fp_out, "level", level, 1);
             write_XML_mpz_integer_value (fp_out,
                 "good_sequences", good_sequences, 1);
             write_XML_mpz_integer_value (fp_out,
@@ -1085,8 +1073,8 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
             mpz_add_ui (good_sequences, good_sequences, 1);
             emit_sequence (sequence_accumulator, n);
             // Don't do it if it's going to happen a thousand times every second.
-            if (n < 5 || n > 7) {
-                checkpoint (n, p->level);
+            if (n < 5 || n > 6) {
+                checkpoint (n);
             }
         }
 
