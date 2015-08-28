@@ -8,7 +8,10 @@
 #include <gmp.h>    // must be included after stdlib.h
 
 #define CHECKPOINT_FILE "checkpoint.xml"
-#define CHECKPOINT_INTERVAL_IN_SECONDS  10.0    //
+#define CHECKPOINT_INTERVAL_IN_SECONDS  10.0
+
+#define FALSE 0
+#define TRUE !FALSE
 
 // This data structure is used for generating a digraph in memory.
 // There will be at most $n$ child nodes, but we don't know $n$ at compile

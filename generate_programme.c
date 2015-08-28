@@ -1,8 +1,9 @@
 #include "generate_programme.h"
 
-#define VERSION 3
+#define VERSION 5
 
 int sequence_accumulator[MAX_n];
+int sequence_is_valid = FALSE;
 
 static mpz_t good_sequences; // Using the GNU multiple precision library.
 static mpz_t predicted_number_of_candidate_sequences;
@@ -895,8 +896,6 @@ void update_clock (void) {
 void checkpoint (int n, int level) {
     FILE * fp_out = NULL;
 
-    fprintf (stderr, "CHECKPOINT\n");
-
     fp_out = fopen (CHECKPOINT_FILE, "w");
     if (NULL == fp_out) {
         fprintf (stderr, "Unable to open checkpoint file for writing: %s (continuing)\n",
@@ -910,13 +909,19 @@ void checkpoint (int n, int level) {
             write_XML_integer_value (fp_out, "version", VERSION, 1);
             write_XML_integer_value (fp_out, "order", n, 1);
             write_XML_integer_value (fp_out, "level", level, 1);
-            write_XML_mpz_integer_value (fp_out, "good_sequences", good_sequences, 1);
-            open_XML_tag (fp_out, "solution", 1);
-            for (i = 0; i < (1 << n); i ++) {
-                write_XML_integer_value (fp_out, "sequence_accumulator",
-                    sequence_accumulator[i], 2);
+            write_XML_mpz_integer_value (fp_out,
+                "good_sequences", good_sequences, 1);
+            write_XML_mpz_integer_value (fp_out,
+                "predicted_number_of_candidate_sequences",
+                predicted_number_of_candidate_sequences, 1);
+            if (sequence_is_valid) {
+                open_XML_tag (fp_out, "solution", 1);
+                for (i = 0; i < (1 << n); i ++) {
+                    write_XML_integer_value (fp_out, "sequence_accumulator",
+                        sequence_accumulator[i], 2);
+                }
+                close_XML_tag (fp_out, "solution", 1);
             }
-            close_XML_tag (fp_out, "solution", 1);
         close_XML_tag (fp_out, "checkpoint", 0);
         if (fclose (fp_out)) {
             fprintf (stderr, "Error closing checkpoint file: %s (continuing)\n",
@@ -1059,6 +1064,7 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
 
         if (j == (1 << n)) {
             sanity_check_sequence (sequence_accumulator, cardinality_sequence, n);
+            sequence_is_valid = TRUE;
             mpz_add_ui (good_sequences, good_sequences, 1);
             emit_sequence (sequence_accumulator, n);
             // Don't do it if it's going to happen a thousand times every second.
