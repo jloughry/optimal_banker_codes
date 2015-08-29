@@ -1,6 +1,6 @@
 #include "generate_programme.h"
 
-#define VERSION 7
+#define VERSION 8
 
 int sequence_accumulator[MAX_n];
 int sequence_is_valid = FALSE;
@@ -109,118 +109,17 @@ int main (int argc, char ** argv) {
         }
     }
 
-    // The purpose of `ordering=out' is to keep DOT from re-ordering nodes
-    // on the page.
-
     blank_line ();
+    printf (TAB "/* These are the allowable states. */\n");
     blank_line ();
-    printf (TAB "graph [ordering=out]\n");
     printf (TAB "node [shape=rect]\n");
     blank_line ();
 
-    printf (TAB "/* set of all possible states */\n");
-    blank_line ();
-
     for (row = 0; row < (1 << n); row ++) {
-        printf (TAB "{\n");
-        printf (TAB TAB "rank=same; level_%d\n", row);
-        blank_line ();
-
-        for (col = 0; col < (1 << n); col ++) {
-            char * p = NULL;
-
-            p = binary (col, n);
-
-            printf (TAB TAB "level_%d_%s [label=\"%s\"", row, p, p);
-
-            // The all-zeroes state is always gone through; colour it red.
-
-            if ( (row == 0) && (count_1_bits (p) == 0) ) {
-                printf (",color=red,fontcolor=red");
-            }
-
-            // The all-ones state is always gone through; colour it red.
-
-            if ( odd (n) && (row == (1 << n) - 1) && (count_1_bits (p) == n) ) {
-                printf (",color=red,fontcolor=red");
-            }
-            else if ( even (n) && (row == (1 << n) - 2) && (count_1_bits (p) == n) ) {
-                printf (",color=red,fontcolor=red");
-            }
-
-            // Grey out unreachable states that have the wrong cardinality.
-
-            if (count_1_bits (p) != cardinality[row]) {
-                printf (",color=grey,fontcolor=grey");
-            }
-
-            printf ("]\n");
-
-            free (p);
-            p = NULL;
-        }
-        printf (TAB "}\n");
-        blank_line ();
-    }
-
-    printf (TAB "edge [style=invis]\n");
-
-    blank_line ();
-    printf (TAB "/* Connect the states invisibly so they stay lined up vertically. */\n");
-
-    for (col = 0; col < (1 << n); col ++) {
-        char * p = NULL;
-
-        blank_line ();
-        p = binary (col, n);
-        printf (TAB "level_%d_%s -> level_%d_%s; ", 0, p, 1, p);
-        free (p);
-        p = NULL;
-
-        for (row = 1; row < ((1 << n) - 1); row ++) {
-            p = binary (col, n);
-            printf ("level_%d_%s -> level_%d_%s", row, p, row + 1, p);
-            free (p);
-            p = NULL;
-
-            if ( row < ((1 << n) - 2)) {
-                printf (";");
-            }
-
-            // break long lines
-
-            if ((row % 2) == 1) {
-                printf ("\n" TAB);
-            }
-            else if ( row < ((1 << n) - 2)) {
-                printf (" ");
-            }
-        }
-        blank_line ();
-    }
-
-    blank_line ();
-    printf (TAB "/* Connect the states invisibly so they stay lined up horizontally. */\n");
-
-    for (row = 0; row < (1 << n); row ++) {
-        char * p = NULL;
-
-        blank_line ();
-        p = binary (0, n);
-        printf (TAB "level_%d_%s", row, p);
-        free (p);
-        p = NULL;
-
-        for (col = 1; col < (1 << n); col ++) {
-            p = binary (col, n);
-            printf (" -> level_%d_%s", row, p);
-            free (p);
-            p = NULL;
-
-            // break long lines
-
-            if ((col % 4) == 3) {
-                printf ("\n" TAB);
+        for (col = 0; col < (1 << n); col ++ ) {
+            if (count_1_bits (binary (col, n)) == cardinality[row]) {
+                printf (TAB "level_%d_%s [label=\"%s\"]\n",
+                    row, binary (col, n), binary (col, n));
             }
         }
     }
@@ -267,9 +166,8 @@ int main (int argc, char ** argv) {
                                 break;
                         }
 
-                        printf (TAB "level_%d_%s -> level_%d_%s [label=\"%p to %p\"]\n",
-                            row, binary (col, n), row + 1, binary (row_plus_one_col, n),
-                            &big_dumb_array[row][col], &big_dumb_array[row + 1][row_plus_one_col]);
+                        printf (TAB "level_%d_%s -> level_%d_%s\n",
+                            row, binary (col, n), row + 1, binary (row_plus_one_col, n));
 
                         assert (pointer_number < predicted_number_of_children);
 
@@ -396,6 +294,9 @@ int main (int argc, char ** argv) {
     printf (TAB "/* end of .dot file */\n");
     printf ("}\n");
     blank_line ();
+    if (fflush (stdout)) {
+        fprintf (stderr, "fflush() returned an error (continuing)\n");
+    }
 
     fprintf (stderr, "\n");
 
@@ -1073,7 +974,7 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
             mpz_add_ui (good_sequences, good_sequences, 1);
             emit_sequence (sequence_accumulator, n);
             // Don't do it if it's going to happen a thousand times every second.
-            if (n < 5 || n > 6) {
+            if (n < 5 || n > 7) {
                 checkpoint (n);
             }
         }

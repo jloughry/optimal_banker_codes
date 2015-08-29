@@ -47,7 +47,8 @@ test: $(generated_pdf_file)
 clean::
 	$(rm) $(target) $(generator) *.stackdump \
 		$(generated_dot_files) $(generated_pdf_files) \
-		$(bibtex_file) typescript
+		$(bibtex_file) typescript \
+		$(checkpoint_file)
 
 	$(rm) -r $(debug_symbol_files)
 
