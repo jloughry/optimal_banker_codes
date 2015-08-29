@@ -1,6 +1,6 @@
 #include "generate_programme.h"
 
-#define VERSION 8
+#define VERSION 9
 
 int sequence_accumulator[MAX_n];
 int sequence_is_valid = FALSE;
@@ -9,6 +9,8 @@ time_t starting_time = 0;
 static mpz_t good_sequences; // Using the GNU multiple precision library.
 static mpz_t predicted_number_of_candidate_sequences;
 static mpz_t predicted_number_of_candidate_sequences_at_row_n;
+
+boolean found_first_solution = FALSE;
 
 // For some reason I don't understand, if the following variable is defined
 // inside main(), the programme segfaults.
@@ -23,6 +25,8 @@ int main (int argc, char ** argv) {
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
     aluminium_Christmas_tree * start = &big_dumb_array[0][0];
     int i = 0;
+    boolean option_run_once = FALSE;
+    boolean option_generate_graph = FALSE;
 
     starting_time = time (NULL);
 
@@ -30,13 +34,43 @@ int main (int argc, char ** argv) {
     mpz_init (predicted_number_of_candidate_sequences);
     mpz_init (predicted_number_of_candidate_sequences_at_row_n);
 
+    // Not using GNU getop here because I don't need the complexity.
+
     switch (argc) {
         case 2:
-            n = atoi (argv[1]);
+            if (isdigit ((int)argv[1][0])) {
+                n = atoi (argv[1]);
+            }
+            else if ('-' == argv[1][0]) {
+                usage (argv[0]);
+            }
+            break;
+        case 3:
+            if ('-' == argv[1][0]) {
+                char * p = NULL;
+
+                for (p = argv[1] + 1; *p; p++) {
+                    switch (*p) {
+                        case '1':
+                            option_run_once = TRUE;
+                            break;
+                        case 'g':
+                            option_generate_graph = TRUE;
+                            break;
+                        default:
+                            fprintf (stderr, "Unrecognised option '-%c'\n", *p);
+                            usage (argv[0]);
+                            break;
+                    }
+                }
+            }
+            if (isdigit ((int)argv[2][0])) {
+                n = atoi (argv[2]);
+            }
             break;
         default:
-            fprintf (stderr, "Usage: %s n\n", argv[0]);
-            exit (EXIT_FAILURE);
+            usage (argv[0]);
+            break;
     }
 
     assert (n > 0);
@@ -69,62 +103,64 @@ int main (int argc, char ** argv) {
 
     fprintf (stderr, "Version %d\n", VERSION);
 
-    // Write the header of the DOT source file to stdout.
+    if (option_generate_graph) {
+        // Write the header of the DOT source file to stdout.
 
-    printf ("/*\n");
-    printf (TAB "dot -T pdf order-%d_graph_generated.dot -o order-%d_graph_generated.pdf\n",
-        n, n);
-    blank_line ();
-    printf (TAB "This was made by Version %d of the generator.\n", VERSION);
-    printf ("*/\n");
-    blank_line ();
-    printf ("digraph order%d {\n", n);
-    blank_line ();
-    printf (TAB "node [shape=plaintext]\n");
-    blank_line ();
+        printf ("/*\n");
+        printf (TAB "dot -T pdf order-%d_graph_generated.dot -o order-%d_graph_generated.pdf\n",
+            n, n);
+        blank_line ();
+        printf (TAB "This was made by Version %d of the generator.\n", VERSION);
+        printf ("*/\n");
+        blank_line ();
+        printf ("digraph order%d {\n", n);
+        blank_line ();
+        printf (TAB "node [shape=plaintext]\n");
+        blank_line ();
 
-    // Draw row markers down the left side of the graph.
+        // Draw row markers down the left side of the graph.
 
-    for (row = 0; row < (1 << n); row ++) {
-        printf (TAB "level_%d [label=\"%d (%d)\"]\n",
-            row, row, cardinality[row]);
-    }
-
-    blank_line ();
-    printf (TAB "/* Connect the left side row markers invisibly so they stay lined up. */\n");
-
-    blank_line ();
-    printf (TAB "edge [style=invis]\n");
-    blank_line ();
-
-    printf (TAB "level_0");
-    for (row = 0; row < (1 << n); row ++) {
-        printf (" -> level_%d", row);
-
-        // break long lines
-
-        if ((row % 4) == 3) {
-            blank_line ();
-            printf (TAB TAB);
+        for (row = 0; row < (1 << n); row ++) {
+            printf (TAB "level_%d [label=\"%d (%d)\"]\n",
+                row, row, cardinality[row]);
         }
-    }
 
-    blank_line ();
-    printf (TAB "/* These are the allowable states. */\n");
-    blank_line ();
-    printf (TAB "node [shape=rect]\n");
-    blank_line ();
+        blank_line ();
+        printf (TAB "/* Connect the left side row markers invisibly so they stay lined up. */\n");
 
-    for (row = 0; row < (1 << n); row ++) {
-        for (col = 0; col < (1 << n); col ++ ) {
-            if (count_1_bits (binary (col, n)) == cardinality[row]) {
-                printf (TAB "level_%d_%s [label=\"%s\"]\n",
-                    row, binary (col, n), binary (col, n));
+        blank_line ();
+        printf (TAB "edge [style=invis]\n");
+        blank_line ();
+
+        printf (TAB "level_0");
+        for (row = 0; row < (1 << n); row ++) {
+            printf (" -> level_%d", row);
+
+            // break long lines
+
+            if ((row % 4) == 3) {
+                blank_line ();
+                printf (TAB TAB);
             }
         }
-    }
 
-    blank_line ();
+        blank_line ();
+        printf (TAB "/* These are the allowable states. */\n");
+        blank_line ();
+        printf (TAB "node [shape=rect]\n");
+        blank_line ();
+
+        for (row = 0; row < (1 << n); row ++) {
+            for (col = 0; col < (1 << n); col ++ ) {
+                if (count_1_bits (binary (col, n)) == cardinality[row]) {
+                    printf (TAB "level_%d_%s [label=\"%s\"]\n",
+                        row, binary (col, n), binary (col, n));
+                }
+            }
+        }
+
+        blank_line ();
+    }
 
     // Now generate the graph of allowable transitions (but only if we have
     // good cardinality data).
@@ -138,6 +174,7 @@ int main (int argc, char ** argv) {
 
         printf (TAB "/* These are the allowable transitions. */\n");
         blank_line ();
+        printf (TAB "graph [ordering=out] /* keep binary numbers in order */\n");
         printf (TAB "edge [style=solid,color=black]\n");
         blank_line ();
 
@@ -289,13 +326,13 @@ int main (int argc, char ** argv) {
             "We have no cardinality data; not attempting to generate the graph of allowed transitions.\n");
     }
 
-    // End of DOT source file.
-
-    printf (TAB "/* end of .dot file */\n");
-    printf ("}\n");
-    blank_line ();
-    if (fflush (stdout)) {
-        fprintf (stderr, "fflush() returned an error (continuing)\n");
+    if (option_generate_graph) {
+        printf (TAB "/* end of .dot file */\n");
+        printf ("}\n");
+        blank_line ();
+        if (fflush (stdout)) {
+            fprintf (stderr, "fflush() returned an error (continuing)\n");
+        }
     }
 
     fprintf (stderr, "\n");
@@ -306,7 +343,7 @@ int main (int argc, char ** argv) {
         sequence_accumulator[i] = -1;
     }
 
-    depth_first_search (start, cardinality, n);
+    depth_first_search (start, cardinality, n, option_run_once);
 
     fprintf (stderr, "\n");
     gmp_printfcomma (good_sequences);
@@ -316,7 +353,11 @@ int main (int argc, char ** argv) {
     else {
         fprintf (stderr, " sequences were");
     }
-    fprintf (stderr, " found in all.\n");
+    fprintf (stderr, " found in all");
+    if (option_run_once) {
+        fprintf (stderr, " (we were told to stop after the first one)");
+    }
+    fprintf (stderr, ".\n");
 
     fprintf (stderr, "The predicted number of candidate sequences was ");
     gmp_printfcomma (predicted_number_of_candidate_sequences);
@@ -483,24 +524,24 @@ void test_generate_cardinality_sequence_function_helper (int order) {
 
 // Is the indicated transition an allowable transition?
 
-int allowable (int from_row, int from_col, int to_row, int to_col, int * cardinality, int n) {
+boolean allowable (int from_row, int from_col, int to_row, int to_col, int * cardinality, int n) {
     if ( 1 == count_1_bits (binary (( from_col ^ to_col ), n))
         && (count_1_bits (binary (from_col, n)) == cardinality[from_row])
         && (count_1_bits (binary (to_col, n)) == cardinality[to_row]) ) {
-            return 1;
+            return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 // Is $n$ odd?
 
-int odd (int n) {
+boolean odd (int n) {
     return (n % 2);
 }
 
 // Is $n$ even?
 
-int even (int n) {
+boolean even (int n) {
     return !odd (n);
 }
 
@@ -882,6 +923,15 @@ void write_XML_mpz_integer_value (FILE * fp, char * tag, mpz_t value, int nestin
     return;
 }
 
+// Print 'usage' message and quit.
+
+void usage (char * programme_name) {
+    assert (programme_name);
+
+    fprintf (stderr, USAGE "\n", programme_name);
+    exit (EXIT_FAILURE);
+}
+
 // Display a single node of the digraph.
 
 void display_digraph_node (aluminium_Christmas_tree * p, int n) {
@@ -917,11 +967,16 @@ void display_digraph_node (aluminium_Christmas_tree * p, int n) {
 
 // Depth-first search entire digraph.
 
-void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequence, int n) {
+void depth_first_search (aluminium_Christmas_tree * p,
+    int * cardinality_sequence, int n, boolean first_solution_only) {
     int i = 0;
     int * early_dup_check = NULL;
 
     assert (p);
+
+    if (first_solution_only && found_first_solution) {
+        return;
+    }
 
     sequence_accumulator[p->level] = p->value;
 
@@ -945,7 +1000,8 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
     // The following loop could be multi-threaded for up to $n$ cores.
 
     for (i = 0; i < p->num_children; i ++) {
-        depth_first_search (p->next[i], cardinality_sequence, n);
+        depth_first_search (p->next[i], cardinality_sequence, n,
+            first_solution_only);
     }
 
     // The following check might be redundant with early dup check; I'm not sure yet.
@@ -971,10 +1027,11 @@ void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequenc
         if (j == (1 << n)) {
             sanity_check_sequence (sequence_accumulator, cardinality_sequence, n);
             sequence_is_valid = TRUE;
+            found_first_solution = TRUE;
             mpz_add_ui (good_sequences, good_sequences, 1);
             emit_sequence (sequence_accumulator, n);
             // Don't do it if it's going to happen a thousand times every second.
-            if (n < 5 || n > 7) {
+            if (n < 5 || n > 7 || (TRUE == first_solution_only) ) {
                 checkpoint (n);
             }
         }

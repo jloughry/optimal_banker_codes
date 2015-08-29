@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <ctype.h>
 #include <errno.h>
 #include <math.h>
 #include <stdio.h>
@@ -7,10 +8,14 @@
 #include <time.h>
 #include <gmp.h>    // must be included after stdlib.h
 
+#define USAGE   "Usage: %s [-1g] n"
+
 #define CHECKPOINT_FILE "checkpoint.xml"
 
 #define FALSE 0
 #define TRUE !FALSE
+
+typedef int boolean;
 
 // This data structure is used for generating a digraph in memory.
 // There will be at most $n$ child nodes, but we don't know $n$ at compile
@@ -77,15 +82,16 @@ int count_bits (char * binary_string, char bit_value);
 int count_0_bits (char * binary_string);
 int count_1_bits (char * binary_string);
 void test_count_1_bits (void);
-int allowable (int from_row, int from_col, int to_row, int to_col, int * cardinality, int n);
-int odd (int n);
-int even (int n);
+boolean allowable (int from_row, int from_col, int to_row, int to_col, int * cardinality, int n);
+boolean odd (int n);
+boolean even (int n);
 void count_cardinalities (int n);
 void verify_one_cardinality_sequence_data (int * index, int * sequence, int order);
 void verify_all_hand_made_cardinality_sequence_data (void);
 void acid_test_for_cardinality_sequence (int * sequence_data, int n);
 void display_digraph_node (aluminium_Christmas_tree * p, int n);
-void depth_first_search (aluminium_Christmas_tree * p, int * cardinality_sequence, int n);
+void depth_first_search (aluminium_Christmas_tree * p,
+    int * cardinality_sequence, int n, boolean first_solution_only);
 void gmp_printfcomma2 (mpz_t n);
 void gmp_printfcomma (mpz_t n);
 void sanity_check_sequence (int * sequence, int * cardinality, int n);
@@ -103,6 +109,7 @@ void write_XML_string_value (FILE * fp, char * tag, char * value, int nesting);
 void write_XML_integer_value (FILE * fp, char * tag, int value, int nesting);
 void write_XML_long_long_value (FILE * fp, char * tag, long long value, int nesting);
 void write_XML_mpz_integer_value (FILE * fp, char * tag, mpz_t value, int nesting);
+void usage (char * programme_name);
 
 // These will only be needed until I get a proper generator written, but
 // they might be useful later as test cases for the generator. They have
