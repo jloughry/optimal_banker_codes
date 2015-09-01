@@ -1,6 +1,6 @@
 #include "generate_programme.h"
 
-#define VERSION 9
+#define VERSION 10
 
 int sequence_accumulator[MAX_n];
 int sequence_is_valid = FALSE;
@@ -34,44 +34,8 @@ int main (int argc, char ** argv) {
     mpz_init (predicted_number_of_candidate_sequences);
     mpz_init (predicted_number_of_candidate_sequences_at_row_n);
 
-    // Not using GNU getop here because I don't need the complexity.
-
-    switch (argc) {
-        case 2:
-            if (isdigit ((int)argv[1][0])) {
-                n = atoi (argv[1]);
-            }
-            else if ('-' == argv[1][0]) {
-                usage (argv[0]);
-            }
-            break;
-        case 3:
-            if ('-' == argv[1][0]) {
-                char * p = NULL;
-
-                for (p = argv[1] + 1; *p; p++) {
-                    switch (*p) {
-                        case '1':
-                            option_run_once = TRUE;
-                            break;
-                        case 'g':
-                            option_generate_graph = TRUE;
-                            break;
-                        default:
-                            fprintf (stderr, "Unrecognised option '-%c'\n", *p);
-                            usage (argv[0]);
-                            break;
-                    }
-                }
-            }
-            if (isdigit ((int)argv[2][0])) {
-                n = atoi (argv[2]);
-            }
-            break;
-        default:
-            usage (argv[0]);
-            break;
-    }
+    process_command_line_options (argc, argv, &option_run_once,
+        &option_generate_graph, &n);
 
     assert (n > 0);
     assert (n <= MAX_n);
@@ -103,67 +67,8 @@ int main (int argc, char ** argv) {
 
     fprintf (stderr, "Version %d\n", VERSION);
 
-    if (option_generate_graph) {
-        // Write the header of the DOT source file to stdout.
-
-        printf ("/*\n");
-        printf (TAB "dot -T pdf order-%d_graph_generated.dot -o order-%d_graph_generated.pdf\n",
-            n, n);
-        blank_line ();
-        printf (TAB "This was made by Version %d of the generator.\n", VERSION);
-        printf ("*/\n");
-        blank_line ();
-        printf ("digraph order%d {\n", n);
-        blank_line ();
-        printf (TAB "node [shape=plaintext]\n");
-        blank_line ();
-
-        // Draw row markers down the left side of the graph.
-
-        for (row = 0; row < (1 << n); row ++) {
-            printf (TAB "level_%d [label=\"%d (%d)\"]\n",
-                row, row, cardinality[row]);
-        }
-
-        blank_line ();
-        printf (TAB "/* Connect the left side row markers invisibly so they stay lined up. */\n");
-
-        blank_line ();
-        printf (TAB "edge [style=invis]\n");
-        blank_line ();
-
-        printf (TAB "level_0");
-        for (row = 0; row < (1 << n); row ++) {
-            printf (" -> level_%d", row);
-
-            // break long lines
-
-            if ((row % 4) == 3) {
-                blank_line ();
-                printf (TAB TAB);
-            }
-        }
-
-        blank_line ();
-        printf (TAB "/* These are the allowable states. */\n");
-        blank_line ();
-        printf (TAB "node [shape=rect]\n");
-        blank_line ();
-
-        for (row = 0; row < (1 << n); row ++) {
-            for (col = 0; col < (1 << n); col ++ ) {
-                if (count_1_bits (binary (col, n)) == cardinality[row]) {
-                    printf (TAB "level_%d_%s [label=\"%s\"]\n",
-                        row, binary (col, n), binary (col, n));
-                }
-            }
-        }
-
-        blank_line ();
-    }
-
-    // Now generate the graph of allowable transitions (but only if we have
-    // good cardinality data).
+    // Now generate the graph of allowable transitions (but only if
+    // we have good cardinality data).
 
     // A great big shiny aluminium Christmas tree!
 
@@ -171,12 +76,6 @@ int main (int argc, char ** argv) {
         int number_of_nodes_used = 0;
         double fill_factor_n = 0.0;
         double fill_factor_MAX_n = 0.0;
-
-        printf (TAB "/* These are the allowable transitions. */\n");
-        blank_line ();
-        printf (TAB "graph [ordering=out] /* keep binary numbers in order */\n");
-        printf (TAB "edge [style=solid,color=black]\n");
-        blank_line ();
 
         for (row = 0; row < ( (1 << n) - 1); row ++) {
             for (col = 0; col < (1 << n); col ++) {
@@ -202,9 +101,6 @@ int main (int argc, char ** argv) {
                                 assert (0); // This should never happen.
                                 break;
                         }
-
-                        printf (TAB "level_%d_%s -> level_%d_%s\n",
-                            row, binary (col, n), row + 1, binary (row_plus_one_col, n));
 
                         assert (pointer_number < predicted_number_of_children);
 
@@ -322,17 +218,8 @@ int main (int argc, char ** argv) {
         }
     }
     else {
-        fprintf (stderr,
-            "We have no cardinality data; not attempting to generate the graph of allowed transitions.\n");
-    }
-
-    if (option_generate_graph) {
-        printf (TAB "/* end of .dot file */\n");
-        printf ("}\n");
-        blank_line ();
-        if (fflush (stdout)) {
-            fprintf (stderr, "fflush() returned an error (continuing)\n");
-        }
+        fprintf (stderr, "We have no cardinality data; not attempting "
+            "to generate the graph of allowed transitions.\n");
     }
 
     fprintf (stderr, "\n");
@@ -363,6 +250,10 @@ int main (int argc, char ** argv) {
     gmp_printfcomma (predicted_number_of_candidate_sequences);
     fprintf (stderr, ".\n");
 
+    if (option_generate_graph) {
+        write_dot_file (start, cardinality, n);
+    }
+
     free (cardinality);
     cardinality = NULL;
 
@@ -380,6 +271,112 @@ int main (int argc, char ** argv) {
     mpz_clear (predicted_number_of_candidate_sequences_at_row_n);
 
     return EXIT_SUCCESS;
+}
+
+// This is a simple depth-first search to reset all flags.
+
+void reset_visited_flags (aluminium_Christmas_tree * p) {
+    int i = 0;
+
+    p->visited = FALSE;
+    for (i = 0; i < p->num_children; i ++ ) {
+        reset_visited_flags (p->next[i]);
+    }
+    return;
+}
+
+void write_dot_file (aluminium_Christmas_tree * root, int * cardinality, int n) {
+    int row = 0;
+    int col = 0;
+    aluminium_Christmas_tree * p = NULL;
+
+    p = root;
+    assert (p);
+
+    // First reset the 'visited' flag on every node in the graph.
+
+    fprintf (stderr, "about to reset visited flags\n");
+    reset_visited_flags (p);
+    fprintf (stderr, "done resetting visited flags\n");
+
+    // Write the header of the DOT source file to stdout.
+
+    printf ("/*\n");
+    printf (TAB "dot -T pdf order-%d_graph_generated.dot -o order-%d_graph_generated.pdf\n",
+        n, n);
+    blank_line ();
+    printf (TAB "This was made by Version %d of the generator.\n", VERSION);
+    printf ("*/\n");
+    blank_line ();
+    printf ("digraph order%d {\n", n);
+    blank_line ();
+    printf (TAB "node [shape=plaintext]\n");
+    blank_line ();
+
+    // Draw row markers down the left side of the graph.
+
+    for (row = 0; row < (1 << n); row ++) {
+        printf (TAB "level_%d [label=\"%d (%d)\"]\n",
+            row, row, cardinality[row]);
+    }
+
+    blank_line ();
+    printf (TAB "/* Connect the left side row markers invisibly so they stay lined up. */\n");
+
+    blank_line ();
+    printf (TAB "edge [style=invis]\n");
+    blank_line ();
+
+    printf (TAB "level_0");
+    for (row = 0; row < (1 << n); row ++) {
+        printf (" -> level_%d", row);
+
+        // break long lines
+
+        if ((row % 4) == 3) {
+            blank_line ();
+            printf (TAB TAB);
+        }
+    }
+
+    blank_line ();
+    printf (TAB "/* These are the allowable states. */\n");
+    blank_line ();
+    printf (TAB "node [shape=rect]\n");
+    blank_line ();
+
+    for (row = 0; row < (1 << n); row ++) {
+        for (col = 0; col < (1 << n); col ++ ) {
+            if (count_1_bits (binary (col, n)) == cardinality[row]) {
+                printf (TAB "level_%d_%s [label=\"%s\"",
+                    row, binary (col, n), binary (col, n));
+                if (sequence_accumulator[row] == col) {
+                    printf (" color=red, fontcolor=red");
+                }
+                printf ("]\n");
+            }
+        }
+    }
+
+    blank_line ();
+
+    printf (TAB "/* These are the allowable transitions. */\n");
+    blank_line ();
+    printf (TAB "graph [ordering=out] /* keep binary numbers in order */\n");
+    printf (TAB "edge [style=solid,color=black]\n");
+    blank_line ();
+
+    breadth_first_search (root, n);
+
+    blank_line ();
+    printf (TAB "/* end of .dot file */\n");
+    printf ("}\n");
+    blank_line ();
+    if (fflush (stdout)) {
+        fprintf (stderr, "fflush() returned an error (continuing)\n");
+    }
+
+    return;
 }
 
 // Return a string containing the binary representation of $n$ in $b$ bits.
@@ -932,6 +929,52 @@ void usage (char * programme_name) {
     exit (EXIT_FAILURE);
 }
 
+// Handle the command line.
+
+void process_command_line_options (int argc, char ** argv,
+    boolean * option_1, boolean * option_g, int * n) {
+
+    // Not using GNU getop here because I don't need the complexity.
+
+    switch (argc) {
+        case 2:
+            if (isdigit ((int)argv[1][0])) {
+                *n = atoi (argv[1]);
+            }
+            else if ('-' == argv[1][0]) {
+                usage (argv[0]);
+            }
+            break;
+        case 3:
+            if ('-' == argv[1][0]) {
+                char * p = NULL;
+
+                for (p = argv[1] + 1; *p; p++) {
+                    switch (*p) {
+                        case '1':
+                            *option_1 = TRUE;
+                            break;
+                        case 'g':
+                            *option_g = TRUE;
+                            break;
+                        default:
+                            fprintf (stderr, "Unrecognised option '-%c'\n", *p);
+                            usage (argv[0]);
+                            break;
+                    }
+                }
+            }
+            if (isdigit ((int)argv[2][0])) {
+                *n = atoi (argv[2]);
+            }
+            break;
+        default:
+            usage (argv[0]);
+            break;
+    }
+    return;
+}
+
 // Display a single node of the digraph.
 
 void display_digraph_node (aluminium_Christmas_tree * p, int n) {
@@ -1039,6 +1082,40 @@ void depth_first_search (aluminium_Christmas_tree * p,
         free (duplicate_check);
         duplicate_check = NULL;
     }
+    return;
+}
+
+// Breadth-first search the entire DAG.
+
+void breadth_first_search (aluminium_Christmas_tree * p, int n) {
+    int i = 0;
+
+    assert (n > 0);
+    assert (n <= MAX_n);
+    assert (p);
+
+    if (p->visited) {
+        return;
+    }
+
+    if (0 == p->num_children) {
+        return;
+    }
+
+    fprintf (stderr, "%p: %d %s\n", p, p->level, binary (p->value, n));
+
+    for (i = 0; i < p->num_children; i ++) {
+        printf (TAB "level_%d_%s -> level_%d_%s",
+            p->level, binary (p->value, n),
+            (p->next[i])->level, binary ((p->next[i])->value, n));
+        if (sequence_accumulator[p->level] == p->value &&
+            sequence_accumulator[(p->next[i])->level] == p->next[i]->value) {
+                printf (" [color=red]");
+        }
+        printf ("\n");
+        breadth_first_search (p->next[i], n);
+    }
+    p->visited = TRUE;
     return;
 }
 

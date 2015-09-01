@@ -31,6 +31,7 @@ struct aluminium_Christmas_tree {
     int in_use;
     int num_children;
     int num_children_predicted;
+    boolean visited;
     aluminium_Christmas_tree ** next;
 };
 
@@ -92,6 +93,8 @@ void acid_test_for_cardinality_sequence (int * sequence_data, int n);
 void display_digraph_node (aluminium_Christmas_tree * p, int n);
 void depth_first_search (aluminium_Christmas_tree * p,
     int * cardinality_sequence, int n, boolean first_solution_only);
+void breadth_first_search (aluminium_Christmas_tree * p, int n);
+void reset_visited_flags (aluminium_Christmas_tree * p);
 void gmp_printfcomma2 (mpz_t n);
 void gmp_printfcomma (mpz_t n);
 void sanity_check_sequence (int * sequence, int * cardinality, int n);
@@ -110,6 +113,9 @@ void write_XML_integer_value (FILE * fp, char * tag, int value, int nesting);
 void write_XML_long_long_value (FILE * fp, char * tag, long long value, int nesting);
 void write_XML_mpz_integer_value (FILE * fp, char * tag, mpz_t value, int nesting);
 void usage (char * programme_name);
+void write_dot_file (aluminium_Christmas_tree * root, int * cardinality, int n);
+void process_command_line_options (int argc, char ** argv,
+    boolean * option_1, boolean * option_g, int * n);
 
 // These will only be needed until I get a proper generator written, but
 // they might be useful later as test cases for the generator. They have
