@@ -1,6 +1,6 @@
 target = $(generator)
 
-order = 5
+order = 8
 
 # DEBUG_FLAGS = -DDEBUG
 DEBUG_FLAGS =

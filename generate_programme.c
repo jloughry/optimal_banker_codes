@@ -285,6 +285,20 @@ void reset_visited_flags (aluminium_Christmas_tree * p) {
     return;
 }
 
+// Doing the same thing with brute force.
+
+void reset_visited_flags_the_hard_way (aluminium_Christmas_tree * p) {
+    int row = 0;
+    int col = 0;
+
+    for (row = 0; row < (1 << MAX_n); row ++) {
+        for (col = 0; col < (1 << MAX_n); col ++) {
+            p->visited = FALSE;
+        }
+    }
+    return;
+}
+
 void write_dot_file (aluminium_Christmas_tree * root, int * cardinality, int n) {
     int row = 0;
     int col = 0;
@@ -295,9 +309,7 @@ void write_dot_file (aluminium_Christmas_tree * root, int * cardinality, int n) 
 
     // First reset the 'visited' flag on every node in the graph.
 
-    fprintf (stderr, "about to reset visited flags\n");
-    reset_visited_flags (p);
-    fprintf (stderr, "done resetting visited flags\n");
+    reset_visited_flags_the_hard_way (p);
 
     // Write the header of the DOT source file to stdout.
 
