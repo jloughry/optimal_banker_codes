@@ -94,8 +94,8 @@ void display_digraph_node (aluminium_Christmas_tree * p, int n);
 void depth_first_search (aluminium_Christmas_tree * p,
     int * cardinality_sequence, int n, boolean first_solution_only);
 void breadth_first_search (aluminium_Christmas_tree * p, int n);
-void reset_visited_flags (aluminium_Christmas_tree * p);
-void reset_visited_flags_the_hard_way (aluminium_Christmas_tree * p);
+void reset_visited_flags (aluminium_Christmas_tree * p, int n);
+void reset_visited_flags_the_hard_way (aluminium_Christmas_tree * p, int n);
 void gmp_printfcomma2 (mpz_t n);
 void gmp_printfcomma (mpz_t n);
 void sanity_check_sequence (int * sequence, int * cardinality, int n);

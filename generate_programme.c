@@ -1,6 +1,6 @@
 #include "generate_programme.h"
 
-#define VERSION 10
+#define VERSION 11
 
 int sequence_accumulator[MAX_n];
 int sequence_is_valid = FALSE;
@@ -273,26 +273,30 @@ int main (int argc, char ** argv) {
     return EXIT_SUCCESS;
 }
 
-// This is a simple depth-first search to reset all flags.
+// This is a simple depth-first search to reset all the 'visited' flags.
 
-void reset_visited_flags (aluminium_Christmas_tree * p) {
+void reset_visited_flags (aluminium_Christmas_tree * p, int n) {
     int i = 0;
 
-    p->visited = FALSE;
-    for (i = 0; i < p->num_children; i ++ ) {
-        reset_visited_flags (p->next[i]);
+    if (FALSE == p->visited) {
+        return;
     }
+
+    for (i = 0; i < p->num_children; i ++ ) {
+        reset_visited_flags (p->next[i], n);
+    }
+    p->visited = FALSE;
     return;
 }
 
-// Doing the same thing with brute force.
+// Doing the same thing as the previous fn but by means of brute force.
 
-void reset_visited_flags_the_hard_way (aluminium_Christmas_tree * p) {
+void reset_visited_flags_the_hard_way (aluminium_Christmas_tree * p, int n) {
     int row = 0;
     int col = 0;
 
-    for (row = 0; row < (1 << MAX_n); row ++) {
-        for (col = 0; col < (1 << MAX_n); col ++) {
+    for (row = 0; row < (1 << n); row ++) {
+        for (col = 0; col < (1 << n); col ++) {
             p->visited = FALSE;
         }
     }
@@ -309,7 +313,7 @@ void write_dot_file (aluminium_Christmas_tree * root, int * cardinality, int n) 
 
     // First reset the 'visited' flag on every node in the graph.
 
-    reset_visited_flags_the_hard_way (p);
+    reset_visited_flags (p, n);
 
     // Write the header of the DOT source file to stdout.
 
@@ -1113,8 +1117,6 @@ void breadth_first_search (aluminium_Christmas_tree * p, int n) {
     if (0 == p->num_children) {
         return;
     }
-
-    fprintf (stderr, "%p: %d %s\n", p, p->level, binary (p->value, n));
 
     for (i = 0; i < p->num_children; i ++) {
         printf (TAB "level_%d_%s -> level_%d_%s",
