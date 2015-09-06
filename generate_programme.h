@@ -13,10 +13,7 @@
 
 #define CHECKPOINT_FILE "checkpoint.xml"
 
-#define FALSE 0
-#define TRUE !FALSE
-
-typedef int boolean;
+typedef enum {false, true} boolean;
 
 // This data structure is used for generating a digraph in memory.
 // There will be at most $n$ child nodes, but we don't know $n$ at compile
@@ -118,6 +115,7 @@ void usage (char * programme_name);
 void write_dot_file (aluminium_Christmas_tree * root, int * cardinality, int n);
 void process_command_line_options (int argc, char ** argv,
     boolean * option_1, boolean * option_g, int * n);
+void free_dag (aluminium_Christmas_tree * root, int n);
 
 // These will only be needed until I get a proper generator written, but
 // they might be useful later as test cases for the generator. They have

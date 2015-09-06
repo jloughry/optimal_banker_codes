@@ -1,6 +1,6 @@
 target = $(generator)
 
-order = 8
+order = 4
 
 # DEBUG_FLAGS = -DDEBUG
 DEBUG_FLAGS =
@@ -57,12 +57,9 @@ clean::
 
 	$(rm) -r $(debug_symbol_files)
 
-increment_version_number:
+commit::
 	@echo "#define VERSION $$(($$(cut -d ' ' -f 3 $(version)) + 1))" > $(version)
 	@echo "Version `cut -d ' ' -f 3 $(version)`"
-
-commit::
-	$(increment_version_number)
 
 vi:
 	$(edit) $(generator_source)

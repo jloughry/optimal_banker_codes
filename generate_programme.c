@@ -1,14 +1,14 @@
 #include "generate_programme.h"
 
 int sequence_accumulator[MAX_n];
-int sequence_is_valid = FALSE;
+int sequence_is_valid = false;
 time_t starting_time = 0;
 
 static mpz_t good_sequences; // Using the GNU multiple precision library.
 static mpz_t predicted_number_of_candidate_sequences;
 static mpz_t predicted_number_of_candidate_sequences_at_row_n;
 
-boolean found_first_solution = FALSE;
+boolean found_first_solution = false;
 
 // For some reason I don't understand, if the following variable is defined
 // inside main(), the programme segfaults.
@@ -22,9 +22,10 @@ int main (int argc, char ** argv) {
     int * cardinality = NULL;
     aluminium_Christmas_tree big_dumb_array[1 << MAX_n][1 << MAX_n];
     aluminium_Christmas_tree * start = &big_dumb_array[0][0];
+    aluminium_Christmas_tree * dag = NULL;
     int i = 0;
-    boolean option_run_once = FALSE;
-    boolean option_generate_graph = FALSE;
+    boolean option_run_once = false;
+    boolean option_generate_graph = false;
 
     starting_time = time (NULL);
 
@@ -50,12 +51,26 @@ int main (int argc, char ** argv) {
         for (col = 0; col < (1 << n); col ++) {
             big_dumb_array[row][col].level = -1;
             big_dumb_array[row][col].value = -99;
-            big_dumb_array[row][col].in_use = 0;
+            big_dumb_array[row][col].in_use = false;
             big_dumb_array[row][col].num_children = 0;
             big_dumb_array[row][col].num_children_predicted = 0;
+            big_dumb_array[row][col].visited = false;
             big_dumb_array[row][col].next = NULL;
         }
     }
+
+    // dag is a smarter data structure, built in parallel with the
+    // big_dumb_array, and meant to supplant it.
+
+    dag = malloc (sizeof (aluminium_Christmas_tree));
+    assert (dag);
+    dag->level = 0;
+    dag->value = 0;
+    dag->in_use = true;
+    dag->num_children = 0;
+    dag->num_children_predicted = 0;
+    dag->visited = false;
+    dag->next = NULL;
 
     verify_all_hand_made_cardinality_sequence_data ();
     test_generate_cardinality_sequence_function ();
@@ -104,7 +119,7 @@ int main (int argc, char ** argv) {
 
                         big_dumb_array[row][col].level = row;
                         big_dumb_array[row][col].value = col;
-                        big_dumb_array[row][col].in_use = 1;
+                        big_dumb_array[row][col].in_use = true;
                         if (NULL == big_dumb_array[row][col].next) {
                             big_dumb_array[row][col].next = malloc (sizeof (aluminium_Christmas_tree *)
                                 * predicted_number_of_children + 1);
@@ -124,7 +139,7 @@ int main (int argc, char ** argv) {
 
                         big_dumb_array[row + 1][row_plus_one_col].level = row + 1;
                         big_dumb_array[row + 1][row_plus_one_col].value = row_plus_one_col;
-                        big_dumb_array[row + 1][row_plus_one_col].in_use = 1;
+                        big_dumb_array[row + 1][row_plus_one_col].in_use = true;
 
                         // However, we don't know anything about *their* children.
 
@@ -158,7 +173,7 @@ int main (int argc, char ** argv) {
         if (odd (n)) {
             big_dumb_array[(1 << n) - 1][(1 << n) - 1].level = (1 << n) - 1;
             big_dumb_array[(1 << n) - 1][(1 << n) - 1].value = (1 << n) - 1;
-            big_dumb_array[(1 << n) - 1][(1 << n) - 1].in_use = 1;
+            big_dumb_array[(1 << n) - 1][(1 << n) - 1].in_use = true;
 
             fprintf (stderr, "node %p (%d, %d) also created with %d children.\n",
                 &big_dumb_array[(1 << n) - 1][(1 << n) - 1],
@@ -264,6 +279,9 @@ int main (int argc, char ** argv) {
         }
     }
 
+    free_dag (dag, n);
+    dag = NULL;
+
     mpz_clear (good_sequences);
     mpz_clear (predicted_number_of_candidate_sequences);
     mpz_clear (predicted_number_of_candidate_sequences_at_row_n);
@@ -276,14 +294,14 @@ int main (int argc, char ** argv) {
 void reset_visited_flags (aluminium_Christmas_tree * p, int n) {
     int i = 0;
 
-    if (FALSE == p->visited) {
+    if (false == p->visited) {
         return;
     }
 
     for (i = 0; i < p->num_children; i ++ ) {
         reset_visited_flags (p->next[i], n);
     }
-    p->visited = FALSE;
+    p->visited = false;
     return;
 }
 
@@ -295,7 +313,7 @@ void reset_visited_flags_the_hard_way (aluminium_Christmas_tree * p, int n) {
 
     for (row = 0; row < (1 << n); row ++) {
         for (col = 0; col < (1 << n); col ++) {
-            p->visited = FALSE;
+            p->visited = false;
         }
     }
     return;
@@ -539,9 +557,9 @@ boolean allowable (int from_row, int from_col, int to_row, int to_col, int * car
     if ( 1 == count_1_bits (binary (( from_col ^ to_col ), n))
         && (count_1_bits (binary (from_col, n)) == cardinality[from_row])
         && (count_1_bits (binary (to_col, n)) == cardinality[to_row]) ) {
-            return TRUE;
+            return true;
     }
-    return FALSE;
+    return false;
 }
 
 // Is $n$ odd?
@@ -966,10 +984,10 @@ void process_command_line_options (int argc, char ** argv,
                 for (p = argv[1] + 1; *p; p++) {
                     switch (*p) {
                         case '1':
-                            *option_1 = TRUE;
+                            *option_1 = true;
                             break;
                         case 'g':
-                            *option_g = TRUE;
+                            *option_g = true;
                             break;
                         default:
                             fprintf (stderr, "Unrecognised option '-%c'\n", *p);
@@ -1083,12 +1101,12 @@ void depth_first_search (aluminium_Christmas_tree * p,
 
         if (j == (1 << n)) {
             sanity_check_sequence (sequence_accumulator, cardinality_sequence, n);
-            sequence_is_valid = TRUE;
-            found_first_solution = TRUE;
+            sequence_is_valid = true;
+            found_first_solution = true;
             mpz_add_ui (good_sequences, good_sequences, 1);
             emit_sequence (sequence_accumulator, n);
             // Don't do it if it's going to happen a thousand times every second.
-            if (n < 5 || n > 7 || (TRUE == first_solution_only) ) {
+            if (n < 5 || n > 7 || (true == first_solution_only) ) {
                 checkpoint (n);
             }
         }
@@ -1130,7 +1148,24 @@ void breadth_first_search (aluminium_Christmas_tree * p, int n) {
         printf ("\n");
         breadth_first_search (p->next[i], n);
     }
-    p->visited = TRUE;
+    p->visited = true;
+    return;
+}
+
+// Free the memory used by a dag.
+
+void free_dag (aluminium_Christmas_tree * root, int n) {
+    int i = 0;
+
+    assert (root);
+
+    for (i = 0; i < root->num_children; i ++) {
+        fprintf (stderr, "freeing DAG's child %p\n", root->next[i]);
+        free_dag (root->next[i], n);
+    }
+    fprintf (stderr, "freeing DAG %p\n", root);
+    free (root);
+
     return;
 }
 
