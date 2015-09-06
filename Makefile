@@ -1,6 +1,6 @@
 target = $(generator)
 
-order = 7
+order = 8
 
 # DEBUG_FLAGS = -DDEBUG
 DEBUG_FLAGS =
@@ -14,7 +14,7 @@ generated_file = order-$(order)_graph_generated
 generator_source = $(generator).c
 generator_header = $(generator).h
 generator_compiled = $(generator).exe
-generator_sources = $(generator_source) $(generator_header)
+generator_sources = $(generator_source) $(generator_header) $(version)
 generated_dot_file = $(generated_file).dot
 generated_pdf_file = $(generated_file).pdf
 
@@ -22,6 +22,9 @@ generated_dot_files = order-*_graph_generated.dot
 generated_pdf_files = order-*_graph_generated.pdf
 debug_symbol_files = $(generator).dSYN
 checkpoint_file = checkpoint.xml
+
+build_counter = counters/build_counter.txt
+version = version.h
 
 .PHONY: test clean $(generated_pdf_file)
 
@@ -41,6 +44,8 @@ $(generated_pdf_file): $(generator)
 $(generator): $(generator_sources) Makefile
 	gcc $(GDB_FLAGS) $(GCC_FLAGS) $(DEBUG_FLAGS) -o $@ $< $(LINKER_FLAGS)
 	mv $(generator_compiled) $@
+	@echo $$(($$(cat $(build_counter)) + 1)) > $(build_counter)
+	@echo "Build `cat $(build_counter)`"
 
 test: $(generated_pdf_file)
 
@@ -51,6 +56,13 @@ clean::
 		$(checkpoint_file)
 
 	$(rm) -r $(debug_symbol_files)
+
+increment_version_number:
+	@echo "#define VERSION $$(($$(cut -d ' ' -f 3 $(version)) + 1))" > $(version)
+	@echo "Version `cut -d ' ' -f 3 $(version)`"
+
+commit::
+	$(increment_version_number)
 
 vi:
 	$(edit) $(generator_source)

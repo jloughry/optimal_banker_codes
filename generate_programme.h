@@ -7,6 +7,7 @@
 #include <string.h>
 #include <time.h>
 #include <gmp.h>    // must be included after stdlib.h
+#include "version.h"
 
 #define USAGE   "Usage: %s [-1g] n"
 

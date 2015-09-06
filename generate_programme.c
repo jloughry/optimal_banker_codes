@@ -1,7 +1,5 @@
 #include "generate_programme.h"
 
-#define VERSION 11
-
 int sequence_accumulator[MAX_n];
 int sequence_is_valid = FALSE;
 time_t starting_time = 0;
@@ -1124,7 +1122,10 @@ void breadth_first_search (aluminium_Christmas_tree * p, int n) {
             (p->next[i])->level, binary ((p->next[i])->value, n));
         if (sequence_accumulator[p->level] == p->value &&
             sequence_accumulator[(p->next[i])->level] == p->next[i]->value) {
-                printf (" [color=red]");
+            printf (" [color=red]");
+        }
+        else {
+            printf (" [style=invis]");
         }
         printf ("\n");
         breadth_first_search (p->next[i], n);
