@@ -26,6 +26,8 @@ int main (int argc, char ** argv) {
     int i = 0;
     boolean option_run_once = false;
     boolean option_generate_graph = false;
+    int row_plus_one_col = 0;
+    int dag_child = 0;
 
     starting_time = time (NULL);
 
@@ -59,19 +61,6 @@ int main (int argc, char ** argv) {
         }
     }
 
-    // dag is a smarter data structure, built in parallel with the
-    // big_dumb_array, and meant to supplant it.
-
-    dag = malloc (sizeof (aluminium_Christmas_tree));
-    assert (dag);
-    dag->level = 0;
-    dag->value = 0;
-    dag->in_use = true;
-    dag->num_children = 0;
-    dag->num_children_predicted = 0;
-    dag->visited = false;
-    dag->next = NULL;
-
     verify_all_hand_made_cardinality_sequence_data ();
     test_generate_cardinality_sequence_function ();
 
@@ -80,10 +69,65 @@ int main (int argc, char ** argv) {
 
     fprintf (stderr, "Version %d\n", VERSION);
 
+    // dag is a smarter data structure, built in parallel with the
+    // big_dumb_array, and meant to supplant it.
+
+    row = 0;
+    col = 0;
+    dag = malloc (sizeof (aluminium_Christmas_tree));
+    assert (dag);
+    dag->level = row;
+    dag->value = col;
+    dag->num_children = 0;
+    dag->in_use = true;
+    dag->visited = false;
+    dag->next = NULL;
+
+    switch (cardinality[row] - cardinality[row + 1]) {
+        case -1:
+            dag->num_children_predicted = count_0_bits (binary (col, n));
+            break;
+        case 1:
+            dag->num_children_predicted = count_1_bits (binary (col, n));
+            break;
+        default:
+            assert (false); // This should never happen.
+            break;
+    }
+
+    fprintf (stderr, "%p is predicted to have %d children.\n", dag, dag->num_children_predicted);
+
     // Now generate the graph of allowable transitions (but only if
     // we have good cardinality data).
 
     // A great big shiny aluminium Christmas tree!
+
+    assert (NULL == dag->next);
+    dag->next = malloc ((dag->num_children_predicted + 1) * sizeof (aluminium_Christmas_tree *));
+    assert (dag->next);
+    dag_child = 0;
+    dag->next[dag_child] = NULL; // Terminate the list.
+
+    for (col = 0; col < (1 << n); col ++) {
+        for (row_plus_one_col = 0; row_plus_one_col < (1 << n); row_plus_one_col ++) {
+            if (allowable (row, col, row + 1, row_plus_one_col, cardinality, n)) {
+                dag->next[dag_child] = malloc (sizeof (aluminium_Christmas_tree));
+                assert (dag->next[dag_child]);
+                fprintf (stderr, "%p[%d] = %p\n", dag, dag_child, dag->next[dag_child]);
+                (dag->next[dag_child])->level = row + 1;
+                (dag->next[dag_child])->value = row_plus_one_col;
+                (dag->next[dag_child])->in_use = true;
+                (dag->next[dag_child])->num_children = 0;
+                (dag->next[dag_child])->num_children_predicted = 0;
+                (dag->next[dag_child])->visited = false;
+                (dag->next[dag_child])->next = NULL;
+
+                ++ dag_child;
+                dag->next[dag_child] = NULL; // Terminate the list.
+            }
+        }
+    }
+    dag->num_children = dag_child;
 
     if (cardinality[0] >= 0) {
         int number_of_nodes_used = 0;
@@ -111,7 +155,7 @@ int main (int argc, char ** argv) {
                                 predicted_number_of_children = count_1_bits (binary (col, n));
                                 break;
                             default:
-                                assert (0); // This should never happen.
+                                assert (false); // This should never happen.
                                 break;
                         }
 
@@ -124,7 +168,7 @@ int main (int argc, char ** argv) {
                             big_dumb_array[row][col].next = malloc (sizeof (aluminium_Christmas_tree *)
                                 * predicted_number_of_children + 1);
                             assert (big_dumb_array[row][col].next);
-                            big_dumb_array[row][col].next[0] = NULL; // NULL terminate array just in case.
+                            big_dumb_array[row][col].next[0] = NULL; // NULL terminate just in case.
                         }
                         big_dumb_array[row][col].next[pointer_number] =
                             &(big_dumb_array[row + 1][row_plus_one_col]);
@@ -837,7 +881,7 @@ void sanity_check_sequence (int * sequence, int * cardinality, int n) {
             fprintf (stderr, ", count_1_bits (\"%d\") != %d\n",
                 count_1_bits (binary (sequence[i], n)), cardinality[i]);
 
-            assert (0); // Fail on purpose.
+            assert (false); // Fail on purpose.
         }
     }
 
@@ -1159,11 +1203,19 @@ void free_dag (aluminium_Christmas_tree * root, int n) {
 
     assert (root);
 
-    for (i = 0; i < root->num_children; i ++) {
-        fprintf (stderr, "freeing DAG's child %p\n", root->next[i]);
-        free_dag (root->next[i], n);
+    fprintf (stderr, "I have been told to free %p who has %d children.\n", root, root->num_children);
+    if (root->num_children > 0) {
+        for (i = 0; i < root->num_children; i ++) {
+            fprintf (stderr, "  first freeing %p's child[%d] = %p\n", root, i, root->next[i]);
+            if (root->next[i]) {
+                free_dag (root->next[i], n);
+            }
+            else {
+                fprintf (stderr, "%p->next[%d] was null.\n", root, i);
+            }
+        }
     }
-    fprintf (stderr, "freeing DAG %p\n", root);
+    fprintf (stderr, "all children freed; freeing DAG %p\n", root);
     free (root);
 
     return;
