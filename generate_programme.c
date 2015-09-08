@@ -27,7 +27,7 @@ int main (int argc, char ** argv) {
     boolean option_run_once = false;
     boolean option_generate_graph = false;
     int row_plus_one_col = 0;
-    int dag_child = 0;
+    int child_number = 0;
 
     starting_time = time (NULL);
 
@@ -70,18 +70,21 @@ int main (int argc, char ** argv) {
     fprintf (stderr, "Version %d\n", VERSION);
 
     // dag is a smarter data structure, built in parallel with the
-    // big_dumb_array, but meant to supplant it after I'm convinced.
+    // big_dumb_array, but meant to supplant it as soon as I'm sure.
 
     row = 0;
     col = 0;
+
     dag = malloc (sizeof (aluminium_Christmas_tree));
     assert (dag);
+
     dag->level = row;
     dag->value = col;
     dag->num_children = 0;
     dag->in_use = true;
     dag->visited = false;
     dag->child = NULL;
+    dag->sibling = NULL;
 
     switch (cardinality[row] - cardinality[row + 1]) {
         case -1:
@@ -102,29 +105,41 @@ int main (int argc, char ** argv) {
     assert (NULL == dag->child);
     dag->child = malloc ((dag->num_children_predicted + 1) * sizeof (aluminium_Christmas_tree *));
     assert (dag->child);
-    dag_child = 0;
-    dag->child[dag_child] = NULL; // Terminate the list.
+    child_number = 0;
+    dag->child[child_number] = NULL; // Terminate the list.
 
     for (col = 0; col < (1 << n); col ++) {
         for (row_plus_one_col = 0; row_plus_one_col < (1 << n); row_plus_one_col ++) {
             if (allowable (row, col, row + 1, row_plus_one_col, cardinality, n)) {
-                dag->child[dag_child] = malloc (sizeof (aluminium_Christmas_tree));
-                assert (dag->child[dag_child]);
-                fprintf (stderr, "%p[%d] = %p\n", dag, dag_child, dag->child[dag_child]);
-                (dag->child[dag_child])->level = row + 1;
-                (dag->child[dag_child])->value = row_plus_one_col;
-                (dag->child[dag_child])->in_use = true;
-                (dag->child[dag_child])->num_children = 0;
-                (dag->child[dag_child])->num_children_predicted = 0;
-                (dag->child[dag_child])->visited = false;
-                (dag->child[dag_child])->child = NULL;
+                aluminium_Christmas_tree * here = NULL;
 
-                ++ dag_child;
-                dag->child[dag_child] = NULL; // Terminate the list.
+                here = malloc (sizeof (aluminium_Christmas_tree));
+                assert (here);
+
+                here->level = row + 1;
+                here->value = row_plus_one_col;
+                here->in_use = true;
+                here->num_children = 0;
+                here->num_children_predicted = 0;
+                here->visited = false;
+                here->child = NULL;
+                here->sibling = NULL;
+
+                dag->child[child_number] = here;
+
+                if (child_number > 0) {
+                    (dag->child[child_number - 1])->sibling = here;
+                }
+                here->sibling = NULL;
+
+                fprintf (stderr, "%p[%d] = %p\n", dag, child_number, dag->child[child_number]);
+
+                ++ child_number;
+                dag->child[child_number] = NULL; // Terminate the list.
             }
         }
     }
-    dag->num_children = dag_child;
+    dag->num_children = child_number;
 
     // Now build a DAG in the big dumb array.
 
@@ -1202,7 +1217,8 @@ void free_dag (aluminium_Christmas_tree * root, int n) {
 
     assert (root);
 
-    fprintf (stderr, "I have been told to free %p who has %d children.\n", root, root->num_children);
+    fprintf (stderr, "I have been told to free %p who has %d children and sibling %p.\n",
+        root, root->num_children, root->sibling);
     if (root->num_children > 0) {
         for (i = 0; i < root->num_children; i ++) {
             fprintf (stderr, "  first freeing %p's child[%d] = %p\n", root, i, root->child[i]);
