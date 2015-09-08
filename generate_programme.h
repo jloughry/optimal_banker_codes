@@ -21,7 +21,7 @@ typedef enum {false, true} boolean;
 
 typedef struct aluminium_Christmas_tree aluminium_Christmas_tree;
 
-#define MAX_n 8 // larger than 8, the programme segfaults.
+#define MAX_n 7 // If larger than 7, the programme segfaults.
 
 struct aluminium_Christmas_tree {
     int level;
@@ -30,12 +30,8 @@ struct aluminium_Christmas_tree {
     int num_children;
     int num_children_predicted;
     boolean visited;
-    aluminium_Christmas_tree ** next;
-};
-
-struct list_node {
-    int num;
-    struct list_node * next;
+    aluminium_Christmas_tree * sibling;
+    aluminium_Christmas_tree ** child;
 };
 
 /*

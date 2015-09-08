@@ -57,7 +57,7 @@ int main (int argc, char ** argv) {
             big_dumb_array[row][col].num_children = 0;
             big_dumb_array[row][col].num_children_predicted = 0;
             big_dumb_array[row][col].visited = false;
-            big_dumb_array[row][col].next = NULL;
+            big_dumb_array[row][col].child = NULL;
         }
     }
 
@@ -70,7 +70,7 @@ int main (int argc, char ** argv) {
     fprintf (stderr, "Version %d\n", VERSION);
 
     // dag is a smarter data structure, built in parallel with the
-    // big_dumb_array, and meant to supplant it.
+    // big_dumb_array, but meant to supplant it after I'm convinced.
 
     row = 0;
     col = 0;
@@ -81,7 +81,7 @@ int main (int argc, char ** argv) {
     dag->num_children = 0;
     dag->in_use = true;
     dag->visited = false;
-    dag->next = NULL;
+    dag->child = NULL;
 
     switch (cardinality[row] - cardinality[row + 1]) {
         case -1:
@@ -95,39 +95,38 @@ int main (int argc, char ** argv) {
             break;
     }
 
-    fprintf (stderr, "%p is predicted to have %d children.\n", dag, dag->num_children_predicted);
-
-    // Now generate the graph of allowable transitions (but only if
-    // we have good cardinality data).
+    // Now generate the graph of allowable transitions.
 
     // A great big shiny aluminium Christmas tree!
 
-    assert (NULL == dag->next);
-    dag->next = malloc ((dag->num_children_predicted + 1) * sizeof (aluminium_Christmas_tree *));
-    assert (dag->next);
+    assert (NULL == dag->child);
+    dag->child = malloc ((dag->num_children_predicted + 1) * sizeof (aluminium_Christmas_tree *));
+    assert (dag->child);
     dag_child = 0;
-    dag->next[dag_child] = NULL; // Terminate the list.
+    dag->child[dag_child] = NULL; // Terminate the list.
 
     for (col = 0; col < (1 << n); col ++) {
         for (row_plus_one_col = 0; row_plus_one_col < (1 << n); row_plus_one_col ++) {
             if (allowable (row, col, row + 1, row_plus_one_col, cardinality, n)) {
-                dag->next[dag_child] = malloc (sizeof (aluminium_Christmas_tree));
-                assert (dag->next[dag_child]);
-                fprintf (stderr, "%p[%d] = %p\n", dag, dag_child, dag->next[dag_child]);
-                (dag->next[dag_child])->level = row + 1;
-                (dag->next[dag_child])->value = row_plus_one_col;
-                (dag->next[dag_child])->in_use = true;
-                (dag->next[dag_child])->num_children = 0;
-                (dag->next[dag_child])->num_children_predicted = 0;
-                (dag->next[dag_child])->visited = false;
-                (dag->next[dag_child])->next = NULL;
+                dag->child[dag_child] = malloc (sizeof (aluminium_Christmas_tree));
+                assert (dag->child[dag_child]);
+                fprintf (stderr, "%p[%d] = %p\n", dag, dag_child, dag->child[dag_child]);
+                (dag->child[dag_child])->level = row + 1;
+                (dag->child[dag_child])->value = row_plus_one_col;
+                (dag->child[dag_child])->in_use = true;
+                (dag->child[dag_child])->num_children = 0;
+                (dag->child[dag_child])->num_children_predicted = 0;
+                (dag->child[dag_child])->visited = false;
+                (dag->child[dag_child])->child = NULL;
 
                 ++ dag_child;
-                dag->next[dag_child] = NULL; // Terminate the list.
+                dag->child[dag_child] = NULL; // Terminate the list.
             }
         }
     }
     dag->num_children = dag_child;
+
+    // Now build a DAG in the big dumb array.
 
     if (cardinality[0] >= 0) {
         int number_of_nodes_used = 0;
@@ -164,13 +163,13 @@ int main (int argc, char ** argv) {
                         big_dumb_array[row][col].level = row;
                         big_dumb_array[row][col].value = col;
                         big_dumb_array[row][col].in_use = true;
-                        if (NULL == big_dumb_array[row][col].next) {
-                            big_dumb_array[row][col].next = malloc (sizeof (aluminium_Christmas_tree *)
+                        if (NULL == big_dumb_array[row][col].child) {
+                            big_dumb_array[row][col].child = malloc (sizeof (aluminium_Christmas_tree *)
                                 * predicted_number_of_children + 1);
-                            assert (big_dumb_array[row][col].next);
-                            big_dumb_array[row][col].next[0] = NULL; // NULL terminate just in case.
+                            assert (big_dumb_array[row][col].child);
+                            big_dumb_array[row][col].child[0] = NULL; // NULL terminate just in case.
                         }
-                        big_dumb_array[row][col].next[pointer_number] =
+                        big_dumb_array[row][col].child[pointer_number] =
                             &(big_dumb_array[row + 1][row_plus_one_col]);
                         big_dumb_array[row][col].num_children ++;
                         big_dumb_array[row][col].num_children_predicted = predicted_number_of_children;
@@ -316,9 +315,9 @@ int main (int argc, char ** argv) {
 
     for (row = 0; row < (1 << n); row ++) {
         for (col = 0; col < (1 << n); col ++) {
-            if (big_dumb_array[row][col].next) {
-                free (big_dumb_array[row][col].next);
-                big_dumb_array[row][col].next = NULL;
+            if (big_dumb_array[row][col].child) {
+                free (big_dumb_array[row][col].child);
+                big_dumb_array[row][col].child = NULL;
             }
         }
     }
@@ -343,7 +342,7 @@ void reset_visited_flags (aluminium_Christmas_tree * p, int n) {
     }
 
     for (i = 0; i < p->num_children; i ++ ) {
-        reset_visited_flags (p->next[i], n);
+        reset_visited_flags (p->child[i], n);
     }
     p->visited = false;
     return;
@@ -1073,7 +1072,7 @@ void display_digraph_node (aluminium_Christmas_tree * p, int n) {
                     break;
             }
             for (i = 0; i < p->num_children; i ++) {
-                fprintf (stderr, " %p", p->next[i]);
+                fprintf (stderr, " %p", p->child[i]);
             }
             fprintf (stderr, ".\n");
         }
@@ -1119,7 +1118,7 @@ void depth_first_search (aluminium_Christmas_tree * p,
     // The following loop could be multi-threaded for up to $n$ cores.
 
     for (i = 0; i < p->num_children; i ++) {
-        depth_first_search (p->next[i], cardinality_sequence, n,
+        depth_first_search (p->child[i], cardinality_sequence, n,
             first_solution_only);
     }
 
@@ -1181,16 +1180,16 @@ void breadth_first_search (aluminium_Christmas_tree * p, int n) {
     for (i = 0; i < p->num_children; i ++) {
         printf (TAB "level_%d_%s -> level_%d_%s",
             p->level, binary (p->value, n),
-            (p->next[i])->level, binary ((p->next[i])->value, n));
+            (p->child[i])->level, binary ((p->child[i])->value, n));
         if (sequence_accumulator[p->level] == p->value &&
-            sequence_accumulator[(p->next[i])->level] == p->next[i]->value) {
+            sequence_accumulator[(p->child[i])->level] == p->child[i]->value) {
             printf (" [color=red]");
         }
         else {
             printf (" [style=invis]");
         }
         printf ("\n");
-        breadth_first_search (p->next[i], n);
+        breadth_first_search (p->child[i], n);
     }
     p->visited = true;
     return;
@@ -1206,12 +1205,12 @@ void free_dag (aluminium_Christmas_tree * root, int n) {
     fprintf (stderr, "I have been told to free %p who has %d children.\n", root, root->num_children);
     if (root->num_children > 0) {
         for (i = 0; i < root->num_children; i ++) {
-            fprintf (stderr, "  first freeing %p's child[%d] = %p\n", root, i, root->next[i]);
-            if (root->next[i]) {
-                free_dag (root->next[i], n);
+            fprintf (stderr, "  first freeing %p's child[%d] = %p\n", root, i, root->child[i]);
+            if (root->child[i]) {
+                free_dag (root->child[i], n);
             }
             else {
-                fprintf (stderr, "%p->next[%d] was null.\n", root, i);
+                fprintf (stderr, "%p->child[%d] was null.\n", root, i);
             }
         }
     }
