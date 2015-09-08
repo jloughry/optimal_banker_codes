@@ -28,6 +28,7 @@ int main (int argc, char ** argv) {
     boolean option_generate_graph = false;
     int row_plus_one_col = 0;
     int child_number = 0;
+    aluminium_Christmas_tree ** addressable_row_array = NULL;
 
     starting_time = time (NULL);
 
@@ -72,6 +73,9 @@ int main (int argc, char ** argv) {
     // dag is a smarter data structure, built in parallel with the
     // big_dumb_array, but meant to supplant it as soon as I'm sure.
 
+    addressable_row_array = malloc ((1 << n) * sizeof (aluminium_Christmas_tree *));
+    assert (addressable_row_array);
+
     row = 0;
     col = 0;
 
@@ -97,6 +101,8 @@ int main (int argc, char ** argv) {
             assert (false); // This should never happen.
             break;
     }
+
+    addressable_row_array[row] = dag;
 
     // Now generate the graph of allowable transitions.
 
@@ -140,6 +146,9 @@ int main (int argc, char ** argv) {
         }
     }
     dag->num_children = child_number;
+    ++ row;
+
+    addressable_row_array[row] = dag->child[0];
 
     // Now build a DAG in the big dumb array.
 
@@ -339,6 +348,9 @@ int main (int argc, char ** argv) {
 
     free_dag (dag, n);
     dag = NULL;
+
+    free (addressable_row_array);
+    addressable_row_array = NULL;
 
     mpz_clear (good_sequences);
     mpz_clear (predicted_number_of_candidate_sequences);
