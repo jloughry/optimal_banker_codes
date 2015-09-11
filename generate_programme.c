@@ -839,12 +839,16 @@ void gmp_printfcomma (mpz_t n) {
 // Display an entire sequence.
 
 void emit_sequence (int * sequence, int n) {
+    int percent_done = 0;
+
+    percent_done = 100 * sequence[1] / (1 << (n - 1));
+
     gmp_printfcomma (good_sequences);
     fprintf (stderr, " sequence");
     if (mpz_cmp_ui (good_sequences, 1) != 0) {
         fprintf (stderr, "s");
     }
-    fprintf (stderr, " found: ");
+    fprintf (stderr, " (~%d%%) found: ", percent_done);
     display_sequence_helper (sequence, n);
     fprintf (stderr, "\n");
 
