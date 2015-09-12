@@ -840,15 +840,23 @@ void gmp_printfcomma (mpz_t n) {
 
 void emit_sequence (int * sequence, int n) {
     int percent_done = 0;
+    int percent_almost_done = 0;
 
-    percent_done = 100 * sequence[1] / (1 << (n - 1));
+    percent_done = 100 * log2f(sequence[1]) / (float) n;
+    percent_almost_done = 100 * log2f(sequence[1]) / (float) (n - 1);
 
     gmp_printfcomma (good_sequences);
     fprintf (stderr, " sequence");
     if (mpz_cmp_ui (good_sequences, 1) != 0) {
         fprintf (stderr, "s");
     }
-    fprintf (stderr, " (~%d%%) found: ", percent_done);
+    if (percent_almost_done < 1) {
+        fprintf (stderr, " (~0%% done) found: ");
+    }
+    else {
+        fprintf (stderr, " (%d%% to %d%% done) found: ",
+            percent_done, percent_almost_done);
+    }
     display_sequence_helper (sequence, n);
     fprintf (stderr, "\n");
 
