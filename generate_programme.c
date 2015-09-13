@@ -239,7 +239,6 @@ int main (int argc, char ** argv) {
                     }
                 }
             }
-            blank_line ();
         }
         if (odd (n)) {
             big_dumb_array[(1 << n) - 1][(1 << n) - 1].level = (1 << n) - 1;
@@ -1282,6 +1281,8 @@ void free_dag (aluminium_Christmas_tree * root, int n) {
     return;
 }
 
+#ifdef DEBUG
+
 // For detecting memory leaks.
 
 void * debug_malloc (size_t size, const char * file, const int line, const char * func) {
@@ -1293,4 +1294,6 @@ void * debug_malloc (size_t size, const char * file, const int line, const char 
     fprintf (stderr, "%s line %d, %s() allocated %p[%zu]\n", file, line, func, p, size);
     return p;
 }
+
+#endif
 
