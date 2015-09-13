@@ -1282,3 +1282,15 @@ void free_dag (aluminium_Christmas_tree * root, int n) {
     return;
 }
 
+// For detecting memory leaks.
+
+void * debug_malloc (size_t size, const char * file, const int line, const char * func) {
+    void * p = NULL;
+    
+    p = calloc (size, 1);
+    assert (p);
+
+    fprintf (stderr, "%s line %d, %s() allocated %p[%zu]\n", file, line, func, p, size);
+    return p;
+}
+

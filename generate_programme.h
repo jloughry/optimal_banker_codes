@@ -13,6 +13,10 @@
 
 #define CHECKPOINT_FILE "checkpoint.xml"
 
+#define malloc(how_big) debug_malloc(how_big, __FILE__, __LINE__, __FUNCTION__)
+
+void * debug_malloc (size_t size, const char * file, const int line, const char * func);
+
 typedef enum {false, true} boolean;
 
 // This data structure is used for generating a digraph in memory.
