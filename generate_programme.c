@@ -29,6 +29,7 @@ int main (int argc, char ** argv) {
     int row_plus_one_col = 0;
     int child_number = 0;
     aluminium_Christmas_tree ** addressable_row_array = NULL;
+    char binary_buffer[MAX_n + 1];
 
     starting_time = time (NULL);
 
@@ -92,10 +93,10 @@ int main (int argc, char ** argv) {
 
     switch (cardinality[row] - cardinality[row + 1]) {
         case -1:
-            dag->num_children_predicted = count_0_bits (binary (col, n));
+            dag->num_children_predicted = count_0_bits (binary (col, n, binary_buffer));
             break;
         case 1:
-            dag->num_children_predicted = count_1_bits (binary (col, n));
+            dag->num_children_predicted = count_1_bits (binary (col, n, binary_buffer));
             break;
         default:
             assert (false); // This should never happen.
@@ -166,16 +167,19 @@ int main (int argc, char ** argv) {
                 for (row_plus_one_col = 0; row_plus_one_col < (1 << n); row_plus_one_col ++) {
 
                     if (allowable (row, col, row + 1, row_plus_one_col, cardinality, n)) {
+                        char buf1[n + 1];
+                        char buf2[n + 1];
 
-                        assert (count_1_bits (binary (col,n)) == cardinality[row]);
-                        assert (count_1_bits (binary (row_plus_one_col, n)) == cardinality[row + 1]);
+                        assert (count_1_bits (binary (col, n, buf1)) == cardinality[row]);
+                        assert (count_1_bits (binary (row_plus_one_col, n, buf1))
+                            == cardinality[row + 1]);
 
                         switch (cardinality[row] - cardinality[row + 1]) {
                             case -1:
-                                predicted_number_of_children = count_0_bits (binary (col, n));
+                                predicted_number_of_children = count_0_bits (binary (col, n, buf2));
                                 break;
                             case 1:
-                                predicted_number_of_children = count_1_bits (binary (col, n));
+                                predicted_number_of_children = count_1_bits (binary (col, n, buf2));
                                 break;
                             default:
                                 assert (false); // This should never happen.
@@ -449,9 +453,14 @@ void write_dot_file (aluminium_Christmas_tree * root, int * cardinality, int n) 
 
     for (row = 0; row < (1 << n); row ++) {
         for (col = 0; col < (1 << n); col ++ ) {
-            if (count_1_bits (binary (col, n)) == cardinality[row]) {
+            char buf[n + 1];
+
+            if (count_1_bits (binary (col, n, buf)) == cardinality[row]) {
+                char buf1[n + 1];
+                char buf2[n + 1];
+
                 printf (TAB "level_%d_%s [label=\"%s\"",
-                    row, binary (col, n), binary (col, n));
+                    row, binary (col, n, buf1), binary (col, n, buf2));
                 if (sequence_accumulator[row] == col) {
                     printf (" color=red, fontcolor=red");
                 }
@@ -481,13 +490,16 @@ void write_dot_file (aluminium_Christmas_tree * root, int * cardinality, int n) 
     return;
 }
 
-// Return a string containing the binary representation of $n$ in $b$ bits.
-//
-// The caller is responsible for freeing the string.
+// Return a string containing the binary representation of $n$ in $b$ bits in buffer.
 
-char * binary (int n, int num_bits) {
+char * binary (int n, int num_bits, char * buffer) {
     int i = 0;
-    char * s = NULL;
+
+    // Make sure buffer points to some storage. I don't think there is any
+    // way for this function to know for sure it's valid storage, or that
+    // it's big enough.
+
+    assert (buffer);
 
     // Make sure the result fits in the specified number of bits.
 
@@ -497,18 +509,13 @@ char * binary (int n, int num_bits) {
 
     assert ( log (n) <= (double) num_bits );
 
-    s = malloc (sizeof (char) * (num_bits + 1));
-    if (!s) {
-        fprintf (stderr, "malloc() failed\n");
-        exit (EXIT_FAILURE);
-    }
-    s[0] = '\0';
+    buffer[0] = '\0';
 
     for (i = (1 << (num_bits - 1)); i > 0; i >>= 1) {
-        strcat (s, ((n & i) == i) ? "1" : "0");
+        strcat (buffer, ((n & i) == i) ? "1" : "0");
     }
 
-    return s;
+    return buffer;
 }
 
 // Put a blank line in the output.
@@ -624,9 +631,13 @@ void test_generate_cardinality_sequence_function_helper (int order) {
 // Is the indicated transition an allowable transition?
 
 boolean allowable (int from_row, int from_col, int to_row, int to_col, int * cardinality, int n) {
-    if ( 1 == count_1_bits (binary (( from_col ^ to_col ), n))
-        && (count_1_bits (binary (from_col, n)) == cardinality[from_row])
-        && (count_1_bits (binary (to_col, n)) == cardinality[to_row]) ) {
+    char buf1 [n + 1];
+    char buf2 [n + 1];
+    char buf3 [n + 1];
+
+    if ( 1 == count_1_bits (binary (( from_col ^ to_col ), n, buf1))
+        && (count_1_bits (binary (from_col, n, buf2)) == cardinality[from_row])
+        && (count_1_bits (binary (to_col, n, buf3)) == cardinality[to_row]) ) {
             return true;
     }
     return false;
@@ -653,7 +664,9 @@ void count_cardinalities (int n) {
     assert (n > 0);
 
     for (i = 0; i < (1 << n); i ++) {
-        p = binary (i, n);
+        char buf [n + 1];
+
+        p = binary (i, n, buf);
         fprintf (stderr, "%d\n", count_1_bits (p));
         free (p);
         p = NULL;
@@ -913,11 +926,15 @@ void sanity_check_sequence (int * sequence, int * cardinality, int n) {
 
     // Second check: that the cardinality of every element is right.
     for (i = 0; i < (1 << n); i ++) {
-        if (count_1_bits (binary (sequence[i], n)) != cardinality[i]) {
+        char buf1[n + 1];
+
+        if (count_1_bits (binary (sequence[i], n, buf1)) != cardinality[i]) {
+            char buf2[n + 1];
+            
             fprintf (stderr, "sanity check failed on sequence ");
             display_sequence_helper (sequence, n);
             fprintf (stderr, ", count_1_bits (\"%d\") != %d\n",
-                count_1_bits (binary (sequence[i], n)), cardinality[i]);
+                count_1_bits (binary (sequence[i], n, buf2)), cardinality[i]);
 
             assert (false); // Fail on purpose.
         }
@@ -1096,8 +1113,10 @@ void display_digraph_node (aluminium_Christmas_tree * p, int n) {
         fprintf (stderr, "NULL digraph node.\n");
     }
     else {
+        char buf[n + 1];
+
         fprintf (stderr, "digraph node %p: level %d, value %s has ",
-            (void *) p, p->level, binary (p->value, n));
+            (void *) p, p->level, binary (p->value, n, buf));
         if (p->num_children > 0) {
             int i = 0;
 
@@ -1217,9 +1236,12 @@ void breadth_first_search (aluminium_Christmas_tree * p, int n) {
     }
 
     for (i = 0; i < p->num_children; i ++) {
+        char buf1[n + 1];
+        char buf2[n + 1];
+
         printf (TAB "level_%d_%s -> level_%d_%s",
-            p->level, binary (p->value, n),
-            (p->child[i])->level, binary ((p->child[i])->value, n));
+            p->level, binary (p->value, n, buf1),
+            (p->child[i])->level, binary ((p->child[i])->value, n, buf2));
         if (sequence_accumulator[p->level] == p->value &&
             sequence_accumulator[(p->child[i])->level] == p->child[i]->value) {
             printf (" [color=red]");

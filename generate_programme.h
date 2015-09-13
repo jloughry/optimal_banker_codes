@@ -71,7 +71,7 @@ level_1_0001 -> level_2_1100
 
 // Function prototypes:
 
-char * binary (int n, int num_bits);
+char * binary (int n, int num_bits, char * b);
 void blank_line (void);
 int count_bits (char * binary_string, char bit_value);
 int count_0_bits (char * binary_string);
