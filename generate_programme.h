@@ -9,7 +9,7 @@
 #include <gmp.h>    // must be included after stdlib.h
 #include "version.h"
 
-#define USAGE   "Usage: %s [-1g] n"
+#define USAGE   "Usage: %s [-1g[r num]] n"
 
 #define CHECKPOINT_FILE "checkpoint.xml"
 
@@ -92,7 +92,8 @@ void verify_all_hand_made_cardinality_sequence_data (void);
 void acid_test_for_cardinality_sequence (int * sequence_data, int n);
 void display_digraph_node (aluminium_Christmas_tree * p, int n);
 void depth_first_search (aluminium_Christmas_tree * p,
-    int * cardinality_sequence, int n, boolean first_solution_only);
+    int * cardinality_sequence, int n, boolean first_solution_only,
+    int restart_level);
 void breadth_first_search (aluminium_Christmas_tree * p, int n);
 void reset_visited_flags (aluminium_Christmas_tree * p, int n);
 void reset_visited_flags_the_hard_way (aluminium_Christmas_tree * p, int n);
@@ -116,8 +117,10 @@ void write_XML_mpz_integer_value (FILE * fp, char * tag, mpz_t value, int nestin
 void usage (char * programme_name);
 void write_dot_file (aluminium_Christmas_tree * root, int * cardinality, int n);
 void process_command_line_options (int argc, char ** argv,
-    boolean * option_1, boolean * option_g, int * n);
+    boolean * option_1, boolean * option_g, int * option_r, int * n);
 void free_dag (aluminium_Christmas_tree * root, int n);
+void test_process_command_line_options (int option_run_once,
+    int option_generate_graph, int option_restart_level, int n);
 
 // These will only be needed until I get a proper generator written, but
 // they might be useful later as test cases for the generator. They have

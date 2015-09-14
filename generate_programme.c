@@ -3,6 +3,7 @@
 int sequence_accumulator[MAX_n];
 int sequence_is_valid = false;
 time_t starting_time = 0;
+boolean first_time_through_recursion = true;
 
 static mpz_t good_sequences; // Using the GNU multiple precision library.
 static mpz_t predicted_number_of_candidate_sequences;
@@ -26,6 +27,7 @@ int main (int argc, char ** argv) {
     int i = 0;
     boolean option_run_once = false;
     boolean option_generate_graph = false;
+    int option_restart_level = 0;
     int row_plus_one_col = 0;
     int child_number = 0;
     aluminium_Christmas_tree ** addressable_row_array = NULL;
@@ -38,7 +40,7 @@ int main (int argc, char ** argv) {
     mpz_init (predicted_number_of_candidate_sequences_at_row_n);
 
     process_command_line_options (argc, argv, &option_run_once,
-        &option_generate_graph, &n);
+        &option_generate_graph, &option_restart_level, &n);
 
     assert (n > 0);
     assert (n <= MAX_n);
@@ -313,7 +315,7 @@ int main (int argc, char ** argv) {
         sequence_accumulator[i] = -1;
     }
 
-    depth_first_search (start, cardinality, n, option_run_once);
+    depth_first_search (start, cardinality, n, option_run_once, option_restart_level);
 
     fprintf (stderr, "\n");
     gmp_printfcomma (good_sequences);
@@ -1062,9 +1064,10 @@ void usage (char * programme_name) {
 // Handle the command line.
 
 void process_command_line_options (int argc, char ** argv,
-    boolean * option_1, boolean * option_g, int * n) {
+    boolean * option_1, boolean * option_g, int * option_r, int * n) {
 
-    // Not using GNU getop here because I don't need the complexity.
+    // Not using GNU getop here because I didn't need the complexity
+    // before, but now it might be a good idea to use it.
 
     switch (argc) {
         case 2:
@@ -1076,6 +1079,7 @@ void process_command_line_options (int argc, char ** argv,
             }
             break;
         case 3:
+        case 4:
             if ('-' == argv[1][0]) {
                 char * p = NULL;
 
@@ -1087,6 +1091,14 @@ void process_command_line_options (int argc, char ** argv,
                         case 'g':
                             *option_g = true;
                             break;
+                        case 'r':
+                            if (isdigit ((int)argv[argc - 2][0])) {
+                                *option_r = atoi (argv[argc - 2]);
+                            }
+                            else {
+                                usage (argv[0]);
+                            }
+                            break;
                         default:
                             fprintf (stderr, "Unrecognised option '-%c'\n", *p);
                             usage (argv[0]);
@@ -1094,8 +1106,11 @@ void process_command_line_options (int argc, char ** argv,
                     }
                 }
             }
-            if (isdigit ((int)argv[2][0])) {
-                *n = atoi (argv[2]);
+            if (isdigit ((int)argv[argc - 1][0])) {
+                *n = atoi (argv[argc - 1]);
+            }
+            else {
+                usage (argv[0]);
             }
             break;
         default:
@@ -1143,7 +1158,11 @@ void display_digraph_node (aluminium_Christmas_tree * p, int n) {
 // Depth-first search entire digraph.
 
 void depth_first_search (aluminium_Christmas_tree * p,
-    int * cardinality_sequence, int n, boolean first_solution_only) {
+    int * cardinality_sequence,
+    int n,
+    boolean first_solution_only,
+    int restart_level) {
+
     int i = 0;
     int * early_dup_check = NULL;
 
@@ -1172,11 +1191,33 @@ void depth_first_search (aluminium_Christmas_tree * p,
     free (early_dup_check);
     early_dup_check = NULL;
 
-    // The following loop could be multi-threaded for up to $n$ cores.
+    // This is messy, but it's an attempt to provide a limited restart
+    // capability if the computation is ever interrupted. (I wonder if
+    // call-with-current-continuation would be a much more general way
+    // of accomplishing this.)
 
-    for (i = 0; i < p->num_children; i ++) {
-        depth_first_search (p->child[i], cardinality_sequence, n,
-            first_solution_only);
+    if (restart_level > 0) {
+        if (first_time_through_recursion) {
+            first_time_through_recursion = false;
+            for (i = restart_level; i < p->num_children; i ++) {
+                depth_first_search (p->child[i], cardinality_sequence, n,
+                    first_solution_only, restart_level);
+            }
+        }
+        else {
+            for (i = 0; i < p->num_children; i ++) {
+                depth_first_search (p->child[i], cardinality_sequence, n,
+                    first_solution_only, restart_level);
+            }
+        }
+    }
+    else {
+        // The following loop could be multi-threaded for up to $n$ cores.
+
+        for (i = 0; i < p->num_children; i ++) {
+            depth_first_search (p->child[i], cardinality_sequence, n,
+                first_solution_only, restart_level);
+        }
     }
 
     // The following check might be redundant with early dup check; I'm not sure yet.
@@ -1296,4 +1337,13 @@ void * debug_malloc (size_t size, const char * file, const int line, const char 
 }
 
 #endif
+
+void test_process_command_line_options (int option_run_once,
+    int option_generate_graph, int option_restart_level, int n) {
+
+    fprintf (stderr,
+        "run_once = %d, generate_graph = %d, restart_level = %d, n = %d\n",
+        option_run_once, option_generate_graph, option_restart_level, n);
+    exit (1);
+}
 
