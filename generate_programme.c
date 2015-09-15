@@ -1062,60 +1062,66 @@ void usage (char * programme_name) {
 }
 
 // Handle the command line.
+//
+// Note: isdigit() before atoi() means it won't accept negative numbers.
 
 void process_command_line_options (int argc, char ** argv,
     boolean * option_1, boolean * option_g, int * option_r, int * n) {
 
-    // Not using GNU getop here because I didn't need the complexity
-    // before, but now it might be a good idea to use it.
+    int c = 0;
 
-    switch (argc) {
-        case 2:
-            if (isdigit ((int)argv[1][0])) {
-                *n = atoi (argv[1]);
-            }
-            else if ('-' == argv[1][0]) {
-                usage (argv[0]);
-            }
-            break;
-        case 3:
-        case 4:
-            if ('-' == argv[1][0]) {
-                char * p = NULL;
-
-                for (p = argv[1] + 1; *p; p++) {
-                    switch (*p) {
-                        case '1':
-                            *option_1 = true;
-                            break;
-                        case 'g':
-                            *option_g = true;
-                            break;
-                        case 'r':
-                            if (isdigit ((int)argv[argc - 2][0])) {
-                                *option_r = atoi (argv[argc - 2]);
-                            }
-                            else {
-                                usage (argv[0]);
-                            }
-                            break;
-                        default:
-                            fprintf (stderr, "Unrecognised option '-%c'\n", *p);
-                            usage (argv[0]);
-                            break;
-                    }
+    while ((c = getopt (argc, argv, "1gr:")) != -1) {
+        switch (c) {
+            case '1':
+                *option_1 = true;
+                break;
+            case 'g':
+                *option_g = true;
+                break;
+            case 'r':
+                if (isdigit ((int)optarg[0])) {
+                    *option_r = atoi (optarg);
                 }
-            }
-            if (isdigit ((int)argv[argc - 1][0])) {
-                *n = atoi (argv[argc - 1]);
-            }
-            else {
+                else {
+                    fprintf (stderr,
+                        "Option -%c requires a numeric argument.\n",
+                            optopt);
+                    usage (argv[0]);
+                }
+                break;
+            case '?':
+                if ('r' == optopt) {
+                    fprintf (stderr, "Option -%c requires an argument.\n",
+                        optopt);
+                    usage (argv[0]);
+                }
+                else if (isprint (optopt)) {
+                    fprintf (stderr, "Unknown option '-%c'.\n", optopt);
+                    usage (argv[0]);
+                }
+                else {
+                    fprintf (stderr,
+                        "Unknown option character '\\x%x'.\n", optopt);
+                    usage (argv[0]);
+                }
+                return;
+                break;
+            default:
                 usage (argv[0]);
-            }
-            break;
-        default:
+                break;
+        }
+    }
+    if (optind < argc) { // Then there's at least one argument after the options.
+        if (isdigit ((int)argv[optind][0])) {
+            *n = atoi (argv[optind]);
+            return;
+        }
+        else {
             usage (argv[0]);
-            break;
+        }
+    }
+    else {
+        usage (argv[0]);
     }
     return;
 }

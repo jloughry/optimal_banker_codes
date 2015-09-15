@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h> // needed by GNU getopt
 #include <gmp.h>    // must be included after stdlib.h
 #include "version.h"
 
