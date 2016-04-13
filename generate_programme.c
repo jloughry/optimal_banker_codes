@@ -141,7 +141,8 @@ int main (int argc, char ** argv) {
                 }
                 here->sibling = NULL;
 
-                fprintf (stderr, "%p[%d] = %p\n", dag, child_number, dag->child[child_number]);
+                fprintf (stderr, "%p[%d] = %p\n", (void *) dag,
+                    child_number, (void *) dag->child[child_number]);
 
                 ++ child_number;
                 dag->child[child_number] = NULL; // Terminate the list.
@@ -248,7 +249,7 @@ int main (int argc, char ** argv) {
             big_dumb_array[(1 << n) - 1][(1 << n) - 1].in_use = true;
 
             fprintf (stderr, "node %p (%d, %d) also created with %d children.\n",
-                &big_dumb_array[(1 << n) - 1][(1 << n) - 1],
+                (void *) &big_dumb_array[(1 << n) - 1][(1 << n) - 1],
                 big_dumb_array[(1 << n) - 1][(1 << n) - 1].level,
                 big_dumb_array[(1 << n) - 1][(1 << n) - 1].value,
                 big_dumb_array[(1 << n) - 1][(1 << n) - 1].num_children);
@@ -295,7 +296,8 @@ int main (int argc, char ** argv) {
                     != big_dumb_array[row][col].num_children_predicted) {
                     fprintf (stderr,
                         "misprediction: row %d, col %d (%p); predicted %d children, got %d children\n",
-                        row, col, &big_dumb_array[row][col],
+                        row, col,
+                        (void *) &big_dumb_array[row][col],
                         big_dumb_array[row][col].num_children_predicted,
                         big_dumb_array[row][col].num_children);
                 }
@@ -1150,7 +1152,7 @@ void display_digraph_node (aluminium_Christmas_tree * p, int n) {
                     break;
             }
             for (i = 0; i < p->num_children; i ++) {
-                fprintf (stderr, " %p", p->child[i]);
+                fprintf (stderr, " %p", (void *) p->child[i]);
             }
             fprintf (stderr, ".\n");
         }
@@ -1310,19 +1312,20 @@ void free_dag (aluminium_Christmas_tree * root, int n) {
     assert (root);
 
     fprintf (stderr, "I have been told to free %p who has %d children and sibling %p.\n",
-        root, root->num_children, root->sibling);
+        (void *) root, root->num_children, (void *) root->sibling);
     if (root->num_children > 0) {
         for (i = 0; i < root->num_children; i ++) {
-            fprintf (stderr, "  first freeing %p's child[%d] = %p\n", root, i, root->child[i]);
+            fprintf (stderr, "  first freeing %p's child[%d] = %p\n",
+                (void *) root, i, (void *) root->child[i]);
             if (root->child[i]) {
                 free_dag (root->child[i], n);
             }
             else {
-                fprintf (stderr, "%p->child[%d] was null.\n", root, i);
+                fprintf (stderr, "%p->child[%d] was null.\n", (void *) root, i);
             }
         }
     }
-    fprintf (stderr, "all children freed; freeing DAG %p\n", root);
+    fprintf (stderr, "all children freed; freeing DAG %p\n", (void *) root);
     free (root);
 
     return;

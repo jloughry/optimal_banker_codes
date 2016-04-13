@@ -1,13 +1,13 @@
 target = $(generator)
 
-order = 4
+order = 7
 
 # DEBUG_FLAGS = -DDEBUG
 DEBUG_FLAGS =
 
-GCC_FLAGS = -Wall -Wextra
+GCC_FLAGS = -Wall -Wextra -pedantic
 GDB_FLAGS = -g
-LINKER_FLAGS = -lgmp
+LINKER_FLAGS = -I /usr/local/include -L /usr/local/lib -lgmp
 
 generator = generate_programme
 generated_file = order-$(order)_graph_generated
