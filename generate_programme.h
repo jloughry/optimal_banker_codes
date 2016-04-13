@@ -15,7 +15,7 @@
 #define CHECKPOINT_FILE "checkpoint.xml"
 
 #ifdef DEBUG
-#define malloc(how_big) debug_malloc(how_big, __FILE__, __LINE__, __FUNCTION__)
+#define malloc(how_big) debug_malloc(how_big, __FILE__, __LINE__, __func__)
 #endif
 
 void * debug_malloc (size_t size, const char * file, const int line, const char * func);

@@ -220,10 +220,10 @@ int main (int argc, char ** argv) {
 #ifdef DEBUG
                         fprintf (stderr,
                             "recorded node %p (%d, %d) -> %p (%d, %d) with %d ",
-                            &big_dumb_array[row][col],
+                            (void *) &big_dumb_array[row][col],
                             big_dumb_array[row][col].level,
                             big_dumb_array[row][col].value,
-                            &big_dumb_array[row + 1][row_plus_one_col],
+                            (void *) &big_dumb_array[row + 1][row_plus_one_col],
                             big_dumb_array[row + 1][row_plus_one_col].level,
                             big_dumb_array[row + 1][row_plus_one_col].value,
                             predicted_number_of_children);
