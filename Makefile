@@ -1,6 +1,6 @@
 target = $(generator)
 
-order = 7
+order = 5
 
 # DEBUG_FLAGS = -DDEBUG
 DEBUG_FLAGS =
@@ -31,7 +31,7 @@ version = version.h
 rm = rm -fv
 edit = vi
 
-all:: $(target)
+all:: $(target) ## (default target)
 
 $(generated_pdf_file): $(generator)
 	./$(generator) -1g $(order) > $(generated_dot_file)
@@ -47,9 +47,13 @@ $(generator): $(generator_sources) Makefile
 	@echo $$(($$(cat $(build_counter)) + 1)) > $(build_counter)
 	@echo "Build `cat $(build_counter)`"
 
-test: $(generated_pdf_file)
+test: $(generated_pdf_file) ## Run tests.
 
-clean::
+help: ## Show this help.
+	@grep -hP '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort \
+	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+
+clean:: ## Remove any files that can be re-generated automatically.
 	$(rm) $(target) $(generator) *.stackdump \
 		$(generated_dot_files) $(generated_pdf_files) \
 		$(bibtex_file) typescript \
@@ -57,14 +61,14 @@ clean::
 
 	$(rm) -r $(debug_symbol_files)
 
-commit::
+commit:: ## Update source at GitHub.
 	@echo "#define VERSION $$(($$(cut -d ' ' -f 3 $(version)) + 1))" > $(version)
 	@echo "Version `cut -d ' ' -f 3 $(version)`"
 
-vi:
+vi:	## Edit the main C source.
 	$(edit) $(generator_source)
 
-header:
+header:	## Edit the main C header file.
 	$(edit) $(generator_header)
 
 include common.mk
