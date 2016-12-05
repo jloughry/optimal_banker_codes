@@ -5,7 +5,8 @@ order = 5
 # DEBUG_FLAGS = -DDEBUG
 DEBUG_FLAGS =
 
-GCC_FLAGS = -Wall -Wextra -pedantic
+cc_cmd = clang
+CC_FLAGS = -Wall -Wextra -pedantic
 GDB_FLAGS = -g
 LINKER_FLAGS = -I /usr/local/include -L /usr/local/lib -lgmp
 
@@ -42,8 +43,7 @@ $(generated_pdf_file): $(generator)
 #
 
 $(generator): $(generator_sources) Makefile
-	gcc $(GDB_FLAGS) $(GCC_FLAGS) $(DEBUG_FLAGS) -o $@ $< $(LINKER_FLAGS)
-	mv $(generator_compiled) $@
+	$(cc_cmd) $(CC_FLAGS) $(DEBUG_FLAGS) -o $@ $< $(LINKER_FLAGS)
 	@echo $$(($$(cat $(build_counter)) + 1)) > $(build_counter)
 	@echo "Build `cat $(build_counter)`"
 
